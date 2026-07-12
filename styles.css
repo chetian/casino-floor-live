@@ -1,0 +1,240 @@
+/* Casino Floor Live! — shared styles */
+
+:root {
+  --felt-deep: #0a2a1f;
+  --felt: #0e4d38;
+  --felt-light: #12603f;
+  --ink: #07100c;
+  --ink-2: #0c1a14;
+  --gold: #f4c430;
+  --gold-soft: #e6b422;
+  --cream: #f5efe0;
+  --cream-dim: #cdc9bd;
+  --card-red: #d23c3c;
+  --line: rgba(244, 196, 48, 0.18);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --radius: 16px;
+  --maxw: 1080px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--cream);
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(18, 96, 63, 0.55), transparent 60%),
+    radial-gradient(900px 600px at 90% 10%, rgba(244, 196, 48, 0.06), transparent 55%),
+    var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+
+/* ---------- Header / nav ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(10px);
+  background: rgba(7, 16, 12, 0.72);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 22px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: var(--cream);
+  font-size: 1.05rem;
+}
+.brand:hover { text-decoration: none; }
+.brand .chip { width: 30px; height: 30px; flex: none; }
+.brand em { color: var(--gold); font-style: normal; }
+.nav-links { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.nav-links a { color: var(--cream-dim); font-size: 0.94rem; font-weight: 600; }
+.nav-links a:hover { color: var(--gold); text-decoration: none; }
+
+/* ---------- Hero ---------- */
+.hero {
+  text-align: center;
+  padding: 84px 0 56px;
+  position: relative;
+}
+.hero .logo { width: 108px; height: 108px; margin: 0 auto 22px; display: block; filter: drop-shadow(0 10px 24px rgba(0,0,0,0.5)); }
+.hero h1 {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.05;
+  margin: 0 0 14px;
+  letter-spacing: -0.5px;
+}
+.hero h1 .live { color: var(--gold); }
+.hero .tagline {
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  color: var(--cream-dim);
+  max-width: 620px;
+  margin: 0 auto 30px;
+}
+.badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+.badge {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.03);
+  border-radius: 999px;
+  padding: 7px 15px;
+  font-size: 0.82rem;
+  color: var(--cream-dim);
+  font-weight: 600;
+}
+.badge strong { color: var(--gold); }
+
+.cta {
+  display: inline-block;
+  background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+  color: #23200a;
+  font-weight: 800;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-size: 1.02rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0,0,0,0.15);
+}
+.cta:hover { text-decoration: none; transform: translateY(-1px); }
+.cta.soon { opacity: 0.9; cursor: default; }
+
+/* ---------- Sections ---------- */
+section { padding: 56px 0; }
+.section-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  text-align: center;
+  margin: 0 0 8px;
+}
+.section-sub { text-align: center; color: var(--cream-dim); max-width: 640px; margin: 0 auto 40px; }
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+  border: 0;
+  margin: 0 auto;
+  max-width: var(--maxw);
+}
+
+/* ---------- Feature grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+.card {
+  background: linear-gradient(180deg, rgba(18, 96, 63, 0.28), rgba(10, 42, 31, 0.35));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.card:hover { transform: translateY(-3px); border-color: rgba(244,196,48,0.4); }
+.card .ico { font-size: 1.8rem; margin-bottom: 10px; }
+.card h3 { margin: 0 0 6px; font-size: 1.1rem; }
+.card p { margin: 0; color: var(--cream-dim); font-size: 0.94rem; }
+
+/* game chips list */
+.games {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 760px; margin: 0 auto;
+}
+.game-chip {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.game-chip span { color: var(--gold); margin-right: 7px; }
+
+/* ---------- Callout ---------- */
+.callout {
+  background: linear-gradient(180deg, rgba(244,196,48,0.08), rgba(244,196,48,0.02));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.callout h3 { font-family: "Playfair Display", Georgia, serif; font-size: 1.5rem; margin: 0 0 10px; }
+.callout p { color: var(--cream-dim); margin: 0 auto; max-width: 560px; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 40px 0 60px;
+  margin-top: 30px;
+  color: var(--cream-dim);
+  font-size: 0.9rem;
+}
+.footer-inner { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: center; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { color: var(--cream-dim); font-weight: 600; }
+.footer-links a:hover { color: var(--gold); text-decoration: none; }
+.footer-note { font-size: 0.82rem; color: #8a9790; margin-top: 18px; max-width: 720px; }
+
+/* ---------- Legal / doc pages ---------- */
+.doc {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 56px 0 40px;
+}
+.doc h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  margin: 0 0 6px;
+}
+.doc .eff { color: var(--cream-dim); font-size: 0.92rem; margin: 0 0 34px; }
+.doc h2 {
+  font-size: 1.35rem;
+  margin: 38px 0 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--gold);
+}
+.doc h3 { font-size: 1.08rem; margin: 22px 0 8px; }
+.doc p, .doc li { color: var(--cream); font-size: 1rem; }
+.doc ul { padding-left: 22px; }
+.doc li { margin: 6px 0; }
+.doc .lead { font-size: 1.08rem; color: var(--cream-dim); }
+.doc strong { color: var(--cream); }
+.doc a { text-decoration: underline; }
+.tldr {
+  background: rgba(18, 96, 63, 0.28);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 22px 0 8px;
+}
+.tldr strong { color: var(--gold); }
+.back { display: inline-block; margin-bottom: 26px; color: var(--cream-dim); font-weight: 600; }
+
+@media (max-width: 560px) {
+  .nav-links { gap: 14px; }
+  .hero { padding: 56px 0 40px; }
+  section { padding: 44px 0; }
+}
