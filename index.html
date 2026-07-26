@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Casino Floor Live! — Gamble with your bros. No real money, all the thrill.</title>
-  <meta name="description" content="Casino Floor Live! is a social casino party game for iPhone and iPad. Hit one live floor with up to 10 friends — everyone with their own bankroll — and play Blackjack, Poker, Roulette, Slots and more. Virtual chips only — no real-money gambling." />
+  <meta name="description" content="Casino Floor Live! is a social casino party game for iPhone and iPad. Hit one live floor with up to 10 friends — everyone with their own bankroll — and play Blackjack, Poker, Roulette, Slots and more. Virtual chips only — no real-money gambling. Rated 18+." />
   <meta property="og:title" content="Casino Floor Live!" />
   <meta property="og:description" content="A social casino party game. Up to 10 friends, one live floor, ten ways to win. Virtual chips only." />
   <meta property="og:type" content="website" />
@@ -14,8 +14,8 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260714" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260725" />
 </head>
 <body>
   <header class="site-header">
@@ -25,11 +25,11 @@
         Casino Floor <em>Live!</em>
       </a>
       <div class="nav-links">
-        <a href="#games">Games</a>
-        <a href="#multiplayer">Multiplayer</a>
-        <a href="#vip">VIP</a>
+        <a class="nav-jump" href="#games">Games</a>
+        <a class="nav-jump" href="#multiplayer">Multiplayer</a>
+        <a class="nav-jump" href="#vip">VIP</a>
         <a href="support.html">Support</a>
-        <a href="privacy.html">Privacy</a>
+        <a class="nav-age" href="age-rating.html">18+</a>
       </div>
     </nav>
   </header>
@@ -37,17 +37,38 @@
   <main>
     <section class="hero">
       <div class="wrap">
-        <h1 class="wordmark-heading">
-          <img class="wordmark" src="wordmark.png" alt="Casino Floor Live!" width="888" height="662" />
-          <span class="visually-hidden">Casino Floor Live!</span>
-        </h1>
-        <p class="tagline">The live casino party in your pocket. Grab up to&nbsp;10 bros, hit the same floor, and play every table together — everyone brings their own bankroll, all virtual chips, zero real money.</p>
-        <a class="cta soon" href="#" aria-disabled="true">Coming soon to the App&nbsp;Store</a>
-        <div class="badges">
-          <span class="badge"><strong>Up to 10</strong> players</span>
-          <span class="badge"><strong>10</strong> casino games</span>
-          <span class="badge"><strong>Virtual chips</strong> only</span>
-          <span class="badge">iPhone &amp; iPad</span>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1 class="wordmark-heading">
+              <img class="wordmark" src="wordmark.png" alt="Casino Floor Live!" width="888" height="662" />
+              <span class="visually-hidden">Casino Floor Live!</span>
+            </h1>
+            <p class="tagline">The live casino party in your pocket. Grab up to&nbsp;10 bros, hit the same floor, and play every table together — everyone brings their own bankroll, all virtual chips, zero real money.</p>
+            <div class="hero-cta">
+              <a class="cta soon" href="#" aria-disabled="true">Coming soon to the App&nbsp;Store</a>
+              <a class="cta ghost" href="age-rating.html">Rated 18+ — why?</a>
+            </div>
+            <div class="badges">
+              <span class="badge"><strong>Up to 10</strong> players</span>
+              <span class="badge"><strong>10</strong> casino games</span>
+              <span class="badge"><strong>Virtual chips</strong> only</span>
+              <span class="badge">iPhone &amp; iPad</span>
+            </div>
+          </div>
+          <div class="phones">
+            <div class="phone tilt-l">
+              <picture>
+                <source srcset="shot-floor.webp" type="image/webp" />
+                <img src="shot-floor.png" alt="The casino floor in Casino Floor Live!, with blackjack, roulette, slots and horse racing tables and other players walking between them." width="460" height="1000" />
+              </picture>
+            </div>
+            <div class="phone tilt-r">
+              <picture>
+                <source srcset="shot-blackjack.webp" type="image/webp" />
+                <img src="shot-blackjack.png" alt="A hand of blackjack in Casino Floor Live!, showing the dealer's cards, a player hand of 17, a $25 chip riding, and Hit and Stand buttons." width="460" height="1000" />
+              </picture>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -56,28 +77,24 @@
 
     <section id="what">
       <div class="wrap">
-        <h2 class="section-title">One live floor. Your whole crew.</h2>
-        <p class="section-sub">Casino Floor Live! is a top-down social casino you explore together. Walk the floor with your friends, pull up to any table, and play at your own pace — hang out, talk trash, and bank your chips whenever you're ready to call it.</p>
-        <div class="grid">
-          <div class="card">
-            <div class="ico">🤑</div>
-            <h3>Everyone's got their own stack</h3>
-            <p>No shared pot — each bro plays their own bankroll and keeps their own winnings, so nobody's night ends because someone else went cold. Feeling generous? Slide a buddy some chips with a "stake a bro" transfer.</p>
+        <div class="showcase">
+          <div class="showcase-art">
+            <div class="phone">
+              <picture>
+                <source srcset="shot-floor.webp" type="image/webp" />
+                <img src="shot-floor.png" alt="Walking the casino floor past the Ultimate Hold'em, Horse Racing and Roulette tables toward the Lucky 7s slot machines." width="460" height="1000" />
+              </picture>
+            </div>
           </div>
-          <div class="card">
-            <div class="ico">🍹</div>
-            <h3>No clock, no pressure</h3>
-            <p>There's no timer and no goal to chase. Post up as long as you like, ride a hot streak, and cash out whenever you feel like calling it a night.</p>
-          </div>
-          <div class="card">
-            <div class="ico">🎉</div>
-            <h3>Big-win energy</h3>
-            <p>Live chat, emotes, and floor-wide celebrations when someone hits — the table stays loud and the vibe stays electric.</p>
-          </div>
-          <div class="card">
-            <div class="ico">🎰</div>
-            <h3>Ten ways to gamble</h3>
-            <p>From Blackjack to Plinko to a full 6-seat Texas Hold'em table — plenty of floor to explore.</p>
+          <div>
+            <span class="eyebrow">One floor, together</span>
+            <h2>Walk in, look around, sit down</h2>
+            <p>Casino Floor Live! is a whole casino you explore on foot with your friends. Wander past the tables, watch a stranger hit a jackpot, and pull up a seat wherever you like.</p>
+            <ul>
+              <li><strong>Everyone's got their own stack.</strong> No shared pot — each bro plays their own bankroll and keeps their own winnings.</li>
+              <li><strong>No clock, no pressure.</strong> No timer, no daily goal. Stay as long as you like and stop whenever.</li>
+              <li><strong>More than tables.</strong> Hit the ATM, grab a round at the bar, order from the diner, or load up the jukebox.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -96,10 +113,37 @@
           <div class="game-chip"><span>♣</span>Video Poker</div>
           <div class="game-chip"><span>🎡</span>Roulette</div>
           <div class="game-chip"><span>🍒</span>Slots</div>
-          <div class="game-chip"><span>🎲</span>Dice (Over/Under 7)</div>
+          <div class="game-chip"><span>🎲</span>Dice</div>
           <div class="game-chip"><span>🐎</span>Horse Racing</div>
           <div class="game-chip"><span>🔻</span>Plinko</div>
           <div class="game-chip"><span>💣</span>Mines</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section id="tables">
+      <div class="wrap">
+        <div class="showcase flip">
+          <div class="showcase-art">
+            <div class="phone">
+              <picture>
+                <source srcset="shot-blackjack.webp" type="image/webp" />
+                <img src="shot-blackjack.png" alt="A blackjack hand in progress: dealer showing a 5, player holding 17 with $25 riding, and the chip tray along the bottom." width="460" height="1000" />
+              </picture>
+            </div>
+          </div>
+          <div>
+            <span class="eyebrow">Real rules, real odds</span>
+            <h2>Then play it straight</h2>
+            <p>Sit down and it's the game you know. Blackjack pays 3 to 2, the table has limits, the dealer plays by the book, and the odds are the ones you'd get in a real house.</p>
+            <ul>
+              <li><strong>Nothing is rigged for you.</strong> Real odds, win or lose — that's the whole point.</li>
+              <li><strong>Chips you can't buy.</strong> There is no purchase anywhere that tops up your stack.</li>
+              <li><strong>Talk at the table.</strong> Live chat and emotes while the hand plays out.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -127,9 +171,9 @@
             <p>Live chat keeps the trash-talk flowing. Kept civil with an on-device profanity filter, plus mute, block, and report anyone in a tap.</p>
           </div>
           <div class="card">
-            <div class="ico">🍸</div>
-            <h3>More than tables</h3>
-            <p>Hit the ATM, grab a round at the bar, order from the CHOW diner, or spin up the jukebox between hands.</p>
+            <div class="ico">🎉</div>
+            <h3>Big-win energy</h3>
+            <p>Emotes and floor-wide celebrations when someone hits — the table stays loud and the vibe stays electric.</p>
           </div>
         </div>
       </div>
@@ -148,11 +192,15 @@
 
     <hr class="divider" />
 
-    <section id="fairplay">
+    <section id="age">
       <div class="wrap">
-        <div class="callout">
-          <h3>🎯 Just for fun</h3>
-          <p>Casino Floor Live! is a game. Chips are virtual, they can't be cashed out, and there's no real-money wagering anywhere in the app. It's the casino night with your friends — minus the tab.</p>
+        <div class="rating">
+          <div class="rating-mark" aria-hidden="true">18+</div>
+          <div>
+            <h3>This is a game for grown-ups</h3>
+            <p>It's a casino, so we rated it 18+. The chips are pretend — you can't buy them, cash them out, or win anything real. We've written up exactly what's in the game, how chat is kept safe, and what we do and don't sell.</p>
+            <a class="cta" href="age-rating.html">Read the age guide</a>
+          </div>
         </div>
       </div>
     </section>
