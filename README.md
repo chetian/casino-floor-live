@@ -9,19 +9,22 @@ Served via GitHub Pages as a plain static site.
 - `privacy.html` — Privacy Policy (App Store privacy URL)
 - `support.html` — Support / FAQ (App Store support URL)
 - `terms.html` — Terms of Use / EULA
+- `age-rating.html` — Age Suitability disclosure (App Store age suitability URL)
 - `styles.css` — shared styles
 - `favicon.svg` — chip/spade mark
 
-## Live URLs (once Pages is enabled)
-- Home: https://chetian.github.io/casino-floor-live/
-- Privacy: https://chetian.github.io/casino-floor-live/privacy.html
-- Support: https://chetian.github.io/casino-floor-live/support.html
-- Terms: https://chetian.github.io/casino-floor-live/terms.html
+## Live URLs (custom domain, see `CNAME`)
+- Home: https://casinofloorlive.app/
+- Privacy: https://casinofloorlive.app/privacy.html
+- Support: https://casinofloorlive.app/support.html
+- Terms: https://casinofloorlive.app/terms.html
+- Age Suitability: https://casinofloorlive.app/age-rating.html
 
 ## Notes for App Store Connect
 - **Privacy Policy URL** → the privacy.html link above.
 - **Support URL** → the support.html link above (or home).
-- Developer: Daniel Chetian · Contact: danchet@gmail.com
-- Content: simulated gambling with virtual currency (expect 17+ rating).
+- Developer: Chetian Holdings LLC (chetianholdings.com) · Contact: contact@chetianholdings.com
+- **Age Suitability URL** (optional field) → the age-rating.html link above.
+- Content: simulated gambling with virtual currency (rated 18+).
 
-© 2026 Daniel Chetian.
+© 2026 Chetian Holdings LLC.
