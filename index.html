@@ -4,18 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Casino Floor Live! — Gamble with your bros. No real money, all the thrill.</title>
-  <meta name="description" content="Casino Floor Live! is a social casino party game for iPhone and iPad. Hit one live floor with up to 10 friends — everyone with their own bankroll — and play Blackjack, Poker, Roulette, Slots and more. Virtual chips only — no real-money gambling. Rated 18+." />
+  <meta name="description" content="Casino Floor Live! is a social casino party game for iPhone, iPad and Apple Vision Pro. Hit one live floor with up to 10 friends — everyone with their own bankroll — and play Blackjack, Poker, Roulette, Slots and more. Virtual chips only — no real-money gambling. Rated 18+." />
+  <link rel="canonical" href="https://casinofloorlive.app/" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#07100c" />
+  <meta property="og:site_name" content="Casino Floor Live!" />
   <meta property="og:title" content="Casino Floor Live!" />
-  <meta property="og:description" content="A social casino party game. Up to 10 friends, one live floor, every table in the house. Virtual chips only." />
+  <meta property="og:description" content="A social casino party game for iPhone, iPad and Apple Vision Pro. Up to 10 friends, one live floor, every table in the house. Virtual chips only." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="wordmark.png" />
+  <meta property="og:url" content="https://casinofloorlive.app/" />
+  <meta property="og:image" content="https://casinofloorlive.app/shot-vision.jpg" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="900" />
+  <meta property="og:image:alt" content="The Casino Floor Live! casino floor as a miniature diorama sitting in a real backyard, seen through Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="wordmark.png" />
+  <meta name="twitter:title" content="Casino Floor Live!" />
+  <meta name="twitter:description" content="A social casino party game for iPhone, iPad and Apple Vision Pro. Up to 10 friends, one live floor, every table in the house." />
+  <meta name="twitter:image" content="https://casinofloorlive.app/shot-vision.jpg" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260725" />
+  <link rel="stylesheet" href="styles.css?v=20260801" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://chetianholdings.com/#org",
+        "name": "Chetian Holdings LLC",
+        "url": "https://chetianholdings.com/",
+        "email": "contact@chetianholdings.com",
+        "logo": "https://casinofloorlive.app/apple-touch-icon.png"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://casinofloorlive.app/#website",
+        "url": "https://casinofloorlive.app/",
+        "name": "Casino Floor Live!",
+        "publisher": { "@id": "https://chetianholdings.com/#org" }
+      },
+      {
+        "@type": "VideoGame",
+        "@id": "https://casinofloorlive.app/#game",
+        "name": "Casino Floor Live!",
+        "url": "https://casinofloorlive.app/",
+        "image": "https://casinofloorlive.app/shot-vision.jpg",
+        "description": "A social casino party game. Up to 10 friends share one live casino floor and play Blackjack, Poker, Roulette, Slots, Craps and more with virtual chips only — no real-money gambling.",
+        "applicationCategory": "GameApplication",
+        "genre": ["Casino", "Party", "Multiplayer"],
+        "operatingSystem": "iOS, iPadOS, visionOS",
+        "gamePlatform": ["iPhone", "iPad", "Apple Vision Pro"],
+        "playMode": ["SinglePlayer", "MultiPlayer"],
+        "contentRating": "18+",
+        "publisher": { "@id": "https://chetianholdings.com/#org" },
+        "author": { "@id": "https://chetianholdings.com/#org" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -27,6 +76,7 @@
       <div class="nav-links">
         <a class="nav-jump" href="#games">Games</a>
         <a class="nav-jump" href="#multiplayer">Multiplayer</a>
+        <a class="nav-jump" href="#vision">Vision Pro</a>
         <a class="nav-jump" href="#vip">VIP</a>
         <a href="support.html">Support</a>
         <a class="nav-age" href="age-rating.html">18+</a>
@@ -40,7 +90,10 @@
         <div class="hero-grid">
           <div class="hero-copy">
             <h1 class="wordmark-heading">
-              <img class="wordmark" src="wordmark.png" alt="Casino Floor Live!" width="888" height="662" />
+              <picture>
+                <source srcset="wordmark.webp" type="image/webp" />
+                <img class="wordmark" src="wordmark.png" alt="Casino Floor Live!" width="888" height="662" fetchpriority="high" />
+              </picture>
               <span class="visually-hidden">Casino Floor Live!</span>
             </h1>
             <p class="tagline">The live casino party in your pocket. Grab up to&nbsp;10 bros, hit the same floor, and play every table together — everyone brings their own bankroll, all virtual chips, zero real money.</p>
@@ -53,6 +106,7 @@
               <span class="badge"><strong>Every</strong> casino classic</span>
               <span class="badge"><strong>Virtual chips</strong> only</span>
               <span class="badge">iPhone &amp; iPad</span>
+              <span class="badge"><strong>Apple Vision Pro</strong></span>
             </div>
           </div>
           <div class="phones">
@@ -182,6 +236,47 @@
 
     <hr class="divider" />
 
+    <section id="vision">
+      <div class="wrap">
+        <span class="eyebrow center">Also on Apple Vision Pro</span>
+        <h2 class="section-title">Put the whole casino on your coffee table</h2>
+        <p class="section-sub">On Vision Pro the floor isn't on a screen — it's a real object in your room. The same live floor, the same friends on their phones, sitting in your actual space.</p>
+
+        <figure class="visor">
+          <picture>
+            <source srcset="shot-vision.webp" type="image/webp" />
+            <img src="shot-vision.jpg" alt="The Casino Floor Live! casino floor rendered as a miniature diorama sitting in a real backyard, seen through Apple Vision Pro passthrough — tables, slot machines, the high-limit room and other players are all visible in the grass." width="1600" height="900" loading="lazy" />
+          </picture>
+          <figcaption>An actual Vision Pro capture — the floor is in the yard, the yard is really there.</figcaption>
+        </figure>
+
+        <div class="grid vision-grid">
+          <div class="card">
+            <div class="ico">🏠</div>
+            <h3>A casino in your room</h3>
+            <p>Passthrough stays on, so the floor lands on your table, your rug, or the lawn. Pinch and pull to size it — pocket diorama or half the living room.</p>
+          </div>
+          <div class="card">
+            <div class="ico">🎰</div>
+            <h3>Pull a machine out</h3>
+            <p>Grab any cabinet off the floor and it grows to full size in front of you. Walk up, play a few spins, put it back.</p>
+          </div>
+          <div class="card">
+            <div class="ico">👀</div>
+            <h3>Look where you're going</h3>
+            <p>Look at a spot on the floor and tap — your bro walks there. No teleports, no controllers, nothing strapped to your hands.</p>
+          </div>
+          <div class="card">
+            <div class="ico">📱</div>
+            <h3>Same floor as your friends</h3>
+            <p>Vision Pro joins the exact same live rooms as iPhone and iPad. Your bros on their phones see you walking the floor, and you see them.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
     <section id="vip">
       <div class="wrap">
         <div class="callout">
@@ -219,10 +314,14 @@
           <a href="terms.html">Terms of Use</a>
           <a href="support.html">Support</a>
           <a href="age-rating.html">Age Suitability</a>
+          <a href="https://chetianholdings.com/" rel="noopener">The studio ↗</a>
         </div>
       </div>
       <p class="footer-note">
-        © 2026 <a href="https://chetianholdings.com" target="_blank" rel="noopener">Chetian Holdings LLC</a>. Casino Floor Live! is an entertainment game featuring simulated casino play with virtual currency. It does not offer real-money gambling or an opportunity to win real money or prizes. Practice or success at social casino gaming does not imply future success at real-money gambling. Intended for adults (18+).
+        Made by <a href="https://chetianholdings.com/" rel="noopener">Chetian Holdings</a>, an independent software studio.
+      </p>
+      <p class="footer-note">
+        © 2026 <a href="https://chetianholdings.com/" rel="noopener">Chetian Holdings LLC</a>. Casino Floor Live! is an entertainment game featuring simulated casino play with virtual currency. It does not offer real-money gambling or an opportunity to win real money or prizes. Practice or success at social casino gaming does not imply future success at real-money gambling. Intended for adults (18+).
       </p>
     </div>
   </footer>

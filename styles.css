@@ -227,6 +227,41 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.01em; }
 .phones:hover .phone.tilt-l { transform: rotate(-2deg) translateY(2px); }
 .phones:hover .phone.tilt-r { transform: rotate(2deg) translateY(-20px); }
 
+/* ---------- Vision Pro visor ----------
+   A wide, softly-rounded pane with a glass rim — the shape of the headset's
+   own windows, so a passthrough capture reads as "seen through the visor". */
+.visor {
+  position: relative;
+  margin: 0 auto 34px;
+  max-width: 900px;
+  padding: 10px;
+  border-radius: 34px;
+  background: linear-gradient(160deg, rgba(245, 239, 224, 0.14), rgba(12, 19, 16, 0.6) 60%);
+  box-shadow: var(--shadow-lift), 0 0 0 1px rgba(244, 196, 48, 0.16);
+}
+/* The bloom behind it: the floor glowing into the room. Bleeds vertically
+   only — a sideways bleed widens the page and html can't clip it without
+   becoming a scroll container and breaking the sticky header. */
+.visor::before {
+  content: "";
+  position: absolute;
+  inset: -8% 0;
+  z-index: -1;
+  border-radius: 60px;
+  background: radial-gradient(closest-side, rgba(18, 96, 63, 0.5), transparent 72%);
+  pointer-events: none;
+}
+.visor img { border-radius: 26px; width: 100%; height: auto; }
+.visor figcaption {
+  margin-top: 14px;
+  padding: 0 12px 4px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #8a9790;
+}
+.eyebrow.center { display: block; text-align: center; }
+.vision-grid { max-width: 940px; margin: 0 auto; }
+
 /* ---------- Sections ---------- */
 section { padding: 60px 0; }
 .section-title {
