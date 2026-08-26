@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Casino Floor Live! — Gamble with your bros. No real money, all the thrill.</title>
-  <meta name="description" content="Casino Floor Live! is a social casino party game for iPhone, iPad and Apple Vision Pro. Hit one live floor with up to 10 friends — everyone with their own bankroll — and play Blackjack, Poker, Roulette, Slots and more. Virtual chips only — no real-money gambling. Rated 18+." />
+  <title>Casino Floor Live! — Walk a live casino floor with your bros</title>
+  <meta name="description" content="Casino Floor Live! is a social casino party game for iPhone, iPad and Apple Vision Pro. Walk one live floor with up to 10 friends — everyone with their own bankroll — and play Blackjack, Poker, Roulette, Craps, Slots and more. Virtual chips only — no real-money gambling. Rated 18+." />
   <link rel="canonical" href="https://casinofloorlive.app/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#07100c" />
@@ -21,12 +21,13 @@
   <meta name="twitter:title" content="Casino Floor Live!" />
   <meta name="twitter:description" content="A social casino party game for iPhone, iPad and Apple Vision Pro. Up to 10 friends, one live floor, every table in the house." />
   <meta name="twitter:image" content="https://casinofloorlive.app/shot-vision.jpg" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg?v=20260825" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260801" />
+  <link rel="stylesheet" href="styles.css?v=20260825" />
+  <link rel="preload" as="image" href="sprites/bros-atlas.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -70,11 +71,12 @@
   <header class="site-header">
     <nav class="nav">
       <a class="brand" href="index.html">
-        <img class="chip" src="favicon.svg" alt="" />
-        Casino Floor <em>Live!</em>
+        <span class="crown" aria-hidden="true"></span>
+        <span class="brand-text">Casino Floor <em>Live!</em></span>
       </a>
       <div class="nav-links">
         <a class="nav-jump" href="#games">Games</a>
+        <a class="nav-jump" href="#cast">The cast</a>
         <a class="nav-jump" href="#multiplayer">Multiplayer</a>
         <a class="nav-jump" href="#vision">Vision Pro</a>
         <a class="nav-jump" href="#vip">VIP</a>
@@ -85,45 +87,35 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="wrap">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <h1 class="wordmark-heading">
-              <picture>
-                <source srcset="wordmark.webp" type="image/webp" />
-                <img class="wordmark" src="wordmark.png" alt="Casino Floor Live!" width="888" height="662" fetchpriority="high" />
-              </picture>
-              <span class="visually-hidden">Casino Floor Live!</span>
-            </h1>
-            <p class="tagline">The live casino party in your pocket. Grab up to&nbsp;10 bros, hit the same floor, and play every table together — everyone brings their own bankroll, all virtual chips, zero real money.</p>
-            <div class="hero-cta">
-              <a class="cta soon" href="#" aria-disabled="true">Coming soon to the App&nbsp;Store</a>
-              <a class="cta ghost" href="age-rating.html">Rated 18+ — why?</a>
-            </div>
-            <div class="badges">
-              <span class="badge"><strong>Up to 10</strong> players</span>
-              <span class="badge"><strong>Every</strong> casino classic</span>
-              <span class="badge"><strong>Virtual chips</strong> only</span>
-              <span class="badge">iPhone &amp; iPad</span>
-              <span class="badge"><strong>Apple Vision Pro</strong></span>
-            </div>
-          </div>
-          <div class="phones">
-            <div class="phone tilt-l">
-              <picture>
-                <source srcset="shot-floor.webp" type="image/webp" />
-                <img src="shot-floor.png" alt="The casino floor in Casino Floor Live!, with blackjack, roulette, slots and horse racing tables and other players walking between them." width="460" height="1000" />
-              </picture>
-            </div>
-            <div class="phone tilt-r">
-              <picture>
-                <source srcset="shot-blackjack.webp" type="image/webp" />
-                <img src="shot-blackjack.png" alt="A hand of blackjack in Casino Floor Live!, showing the dealer's cards, a player hand of 17, a $25 chip riding, and Hit and Stand buttons." width="460" height="1000" />
-              </picture>
-            </div>
-          </div>
+    <!-- The hero IS the floor: `floor.js` draws the game's own furniture and
+         walks the game's own characters across it. The sprites in /sprites are
+         baked out of the app by CasinoCoreTests' WebSpriteDumpTests — re-run
+         that dump to pick up costume or cast changes. -->
+    <section class="hero" id="floor">
+      <canvas id="floor-canvas" aria-hidden="true"></canvas>
+      <div class="floor-veil" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <p class="live-pill"><span class="live-dot" aria-hidden="true"></span> The floor is open</p>
+        <h1 class="wordmark-heading">
+          <picture>
+            <source srcset="wordmark.webp" type="image/webp" />
+            <img class="wordmark" src="wordmark.png" alt="Casino Floor Live!" width="888" height="662" fetchpriority="high" />
+          </picture>
+          <span class="visually-hidden">Casino Floor Live!</span>
+        </h1>
+        <p class="tagline">Not a menu of games — a casino you walk into. Bring up to&nbsp;10 bros onto one live floor, wander past the tables, and pull up a seat wherever you like. Everyone brings their own bankroll, all virtual chips, zero real money.</p>
+        <div class="hero-cta">
+          <a class="cta soon" href="#" aria-disabled="true">Coming soon to the App&nbsp;Store</a>
+          <a class="cta ghost" href="age-rating.html">Rated 18+ — why?</a>
         </div>
+        <div class="badges">
+          <span class="badge"><strong>Up to 10</strong> players</span>
+          <span class="badge"><strong>Every</strong> casino classic</span>
+          <span class="badge"><strong>Virtual chips</strong> only</span>
+          <span class="badge">iPhone &amp; iPad</span>
+          <span class="badge"><strong>Apple Vision Pro</strong></span>
+        </div>
+        <p class="floor-note">Above: the floor drawn with the game's own art, walked by the game's own cast.</p>
       </div>
     </section>
 
@@ -173,6 +165,40 @@
           <div class="game-chip"><span>🔻</span>Plinko</div>
           <div class="game-chip"><span>💣</span>Mines</div>
         </div>
+        <!-- FUTURE (v1.1): the Sports Book — the odds board, the betting
+             windows and the TV-wall lounge above it. Not announced yet, so it
+             stays off this list until the build that carries it ships. -->
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- The cast, straight out of the game's own art. Only the house
+         regulars — the twelve every player can pick for free on day one.
+         FUTURE: the critters, Main Street, the Late Show, the Fantasy
+         Tavern and the seasonal casts arrive on the monthly drops, and the
+         badge case (fifty-two of them) rides along with them. Both are drawn
+         and in the binary already; neither is announced, so neither is shown
+         here yet. When a drop opens, re-run the sprite dump with
+         CFL_DUMP_IDS naming the new cast and add a row. -->
+    <section id="cast">
+      <div class="wrap">
+        <h2 class="section-title">Meet the house regulars</h2>
+        <p class="section-sub">Twelve characters, free to everyone, and yours to pick before you walk in. They're the ones up on the floor at the top of this page.</p>
+        <ul class="cast">
+          <li class="cast-card"><img src="sprites/bro-ace.png" alt="Ace, a chibi casino character in a green dealer's visor." width="256" height="256" loading="lazy" /><span>Ace</span></li>
+          <li class="cast-card"><img src="sprites/bro-the-king.png" alt="The King, a chibi casino character in a white jumpsuit and shades." width="256" height="256" loading="lazy" /><span>The King</span></li>
+          <li class="cast-card"><img src="sprites/bro-granny-lucky.png" alt="Granny Lucky, a chibi casino character with grey hair and round glasses." width="256" height="256" loading="lazy" /><span>Granny Lucky</span></li>
+          <li class="cast-card"><img src="sprites/bro-big-slick.png" alt="Big Slick, a chibi casino character in a navy suit and gold tie." width="256" height="256" loading="lazy" /><span>Big Slick</span></li>
+          <li class="cast-card"><img src="sprites/bro-tex.png" alt="Tex, a chibi casino character in a cowboy hat and denim." width="256" height="256" loading="lazy" /><span>Tex</span></li>
+          <li class="cast-card"><img src="sprites/bro-ruby.png" alt="Ruby, a chibi casino character in a red showgirl dress and feathered headdress." width="256" height="256" loading="lazy" /><span>Ruby</span></li>
+          <li class="cast-card"><img src="sprites/bro-bruno.png" alt="Bruno, a chibi casino character in a dark suit and shades." width="256" height="256" loading="lazy" /><span>Bruno</span></li>
+          <li class="cast-card"><img src="sprites/bro-vinnie.png" alt="Vinnie, a chibi casino character in a burgundy jacket." width="256" height="256" loading="lazy" /><span>Vinnie</span></li>
+          <li class="cast-card"><img src="sprites/bro-chad.png" alt="Chad, a chibi casino character in a visor and teal polo." width="256" height="256" loading="lazy" /><span>Chad</span></li>
+          <li class="cast-card"><img src="sprites/bro-mystic-marla.png" alt="Mystic Marla, a chibi casino character in a purple hat and robes." width="256" height="256" loading="lazy" /><span>Mystic Marla</span></li>
+          <li class="cast-card"><img src="sprites/bro-peaches.png" alt="Peaches, a chibi casino character with red hair and a gold top." width="256" height="256" loading="lazy" /><span>Peaches</span></li>
+          <li class="cast-card"><img src="sprites/bro-dice.png" alt="Dice, a chibi casino character in a teal tracksuit." width="256" height="256" loading="lazy" /><span>Dice</span></li>
+        </ul>
       </div>
     </section>
 
@@ -280,7 +306,7 @@
     <section id="vip">
       <div class="wrap">
         <div class="callout">
-          <h3>✨ Go VIP</h3>
+          <h3><span class="crown crown-lg" aria-hidden="true"></span> Go VIP</h3>
           <p>A one-time in-app purchase unlocks the VIP badge, the members-only mezzanine, free high-limit salon access, and a fatter $10,000 starting bankroll. Cosmetic and virtual perks only — VIP never buys real-world value.</p>
         </div>
       </div>
@@ -306,8 +332,8 @@
     <div class="wrap">
       <div class="footer-inner">
         <a class="brand" href="index.html">
-          <img class="chip" src="favicon.svg" alt="" />
-          Casino Floor <em>Live!</em>
+          <span class="crown" aria-hidden="true"></span>
+          <span class="brand-text">Casino Floor <em>Live!</em></span>
         </a>
         <div class="footer-links">
           <a href="privacy.html">Privacy Policy</a>
@@ -325,5 +351,7 @@
       </p>
     </div>
   </footer>
+
+  <script src="floor.js?v=20260825" defer></script>
 </body>
 </html>
