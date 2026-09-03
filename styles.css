@@ -114,6 +114,22 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.01em; }
   border-color: var(--gold);
 }
 
+/* The way to the store — solid gold against the 18+ pill's outline. */
+.nav-links a.nav-get {
+  color: #23200a;
+  background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.88rem;
+  font-weight: 900;
+  box-shadow: 0 3px 0 var(--gold-deep);
+}
+.nav-links a.nav-get:hover {
+  color: #23200a;
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 var(--gold-deep);
+}
+
 /* ---------- Hero: the live floor ----------
    The hero is a canvas the game's own floor is drawn onto (floor.js): felt
    carpet, real tables, real cabinets, and the real cast walking between them.
@@ -169,6 +185,7 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.01em; }
   margin: 0 0 28px;
 }
 .hero-cta { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.cta-note { margin: 14px 0 0; color: var(--cream-dim); font-size: 0.92rem; font-weight: 700; }
 .hero .badges { margin-top: 24px; }
 .hero .badge { background: rgba(7, 16, 12, 0.55); backdrop-filter: blur(6px); }
 
@@ -304,7 +321,6 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.01em; }
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 .cta:hover { text-decoration: none; transform: translateY(2px); box-shadow: 0 4px 0 var(--gold-deep), var(--shadow); }
-.cta.soon { cursor: default; }
 .cta.ghost {
   background: rgba(245, 239, 224, 0.06);
   color: var(--cream);
@@ -502,6 +518,29 @@ section { padding: 60px 0; }
 .callout h3 { font-size: 1.55rem; margin: 0 0 10px; }
 .callout p { color: var(--cream-dim); margin: 0 auto; max-width: 580px; }
 
+/* ---------- The closing "get it" band ---------- */
+.get-band {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 34px 44px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(620px 220px at 50% 0%, rgba(244, 196, 48, 0.14), transparent 70%),
+    linear-gradient(180deg, rgba(18, 96, 63, 0.3), rgba(10, 42, 31, 0.42));
+  box-shadow: var(--shadow);
+}
+.get-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  margin: 0 auto 18px;
+}
+.get-band h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); margin: 0 0 10px; }
+.get-band p { color: var(--cream-dim); margin: 0 auto 26px; max-width: 520px; }
+
 /* ---------- The 18+ block on the home page ---------- */
 .rating {
   display: grid;
@@ -590,6 +629,10 @@ section { padding: 60px 0; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
+  /* The store pill needs ~100px the bar doesn't have once the section anchors
+     are still in it — below desktop the hero button and the closing band (and
+     Safari's own Smart App Banner on iOS) carry the call to action instead. */
+  .nav-links a.nav-get { display: none; }
   .hero { min-height: min(88vh, 760px); padding: 80px 0 44px; }
   .cast { grid-template-columns: repeat(4, 1fr); }
   .showcase, .showcase.flip { grid-template-columns: 1fr; gap: 30px; text-align: center; }
