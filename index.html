@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Casino Floor Live! — Walk a live casino floor with your bros</title>
-  <meta name="description" content="Casino Floor Live! is a social casino party game for iPhone, iPad and Apple Vision Pro. Walk one live floor with up to 10 friends — everyone with their own bankroll — and play Blackjack, Poker, Roulette, Craps, Slots and more. Virtual chips only — no real-money gambling. Rated 18+. Free on the App Store." />
+  <!-- Brand first, no tagline padding: Google weighs the home page <title>
+       when it picks the site name shown above the result, and a padded one
+       reads as less confident. Keep it under ~60 characters. -->
+  <title>Casino Floor Live! — Casino Game for iPhone &amp; Vision Pro</title>
+  <meta name="description" content="A social casino game you walk into with up to 10 friends, on iPhone, iPad and Apple Vision Pro. Virtual chips only — no real money. Free, rated 18+." />
   <link rel="canonical" href="https://casinofloorlive.app/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#07100c" />
   <!-- Safari on iOS/iPadOS shows the real store banner for the shipped app. -->
   <meta name="apple-itunes-app" content="app-id=6794734494" />
   <meta property="og:site_name" content="Casino Floor Live!" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:title" content="Casino Floor Live!" />
   <meta property="og:description" content="Out now, free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro. Up to 10 friends, one live floor, every table in the house. Virtual chips only." />
   <meta property="og:type" content="website" />
@@ -28,8 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260903" />
-  <link rel="preload" as="image" href="sprites/bros-atlas.png" />
+  <link rel="stylesheet" href="styles.css?v=20260920" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,12 +50,14 @@
         "@id": "https://casinofloorlive.app/#website",
         "url": "https://casinofloorlive.app/",
         "name": "Casino Floor Live!",
+        "alternateName": ["Casino Floor Live", "CFL"],
         "publisher": { "@id": "https://chetianholdings.com/#org" }
       },
       {
         "@type": "VideoGame",
         "@id": "https://casinofloorlive.app/#game",
         "name": "Casino Floor Live!",
+        "alternateName": ["Casino Floor Live", "CFL"],
         "url": "https://casinofloorlive.app/",
         "image": "https://casinofloorlive.app/shot-vision.jpg",
         "description": "A social casino party game. Up to 10 friends share one live casino floor and play Blackjack, Poker, Roulette, Slots, Craps and more with virtual chips only — no real-money gambling.",
@@ -87,10 +92,10 @@
         <span class="brand-text">Casino Floor <em>Live!</em></span>
       </a>
       <div class="nav-links">
-        <a class="nav-jump" href="#games">Games</a>
+        <a class="nav-jump" href="games.html">Games</a>
         <a class="nav-jump" href="#cast">The cast</a>
-        <a class="nav-jump" href="#multiplayer">Multiplayer</a>
-        <a class="nav-jump" href="#vision">Vision Pro</a>
+        <a class="nav-jump" href="play-with-friends.html">Multiplayer</a>
+        <a class="nav-jump" href="vision-pro.html">Vision Pro</a>
         <a class="nav-jump" href="#vip">VIP</a>
         <a href="support.html">Support</a>
         <a class="nav-age" href="age-rating.html">18+</a>
@@ -110,16 +115,21 @@
       <div class="wrap hero-inner">
         <p class="live-pill"><span class="live-dot" aria-hidden="true"></span> The floor is open</p>
         <h1 class="wordmark-heading">
+          <!-- The wordmark is the LCP element and never renders wider than
+               310 CSS px, so 2x displays take the 620px file and only 3x ones
+               pull the full 888px. The PNG is a fallback no current browser
+               reaches. -->
           <picture>
-            <source srcset="wordmark.webp" type="image/webp" />
+            <source srcset="wordmark-620.webp 620w, wordmark.webp 888w"
+                    sizes="(max-width: 470px) 66vw, 310px"
+                    type="image/webp" />
             <img class="wordmark" src="wordmark.png" alt="Casino Floor Live!" width="888" height="662" fetchpriority="high" />
           </picture>
           <span class="visually-hidden">Casino Floor Live!</span>
         </h1>
-        <p class="tagline">Not a menu of games — a casino you walk into. Bring up to&nbsp;10 bros onto one live floor, wander past the tables, and pull up a seat wherever you like. Everyone brings their own bankroll, all virtual chips, zero real money.</p>
+        <p class="tagline">Not a menu of games — a casino you walk into. Bring up to&nbsp;10 friends onto one live floor, wander past the tables, and pull up a seat wherever you like. Everyone brings their own bankroll, all virtual chips, zero real money.</p>
         <div class="hero-cta">
           <a class="cta" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free on the App&nbsp;Store</a>
-          <a class="cta ghost" href="age-rating.html">Rated 18+ — why?</a>
         </div>
         <p class="cta-note">Out now — free on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro.</p>
         <div class="badges">
@@ -151,7 +161,7 @@
             <h2>Walk in, look around, sit down</h2>
             <p>Casino Floor Live! is a whole casino you explore on foot with your friends. Wander past the tables, watch a stranger hit a jackpot, and pull up a seat wherever you like.</p>
             <ul>
-              <li><strong>Everyone's got their own stack.</strong> No shared pot — each bro plays their own bankroll and keeps their own winnings.</li>
+              <li><strong>Everyone's got their own stack.</strong> No shared pot — each player rides their own bankroll and keeps their own winnings.</li>
               <li><strong>No clock, no pressure.</strong> No timer, no daily goal. Stay as long as you like and stop whenever.</li>
               <li><strong>More than tables.</strong> Hit the ATM, grab a round at the bar, order from the diner, or load up the jukebox.</li>
             </ul>
@@ -179,6 +189,9 @@
           <div class="game-chip"><span>🔻</span>Plinko</div>
           <div class="game-chip"><span>💣</span>Mines</div>
         </div>
+        <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
+          <a href="games.html">See the rules and payouts for every game →</a>
+        </p>
         <!-- FUTURE (v1.1): the Sports Book — the odds board, the betting
              windows and the TV-wall lounge above it. Not announced yet, so it
              stays off this list until the build that carries it ships. -->
@@ -247,7 +260,7 @@
 
     <section id="multiplayer">
       <div class="wrap">
-        <h2 class="section-title">Better with bros</h2>
+        <h2 class="section-title">Better with friends</h2>
         <p class="section-sub">Rooms hold up to 10 players. Invite friends through Game Center, jump into a live floor, and share the highs (and the busts) in real time.</p>
         <div class="grid">
           <div class="card">
@@ -271,6 +284,9 @@
             <p>Emotes and floor-wide celebrations when someone hits — the table stays loud and the vibe stays electric.</p>
           </div>
         </div>
+        <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
+          <a href="play-with-friends.html">How playing with friends works →</a>
+        </p>
       </div>
     </section>
 
@@ -304,14 +320,17 @@
           <div class="card">
             <div class="ico">👀</div>
             <h3>Look where you're going</h3>
-            <p>Look at a spot on the floor and tap — your bro walks there. No teleports, no controllers, nothing strapped to your hands.</p>
+            <p>Look at a spot on the floor and tap — your character walks there. No teleports, no controllers, nothing strapped to your hands.</p>
           </div>
           <div class="card">
             <div class="ico">📱</div>
             <h3>Same floor as your friends</h3>
-            <p>Vision Pro joins the exact same live rooms as iPhone and iPad. Your bros on their phones see you walking the floor, and you see them.</p>
+            <p>Vision Pro joins the exact same live rooms as iPhone and iPad. Your friends on their phones see you walking the floor, and you see them.</p>
           </div>
         </div>
+        <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
+          <a href="vision-pro.html">Everything it does on Apple Vision Pro →</a>
+        </p>
       </div>
     </section>
 
@@ -348,7 +367,7 @@
         <div class="get-band">
           <img class="get-icon" src="apple-touch-icon.png" alt="" width="96" height="96" loading="lazy" />
           <h2>Pull up a seat</h2>
-          <p>Casino Floor Live! is out now. Free on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro — bring your bros.</p>
+          <p>Casino Floor Live! is out now. Free on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro — bring your crew.</p>
           <a class="cta" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free on the App&nbsp;Store</a>
         </div>
       </div>
@@ -362,11 +381,17 @@
           <span class="crown" aria-hidden="true"></span>
           <span class="brand-text">Casino Floor <em>Live!</em></span>
         </a>
+        <!-- The three product pages live here on every page: the header's
+             section links hide below 560px, so the footer is what actually
+             carries site-wide internal linking. -->
         <div class="footer-links">
+          <a href="games.html">The games</a>
+          <a href="play-with-friends.html">Play with friends</a>
+          <a href="vision-pro.html">Vision Pro</a>
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Use</a>
           <a href="support.html">Support</a>
-          <a href="age-rating.html">Age Suitability</a>
+          <a href="age-rating.html">Is it real gambling?</a>
           <a href="https://apps.apple.com/app/id6794734494" rel="noopener">App Store ↗</a>
           <a href="https://chetianholdings.com/" rel="noopener">The studio ↗</a>
         </div>

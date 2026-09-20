@@ -488,6 +488,9 @@ section { padding: 60px 0; }
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
 .game-chip:hover { transform: translateY(-2px); border-color: rgba(244, 196, 48, 0.45); }
+/* On the games page each chip is a jump link; it should still read as a chip. */
+.game-chip a { color: inherit; }
+.game-chip a:hover { text-decoration: none; color: var(--gold); }
 /* The little dot is a chip: dashed ring like the $25 chip in game. */
 .game-chip span {
   display: grid;
@@ -590,6 +593,55 @@ section { padding: 60px 0; }
 .footer-links a { color: var(--cream-dim); font-weight: 700; }
 .footer-links a:hover { color: var(--gold); text-decoration: none; }
 .footer-note { font-size: 0.82rem; color: #8a9790; margin-top: 18px; max-width: 760px; }
+
+/* ---------- Landing pages (games / multiplayer / Vision Pro) ----------
+   These sit between the home page and the legal docs: marketing sections, but
+   no canvas hero, so they need their own h1 block. */
+.page-head {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 64px 0 10px;
+  text-align: center;
+}
+.page-head h1 {
+  font-size: clamp(2rem, 5.2vw, 3rem);
+  margin: 10px 0 14px;
+  line-height: 1.15;
+}
+.page-head .lede { color: var(--cream-dim); font-size: 1.08rem; margin: 0 auto; max-width: 640px; }
+.page-head .badges { justify-content: center; }
+.page-head .hero-cta { justify-content: center; margin-top: 26px; }
+
+/* A plain prose block inside a landing-page section — the game write-ups. */
+.prose { max-width: 760px; margin: 0 auto; }
+.prose h3 {
+  font-size: 1.22rem;
+  margin: 34px 0 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--gold);
+}
+.prose h3:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.prose p { color: var(--cream-dim); margin: 0 0 12px; }
+.prose ul { color: var(--cream-dim); padding-left: 22px; margin: 0 0 12px; }
+.prose li { margin: 6px 0; }
+.prose strong { color: var(--cream); }
+
+/* The "next page" rail at the foot of every landing page. */
+.more-links { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.more-links a {
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(18, 96, 63, 0.3), rgba(10, 42, 31, 0.4));
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 0.94rem;
+}
+.more-links a:hover { text-decoration: none; border-color: rgba(244, 196, 48, 0.45); }
+
+@media (max-width: 560px) {
+  .page-head { padding: 40px 0 6px; }
+}
 
 /* ---------- Legal / doc pages ---------- */
 .doc {

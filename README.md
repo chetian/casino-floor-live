@@ -6,6 +6,9 @@ Served via GitHub Pages as a plain static site.
 
 ## Pages
 - `index.html` — landing page
+- `games.html` — every game with its real rules and paytable
+- `play-with-friends.html` — the multiplayer landing page
+- `vision-pro.html` — the Apple Vision Pro landing page
 - `privacy.html` — Privacy Policy (App Store privacy URL)
 - `support.html` — Support / FAQ (App Store support URL)
 - `terms.html` — Terms of Use / EULA
@@ -14,6 +17,11 @@ Served via GitHub Pages as a plain static site.
 - `floor.js` — the live casino floor behind the hero
 - `favicon.svg` — the VIP crown mark
 - `sprites/` — art baked out of the game (see below)
+
+Add a page and it needs three things or it may as well not exist: an entry in
+`sitemap.xml`, a link in the footer of every other page, and the same head
+block (title / description / canonical / robots / OG / Twitter / breadcrumb
+JSON-LD) the others carry.
 
 ## The live floor (hero background)
 
@@ -52,8 +60,67 @@ NOT on this site yet, each with the markup ready to go:
 - **The Sports Book** — the odds board, the betting windows and the TV-wall
   lounge, landing in v1.1. Add it to the `#games` list when the build ships.
 
+## SEO
+
+The head of every page is load-bearing — read this before editing one.
+
+### Why the SERP shows the domain, not the name
+
+Google picks the site name shown above a result from `WebSite` structured data
+first, then `og:site_name`, the home page `<title>`, and "references to it that
+appear on the web". When it isn't confident it falls back to the bare domain,
+which is what `casinofloorlive.app` was doing. The on-page half of the fix is
+in `index.html`: a brand-first `<title>` with no tagline padding, and
+`alternateName: ["Casino Floor Live", "CFL"]` on both the `WebSite` and
+`VideoGame` nodes so the trailing `!` can't cause a mismatch.
+
+The off-page half matters more and is not a code change. "Casino Floor Live"
+collides with **CasinoFloor.com** (a Malta real-money casino, which has a
+Wikipedia article) and with **Live! Casino** (the Cordish US chain). The head
+term is not winnable; the landing pages target the queries that are — Apple
+Vision Pro, playing with friends, and per-game long tail.
+
+### Search Console — verify by DNS, not by script
+
+The privacy page promises no analytics and no trackers, and that stays true:
+verify with a **DNS TXT record**, which adds nothing to any page.
+
+1. Open <https://search.google.com/search-console>, choose **Domain** (not
+   URL-prefix) and enter `casinofloorlive.app`.
+2. Copy the `google-site-verification=…` string it gives you.
+3. At the registrar (Namecheap — the domain's SPF record is already there), add
+   a TXT record: host `@`, value `google-site-verification=…`, TTL automatic.
+   Leave the existing SPF TXT record alone; a domain can hold several.
+4. Wait for propagation, then confirm: `dig +short TXT casinofloorlive.app`
+   should list both records.
+5. Back in Search Console, hit **Verify**.
+6. Submit `https://casinofloorlive.app/sitemap.xml` under **Sitemaps**, and
+   request indexing for the three new pages under **URL Inspection**.
+7. Check **Settings → Site names** to see which name Google actually picked.
+   It is not instant — expect weeks, not days.
+
+Worth doing the same at <https://www.bing.com/webmasters>; Bing's index feeds
+ChatGPT and Copilot search.
+
+### Still open
+
+- **`sameAs` on the `Organization` node** is missing because there are no
+  profiles to point at. Google's site-name system explicitly weighs outside
+  references, so social profiles / a Product Hunt listing are the highest-value
+  thing left.
+- **`wordmark.png`** is still 1.3 MB. It is a `<picture>` fallback no current
+  browser reaches (both WebP variants ship), so it costs nothing in practice —
+  but `brew install pngquant && pngquant --quality 65-85 wordmark.png` would
+  settle it.
+- **RTP figures are deliberately not published.** `games.html` gives rules and
+  paytables only. The measured return-to-player numbers exist in the game's
+  tests; putting them on the site is a business decision, not a copy one.
+
 ## Live URLs (custom domain, see `CNAME`)
 - Home: https://casinofloorlive.app/
+- Games: https://casinofloorlive.app/games.html
+- Multiplayer: https://casinofloorlive.app/play-with-friends.html
+- Vision Pro: https://casinofloorlive.app/vision-pro.html
 - Privacy: https://casinofloorlive.app/privacy.html
 - Support: https://casinofloorlive.app/support.html
 - Terms: https://casinofloorlive.app/terms.html
