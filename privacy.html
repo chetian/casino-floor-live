@@ -57,10 +57,10 @@
     <article class="doc">
       <a class="back" href="index.html">← Back to home</a>
       <h1>Privacy Policy</h1>
-      <p class="eff">Effective date: July 11, 2026 · Last updated: July 25, 2026</p>
+      <p class="eff">Effective date: July 11, 2026 · Last updated: October 13, 2026</p>
 
       <div class="tldr">
-        <strong>The short version:</strong> Casino Floor Live! has no ads, no analytics, no trackers, and no third-party SDKs. There are no accounts, and we don't collect your email, contacts, location, or photos. Your player name comes from Apple's <strong>Game Center</strong> — we don't create it, and we never store it on our servers. When you play online, the app passes your moves and chat messages to the other players in your room through a relay we operate; that relay <strong>forwards</strong> messages in real time and does <strong>not</strong> store them. In-game chat is filtered for profanity on your device, and you can mute or report other players. That's it.
+        <strong>The short version:</strong> Casino Floor Live! has no ads, no trackers, and no analytics or other third-party SDKs. There are no accounts, and we don't collect your email (unless you add it to feedback so we can reply), contacts, location, or photos. Your player name comes from Apple's <strong>Game Center</strong> — we don't create it, and we never store it on our servers. When you play online, the app passes your moves and chat messages to the other players in your room through a relay we operate; that relay <strong>forwards</strong> messages in real time and does <strong>not</strong> store them. In-game chat is filtered for profanity on your device, and you can mute or report other players. Feedback you send from Settings is emailed to us. That's it.
       </div>
 
       <p class="lead">This Privacy Policy explains how the mobile game <strong>Casino Floor Live!</strong> (the "App") handles information. The App is developed and operated by <strong>Chetian Holdings LLC</strong> ("we," "us," or "our"), a limited liability company. By using the App you agree to this policy.</p>
@@ -69,7 +69,7 @@
       <p>We designed the App to collect as little as possible. Here is everything it touches:</p>
 
       <h3>Game Center identity (from Apple)</h3>
-      <p>Your player name comes from Apple's <strong>Game Center</strong> — the App does not ask you to create a username or password. When you sign in, Apple provides the App with your Game Center <strong>display name</strong> and a <strong>player identifier</strong>. Your display name is shown to the other players in your room so people can see who they're playing with. We do <strong>not</strong> store your Game Center name or identifier on our servers; they exist only on your device and are relayed to the other players in your current room while you play. Your use of Game Center is also governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>. Game Center is optional — if you don't sign in, you can still play the App solo, but online invites and multiplayer features will be unavailable.</p>
+      <p>Your player name comes from Apple's <strong>Game Center</strong> — the App does not ask you to create a username or password. When you sign in, Apple provides the App with your Game Center <strong>display name</strong> and a <strong>player identifier</strong>. Your display name is shown to the other players in your room so people can see who they're playing with. We do <strong>not</strong> store your Game Center name or identifier on our servers; they exist only on your device and are relayed to the other players in your current room while you play. Our relay also keeps a running estimate of how many different players have joined. It is a small aggregate count, not a list of players or a record of anyone's play. Your use of Game Center is also governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>. Game Center is optional — if you don't sign in, you can still play the App solo, but online invites and multiplayer features will be unavailable.</p>
 
       <h3>Multiplayer gameplay data</h3>
       <p>When you play online, the App sends <strong>gameplay messages</strong> — such as your player name and color, your seat and table, bets, and game actions — to the other players in your room. This traffic passes through a relay server we operate so that everyone in the room stays in sync. The relay simply <strong>forwards</strong> messages between the players who are connected at that moment; it treats each message as opaque data, does <strong>not</strong> maintain user accounts, profiles, or a database of players, and is <strong>not</strong> designed to store your gameplay or read its contents after it is delivered.</p>
@@ -83,11 +83,23 @@
         <li><strong>House rules.</strong> Before chatting for the first time, you agree to keep it respectful — no harassment, hate speech, or abuse.</li>
       </ul>
 
+      <h3>Feedback</h3>
+      <p>Settings has a <strong>Send Feedback</strong> form. When you send it, the App passes your note through our relay, which <strong>emails</strong> it to us through our email provider, <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">Resend</a>. The relay does <strong>not</strong> keep a copy. Along with your words, the note carries your app version and build, your device model and operating-system version, and, if you have them, your Game Center display name, whether you're a VIP, and your room code. The form shows all of this before you send. You can add your <strong>email address</strong> if you'd like a reply; it's optional, and we use it only to answer you. If you choose to send your feedback by email instead, it goes through your device's mail app, like a report.</p>
+
+      <h3>House shows and bets</h3>
+      <p>The televisions in the App show our own <strong>house shows</strong>, live for everyone at once. The App downloads the show schedules and results from our relay over HTTPS; those requests don't include your player name or identifier. Bets are placed with in-game chips only. Your bet tickets are kept <strong>on your device</strong> and settled there — we never store them.</p>
+
+      <h3>Notifications</h3>
+      <p>Bet-result notifications are <strong>optional and off by default</strong>. If you turn them on, the App schedules them <strong>locally on your device</strong> and may check a result in the background when iOS allows it. There is no push server, and nothing about you is sent to schedule them.</p>
+
+      <h3>Update check</h3>
+      <p>From time to time the App asks Apple's public App Store lookup whether a newer version has been released. The request carries the App's own identifier and your device's App Store region, and nothing that identifies you.</p>
+
       <h3>Purchases</h3>
-      <p>The App offers a single optional in-app purchase (VIP). Purchases are processed entirely by <strong>Apple's App Store / StoreKit</strong>. We do <strong>not</strong> receive or store your name, credit-card number, or other payment details — Apple handles all of that. The App only receives a confirmation from Apple that the purchase is valid so it can unlock your VIP perks.</p>
+      <p>The App offers optional one-time in-app purchases: a <strong>VIP membership</strong> and <strong>character packs</strong>. Purchases are processed entirely by <strong>Apple's App Store / StoreKit</strong>. We do <strong>not</strong> receive or store your name, credit-card number, or other payment details — Apple handles all of that. The App only receives a confirmation from Apple that a purchase is valid so it can unlock what you bought, and checks with Apple again when it launches so your purchases are restored.</p>
 
       <h3>Information stored on your device</h3>
-      <p>Your game progress, settings, chat preferences (including your mute/block list), and a cached record of whether you own VIP are stored <strong>locally on your device</strong> (using standard iOS storage). This information stays on your device and is not transmitted to us. Deleting the App removes it.</p>
+      <p>Your game progress, settings, chat preferences (including your mute/block list), your bet tickets, and a cached record of what you've bought are stored <strong>locally on your device</strong> (using standard iOS storage). This information stays on your device and is not transmitted to us. Deleting the App removes it.</p>
 
       <h3>Where your information lives — at a glance</h3>
       <ul>
@@ -95,7 +107,9 @@
         <li><strong>Your moves &amp; chat messages</strong> — <em>forwarded</em> in real time by our relay to the other players in your room. <strong>Not stored on our servers</strong> and not kept as history.</li>
         <li><strong>Game progress, settings &amp; mute/block list</strong> — stored <em>only on your device</em>.</li>
         <li><strong>Purchases</strong> — handled by <em>Apple</em>; we never see your payment details.</li>
+        <li><strong>House shows</strong> — <em>downloaded</em> from our relay; the requests don't identify you. <strong>Your bet tickets stay on your device.</strong></li>
         <li><strong>Player reports you send</strong> — reach us <em>by email</em> and are used only for safety and moderation.</li>
+        <li><strong>Feedback you send</strong> — <em>emailed</em> to us through our relay and Resend; <strong>not stored</strong> on our relay. Kept in our inbox and used only to answer you and improve the App.</li>
       </ul>
 
       <h2>2. What we do NOT collect</h2>
@@ -103,7 +117,7 @@
         <li>No advertising identifiers (IDFA) and no ad networks.</li>
         <li>No analytics, telemetry, or crash-tracking SDKs.</li>
         <li>No third-party or social-media SDKs of any kind.</li>
-        <li>No email address, phone number, contacts, calendar, or address book.</li>
+        <li>No phone number, contacts, calendar, or address book, and no email address unless you add one to feedback so we can reply.</li>
         <li>No precise or coarse location.</li>
         <li>No access to your photos, camera, or microphone.</li>
         <li>No cross-app or cross-site tracking, and no data brokers.</li>
@@ -115,8 +129,9 @@
         <li>Let you play with friends and show player names at the table.</li>
         <li>Keep everyone in a multiplayer room synchronized in real time, including chat.</li>
         <li>Keep chat civil (on-device profanity filtering, and reviewing player reports for safety).</li>
-        <li>Deliver and restore your VIP in-app purchase.</li>
+        <li>Deliver and restore your in-app purchases (VIP and character packs).</li>
         <li>Save your progress and preferences on your device.</li>
+        <li>Read the feedback you send, answer it when you've left an address, and fix what it reports.</li>
       </ul>
       <p>We do not use your information for advertising, profiling, or automated decision-making, and we never sell it.</p>
 
@@ -125,11 +140,12 @@
       <ul>
         <li><strong>With other players</strong> in your room (your display name, chosen color, in-game actions, and chat messages), which is the whole point of multiplayer.</li>
         <li><strong>With Apple</strong>, through Game Center and the App Store, to provide sign-in and purchases under Apple's own terms and privacy policy.</li>
+        <li><strong>With Resend</strong>, our email provider, only to deliver the feedback you send to our inbox.</li>
         <li><strong>When required by law</strong>, if we must respond to a valid legal request.</li>
       </ul>
 
       <h2>5. Data retention</h2>
-      <p>On-device data remains until you delete it or uninstall the App. Multiplayer messages are relayed in real time and are not intended to be retained after your session; the relay may keep transient, non-identifying operational logs for a short period to keep the service running and secure. Purchase records are held by Apple under Apple's policies.</p>
+      <p>On-device data remains until you delete it or uninstall the App. Multiplayer messages are relayed in real time and are not intended to be retained after your session; the relay may keep transient, non-identifying operational logs for a short period to keep the service running and secure. Feedback you send is kept in our email inbox for as long as we need it to answer you and follow up on what it reports; Resend keeps its delivery records for a limited period under its own policy. Purchase records are held by Apple under Apple's policies.</p>
 
       <h2>6. Security</h2>
       <p>Multiplayer connections to our relay server use encrypted transport (TLS/WSS). No method of transmission or storage is 100% secure, but because the App collects so little and stores your progress locally, there is very little personal information at risk. Please keep your device and iOS up to date.</p>
