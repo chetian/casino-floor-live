@@ -3,9 +3,10 @@
  * This is the game's own floor, not a picture of it. The furniture is drawn
  * with the same shapes, in the same viewBox coordinates and the same palette
  * as `FloorKitArt` in the app, and the characters ARE the app's characters —
- * `sprites/bros-atlas.png` is baked straight out of `BroFace` by the
- * `WebSpriteDumpTests` dump, so a costume change in the game reaches the site
- * by re-running that test rather than by anyone redrawing anything here.
+ * `sprites/bros-atlas.webp` is baked straight out of `BroFace` by the
+ * `WebSpriteDumpTests` dump (the whole released cast, a row each), so a
+ * costume change in the game reaches the site by re-running that test rather
+ * than by anyone redrawing anything here.
  *
  * Everything is one <canvas>: carpet, light pools, tables, chairs, dealers,
  * props, and a floor of bros walking table to table. Coordinates below are
@@ -458,12 +459,28 @@
 
   var actors = [];
 
+  /* A different crowd every visit, out of the whole released cast — and the
+     crowd turns over while you watch: every so often somebody walks off the
+     edge of the floor and somebody new walks on (`shiftChange`). */
+  var CROWD = 14;
+  var onFloor = {};
+
+  function freshRow() {
+    var total = Math.max(ATLAS.bros.length, 1);
+    for (var attempt = 0; attempt < 40; attempt++) {
+      var row = (Math.random() * total) | 0;
+      if (!onFloor[row]) return row;
+    }
+    return (Math.random() * total) | 0;
+  }
+
   function makeActors() {
-    var picks = [0, 1, 2, 4, 5, 7, 8, 10, 3, 6];   // roster rows, a mixed floor
     SPOTS = SPOTS.filter(function (s) { return !blocked(s[0], s[1]); });
     actors = [];
-    for (var i = 0; i < picks.length; i++) {
-      var row = picks[i] % Math.max(ATLAS.bros.length, 1);
+    onFloor = {};
+    for (var i = 0; i < CROWD; i++) {
+      var row = freshRow();
+      onFloor[row] = true;
       var spot = SPOTS[(i * 3) % SPOTS.length];
       actors.push({
         row: row,
@@ -475,13 +492,47 @@
         speed: 34 + (i % 5) * 5,
         wait: i * 0.7,
         seat: null,
+        leaving: false,
         emote: null, emoteAt: 6 + i * 3.5
       });
     }
-    // Three of them are sitting at a table rather than walking it.
+    // Four of them are sitting at a table rather than walking it.
     seat(actors[0], TABLES[0], 2);
     seat(actors[4], TABLES[4], 1);
     seat(actors[7], TABLES[2], 0);
+    seat(actors[11], TABLES[1], 1);
+  }
+
+  /* The ways on and off the floor: aisle mouths just past the world's edge,
+     so a walker crosses the carpet rather than appearing on it. */
+  var DOORS = [[-40, 250], [-40, 470], [1060, 300], [1060, 520], [520, 650], [250, 650], [800, 650]];
+  var nextShift = 9;
+
+  function shiftChange(time) {
+    if (time < nextShift) return;
+    nextShift = time + 7 + Math.random() * 6;
+    var walkers = actors.filter(function (a) { return !a.seat && !a.leaving; });
+    if (!walkers.length) return;
+    var a = walkers[(Math.random() * walkers.length) | 0];
+    var door = DOORS[(Math.random() * DOORS.length) | 0];
+    a.leaving = true;
+    a.wait = 0;
+    a.tx = door[0];
+    a.ty = door[1];
+  }
+
+  /* Off the edge: the same slot comes back on as somebody new. */
+  function arriveSomebodyNew(a) {
+    delete onFloor[a.row];
+    a.row = freshRow();
+    onFloor[a.row] = true;
+    a.name = ATLAS.names[a.row] || '';
+    var door = DOORS[(Math.random() * DOORS.length) | 0];
+    a.x = door[0];
+    a.y = door[1];
+    a.leaving = false;
+    a.wait = 0;
+    pickSpot(a);
   }
 
   function seat(actor, table, index) {
@@ -559,6 +610,7 @@
     var dx = a.tx - a.x, dy = a.ty - a.y;
     var dist = Math.hypot(dx, dy);
     if (dist < 2) {
+      if (a.leaving) { arriveSomebodyNew(a); return; }
       a.wait = 1.5 + Math.random() * 5;
       return;
     }
@@ -567,10 +619,15 @@
     var ny = a.y + (dy / dist) * step;
     if (blocked(nx, ny)) {
       // Slide along whichever axis is still clear; if the table has us boxed
-      // in, give up on this errand and pick another.
+      // in, give up on this errand and pick another (a way out, if leaving).
       if (!blocked(nx, a.y)) ny = a.y;
       else if (!blocked(a.x, ny)) nx = a.x;
-      else { pickSpot(a); return; }
+      else if (a.leaving) {
+        var door = DOORS[(Math.random() * DOORS.length) | 0];
+        a.tx = door[0];
+        a.ty = door[1];
+        return;
+      } else { pickSpot(a); return; }
     }
     a.x = nx;
     a.y = ny;
@@ -850,6 +907,7 @@
     for (i = 0; i < TABLES.length; i++) items.push({ y: TABLES[i].y, t: TABLES[i], kind: 'table' });
     for (i = 0; i < PLANTS.length; i++) items.push({ y: PLANTS[i].y, p: PLANTS[i], kind: 'plant' });
     for (i = 0; i < ROPES.length; i++) items.push({ y: ROPES[i].y, r: ROPES[i], kind: 'rope' });
+    if (!reduceMotion) shiftChange(time);
     for (i = 0; i < actors.length; i++) {
       stepActor(actors[i], dt);
       if (!reduceMotion && actors[i].emoteAt <= time && !actors[i].emote) {
@@ -918,7 +976,7 @@
                      'Bruno', 'Vinnie', 'Chad', 'Mystic Marla', 'Peaches', 'Dice'];
       ATLAS.bros = ATLAS.names;
     })
-    .then(function () { atlas.src = 'sprites/bros-atlas.png'; });
+    .then(function () { atlas.src = 'sprites/bros-atlas.webp'; });
 
   window.addEventListener('resize', function () {
     clearTimeout(resize._t);

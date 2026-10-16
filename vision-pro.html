@@ -7,7 +7,7 @@
   <meta name="description" content="A whole casino floor sitting in your room on Apple Vision Pro. Pull a slot machine out to full size, walk the floor, and share it with friends on iPhone. Free, 18+." />
   <link rel="canonical" href="https://casinofloorlive.app/vision-pro.html" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
-  <meta name="theme-color" content="#07100c" />
+  <meta name="theme-color" content="#05100a" />
   <meta name="apple-itunes-app" content="app-id=6794734494" />
   <meta property="og:site_name" content="Casino Floor Live!" />
   <meta property="og:locale" content="en_US" />
@@ -24,11 +24,11 @@
   <meta name="twitter:description" content="A whole casino floor sitting in your room. Pull a slot machine out to full size, walk the floor, and share it with friends playing on iPhone and iPad." />
   <meta name="twitter:image" content="https://casinofloorlive.app/shot-vision.jpg" />
   <link rel="icon" href="favicon.svg?v=20260825" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260920" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20261015" />
   <!-- The VideoGame node @id-references the home page's #game node, so this
        page reinforces the same entity rather than declaring a second game. -->
   <script type="application/ld+json">
@@ -65,10 +65,11 @@
         <span class="brand-text">Casino Floor <em>Live!</em></span>
       </a>
       <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="games.html">Games</a>
-        <a href="play-with-friends.html">Multiplayer</a>
-        <a href="vision-pro.html">Vision Pro</a>
+        <a class="nav-jump" href="index.html#tv">On TV</a>
+        <a class="nav-jump" href="index.html#cast">Cast</a>
+        <a class="nav-jump" href="games.html">Games</a>
+        <a class="nav-jump nav-more" href="play-with-friends.html">Multiplayer</a>
+        <a class="nav-jump nav-more" href="vision-pro.html">Vision Pro</a>
         <a href="support.html">Support</a>
         <a class="nav-age" href="age-rating.html">18+</a>
         <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free</a>
@@ -100,7 +101,7 @@
             <source srcset="shot-vision.webp" type="image/webp" />
             <img src="shot-vision.jpg" alt="The Casino Floor Live! casino floor rendered as a miniature diorama sitting in a real backyard, seen through Apple Vision Pro passthrough — tables, slot machines, the high-limit room and other players are all visible in the grass." width="1600" height="900" fetchpriority="high" />
           </picture>
-          <figcaption>An actual Vision Pro capture — the floor is in the yard, the yard is really there.</figcaption>
+          <figcaption>Captured on Apple Vision Pro.</figcaption>
         </figure>
       </div>
     </section>
@@ -132,22 +133,22 @@
         <p class="section-sub">The part that only works in a headset: reach into the diorama, take a cabinet out, and it grows to full size in front of you.</p>
         <div class="grid vision-grid">
           <div class="card">
-            <div class="ico">🎰</div>
+            <div class="ico"><img src="sprites/emblems/slotMachine.webp" alt="" width="128" height="128" /></div>
             <h3>Grab it and it grows</h3>
             <p>Take any slot cabinet off the miniature floor and it comes up to full height in your room — a real machine you stand at, not a panel you tap.</p>
           </div>
           <div class="card">
-            <div class="ico">🃏</div>
+            <div class="ico"><img src="sprites/emblems/aceCard.webp" alt="" width="128" height="128" /></div>
             <h3>Walk up to a table</h3>
             <p>Table games open the same way. Sit down, play the hand at proper size, and the floor carries on behind you the whole time.</p>
           </div>
           <div class="card">
-            <div class="ico">👀</div>
+            <div class="ico"><img src="sprites/emblems/compass.webp" alt="" width="128" height="128" /></div>
             <h3>Look, then tap</h3>
             <p>Look at a spot on the floor and tap your fingers — your character walks there on foot. No teleporting, no controllers, nothing strapped to your hands.</p>
           </div>
           <div class="card">
-            <div class="ico">↩️</div>
+            <div class="ico"><img src="sprites/emblems/floorMap.webp" alt="" width="128" height="128" /></div>
             <h3>Put it back</h3>
             <p>Done with a machine? Send it back down to the floor and go find another one. Nothing is a menu you have to back out of.</p>
           </div>
@@ -163,8 +164,7 @@
           <div class="showcase-art">
             <div class="phone">
               <picture>
-                <source srcset="shot-floor.webp" type="image/webp" />
-                <img src="shot-floor.png" alt="The same casino floor on iPhone, looking past the Ultimate Hold'em and Roulette tables toward the slot machines." width="460" height="1000" loading="lazy" />
+                <img src="clips/floor.webp" alt="The same casino floor on iPhone: the craps, dice, horse racing, blackjack and roulette tables, the Dragon's Hoard slots, and the high-limit room up the stairs." width="460" height="1000" loading="lazy" />
               </picture>
             </div>
           </div>

@@ -7,16 +7,16 @@
        when it picks the site name shown above the result, and a padded one
        reads as less confident. Keep it under ~60 characters. -->
   <title>Casino Floor Live! — Casino Game for iPhone &amp; Vision Pro</title>
-  <meta name="description" content="A social casino game you walk into with up to 10 friends, on iPhone, iPad and Apple Vision Pro. Virtual chips only — no real money. Free, rated 18+." />
+  <meta name="description" content="A social casino you walk into with up to 10 friends on iPhone, iPad and Apple Vision Pro, with the house's own shows on TV. Virtual chips only. Free, 18+." />
   <link rel="canonical" href="https://casinofloorlive.app/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
-  <meta name="theme-color" content="#07100c" />
+  <meta name="theme-color" content="#05100a" />
   <!-- Safari on iOS/iPadOS shows the real store banner for the shipped app. -->
   <meta name="apple-itunes-app" content="app-id=6794734494" />
   <meta property="og:site_name" content="Casino Floor Live!" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:title" content="Casino Floor Live!" />
-  <meta property="og:description" content="Out now, free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro. Up to 10 friends, one live floor, every table in the house. Virtual chips only." />
+  <meta property="og:description" content="Free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 67 to collect. Virtual chips only." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://casinofloorlive.app/" />
   <meta property="og:image" content="https://casinofloorlive.app/shot-vision.jpg" />
@@ -25,14 +25,18 @@
   <meta property="og:image:alt" content="The Casino Floor Live! casino floor as a miniature diorama sitting in a real backyard, seen through Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Casino Floor Live!" />
-  <meta name="twitter:description" content="Out now, free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro. Up to 10 friends, one live floor, every table in the house." />
+  <meta name="twitter:description" content="Free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 67 to collect." />
   <meta name="twitter:image" content="https://casinofloorlive.app/shot-vision.jpg" />
   <link rel="icon" href="favicon.svg?v=20260825" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20260920" />
+  <!-- Avenir Next is the app's face and every Apple device has it; Nunito Sans
+       stands in elsewhere. Pirata One is the Battle Banquet's own blackletter
+       (the app bundles the same font). -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;family=Pirata+One&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20261015" />
+  <link rel="preload" as="image" href="sprites/emblem-crown.png" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -60,7 +64,7 @@
         "alternateName": ["Casino Floor Live", "CFL"],
         "url": "https://casinofloorlive.app/",
         "image": "https://casinofloorlive.app/shot-vision.jpg",
-        "description": "A social casino party game. Up to 10 friends share one live casino floor and play Blackjack, Poker, Roulette, Slots, Craps and more with virtual chips only — no real-money gambling.",
+        "description": "A social casino party game. Up to 10 friends share one live casino floor and play Blackjack, Poker, Roulette, Slots, Craps and more with virtual chips only — no real-money gambling. The house runs its own shows on TV, and there is a cast of 67 characters to collect.",
         "applicationCategory": "GameApplication",
         "genre": ["Casino", "Party", "Multiplayer"],
         "operatingSystem": "iOS, iPadOS, visionOS",
@@ -89,14 +93,14 @@
     <nav class="nav">
       <a class="brand" href="index.html">
         <span class="crown" aria-hidden="true"></span>
-        <span class="brand-text">Casino Floor <em>Live!</em></span>
+        <span class="brand-text">Casino Floor Live!</span>
       </a>
       <div class="nav-links">
+        <a class="nav-jump" href="#tv">On TV</a>
+        <a class="nav-jump" href="#cast">Cast</a>
         <a class="nav-jump" href="games.html">Games</a>
-        <a class="nav-jump" href="#cast">The cast</a>
-        <a class="nav-jump" href="play-with-friends.html">Multiplayer</a>
-        <a class="nav-jump" href="vision-pro.html">Vision Pro</a>
-        <a class="nav-jump" href="#vip">VIP</a>
+        <a class="nav-jump nav-more" href="play-with-friends.html">Multiplayer</a>
+        <a class="nav-jump nav-more" href="vision-pro.html">Vision Pro</a>
         <a href="support.html">Support</a>
         <a class="nav-age" href="age-rating.html">18+</a>
         <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free</a>
@@ -105,41 +109,289 @@
   </header>
 
   <main>
-    <!-- The hero IS the floor: `floor.js` draws the game's own furniture and
-         walks the game's own characters across it. The sprites in /sprites are
-         baked out of the app by CasinoCoreTests' WebSpriteDumpTests — re-run
-         that dump to pick up costume or cast changes. -->
+    <!-- THE HERO is the app's home screen standing on the live floor.
+         Behind it, `floor.js` runs the game's own floor: carpet, tables, and
+         the whole released cast walking it (sprites baked out of the app by
+         CasinoCoreTests' WebSpriteDumpTests). Over it: the crown, the name,
+         and the television surfing the house's channels — `tv.js`, playing
+         clips of the app's own home-screen TV (tv/, see README). -->
     <section class="hero" id="floor">
       <canvas id="floor-canvas" aria-hidden="true"></canvas>
       <div class="floor-veil" aria-hidden="true"></div>
-      <div class="wrap hero-inner">
-        <p class="live-pill"><span class="live-dot" aria-hidden="true"></span> The floor is open</p>
-        <h1 class="wordmark-heading">
-          <!-- The wordmark is the LCP element and never renders wider than
-               310 CSS px, so 2x displays take the 620px file and only 3x ones
-               pull the full 888px. The PNG is a fallback no current browser
-               reaches. -->
-          <picture>
-            <source srcset="wordmark-620.webp 620w, wordmark.webp 888w"
-                    sizes="(max-width: 470px) 66vw, 310px"
-                    type="image/webp" />
-            <img class="wordmark" src="wordmark.png" alt="Casino Floor Live!" width="888" height="662" fetchpriority="high" />
-          </picture>
-          <span class="visually-hidden">Casino Floor Live!</span>
-        </h1>
-        <p class="tagline">Walk one live casino floor with up to&nbsp;10 friends, playing together across iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro.</p>
-        <div class="hero-cta">
-          <a class="cta" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free on the App&nbsp;Store</a>
+      <div class="hero-stage">
+        <div class="mark">
+          <span class="crown-mark" aria-hidden="true"></span>
+          <h1 class="wordmark">Casino Floor Live!</h1>
+          <p class="tagline">One live casino floor, up to&nbsp;10 friends, on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro.</p>
         </div>
-        <p class="cta-note">Out now, and free to play.</p>
-        <div class="badges">
-          <span class="badge"><strong>Up to 10</strong> players</span>
-          <span class="badge"><strong>Every</strong> casino classic</span>
-          <span class="badge"><strong>Virtual chips</strong> only</span>
-          <span class="badge">iPhone &amp; iPad</span>
-          <span class="badge"><strong>Apple Vision Pro</strong></span>
+
+        <div class="set">
+          <div class="on-air">
+            <span class="on-air-dot" aria-hidden="true"></span>
+            <span class="on-air-label">On air</span>
+            <span class="on-air-show">Tuning in</span>
+            <span class="on-air-rule" aria-hidden="true"></span>
+            <button class="on-air-next" type="button">Next channel ›</button>
+          </div>
+          <div class="tv">
+            <div class="tv-slab">
+              <div class="tv-glass">
+                <video class="tv-pic" muted playsinline preload="auto" aria-hidden="true" disableremoteplayback></video>
+                <video class="tv-pic hidden" muted playsinline preload="auto" aria-hidden="true" disableremoteplayback></video>
+                <canvas class="tv-snow" aria-hidden="true"></canvas>
+                <div class="tv-osd" aria-hidden="true"></div>
+                <div class="tv-power" aria-hidden="true"><i></i></div>
+                <button class="tv-hit" type="button" aria-label="Change the channel"></button>
+              </div>
+            </div>
+          </div>
         </div>
-        <p class="floor-note">Above: the floor drawn with the game's own art, walked by the game's own cast.</p>
+
+        <div class="play-stack">
+          <a class="chunky play-card" href="https://apps.apple.com/app/id6794734494" rel="noopener">
+            <span class="words">
+              <span class="play-title">GET IT FREE</span>
+              <span class="play-caption"><i class="dot" aria-hidden="true"></i>THE FLOOR IS OPEN</span>
+            </span>
+            <span class="huddle" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          </a>
+          <a class="chunky mode-card" href="play-with-friends.html">
+            <span class="tile"><img src="sprites/emblems/ensemble.webp" alt="" width="128" height="128" /></span>
+            <span><b>Friends</b><small>Up to 10 on one floor</small></span>
+          </a>
+          <a class="chunky mode-card" href="vision-pro.html">
+            <span class="tile"><img src="sprites/emblems/floorMap.webp" alt="" width="128" height="128" /></span>
+            <span><b>Vision Pro</b><small>The casino in your room</small></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- The running board: what's on, all night. Decorative — every show on
+         it is listed properly in the guide below. -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>The Jackpot Run</span><span>Moto Mayhem</span><span>Ultimate Race</span><span>Eye in the sky</span><span>67 characters</span><span>Up to 10 friends</span>
+        <span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>The Jackpot Run</span><span>Moto Mayhem</span><span>Ultimate Race</span><span>Eye in the sky</span><span>67 characters</span><span>Up to 10 friends</span>
+      </div>
+    </div>
+
+    <!-- ON THE TV TONIGHT: the house's own shows, as a TV guide. Every still
+         and clip is the app's home-screen set, filmed (tv/). -->
+    <section id="tv">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">The Lounge is open</span>
+          <h2 class="section-title sign">On the TV tonight</h2>
+          <p class="section-sub">Take the lift up to the Lounge, where the big screen carries the house's own shows: a joust, a title fight or a drag race every ten minutes, and THE BIG RACE every half hour.</p>
+        </div>
+
+        <div class="guide">
+          <div class="channel">
+            <div class="channel-head">
+              <span class="ch-num">CH 02</span>
+              <h3>The house show</h3>
+              <p>A ten-minute tournament, and a new one every ten minutes.</p>
+            </div>
+            <div class="listing">
+              <div class="mini-tv" data-clip="banquet" style="--tint: #F7C948">
+                <div class="glass"><img src="tv/banquet-card.webp" alt="A joust on the Battle Banquet: two knights charge with lances, and the banner reads Glancing Blow." width="480" height="306" loading="lazy" /></div>
+              </div>
+              <div>
+                <h4 class="t-banquet" style="--accent: #FFDF7E">Battle Banquet</h4>
+                <p>Knights joust for a lady's favour, and when the lances run out it goes to swords.</p>
+              </div>
+            </div>
+            <div class="listing">
+              <div class="mini-tv" data-clip="fight" style="--tint: #F5C84A">
+                <div class="glass"><img src="tv/fight-card.webp" alt="Fight Night: a boxer goes down under a KNOCKDOWN banner while the referee counts." width="480" height="306" loading="lazy" /></div>
+              </div>
+              <div>
+                <h4 class="t-fight" style="--accent: #FFE7A3">Fight Night</h4>
+                <p>Eight fighters, one belt, and a count the whole room can hear.</p>
+              </div>
+            </div>
+            <div class="listing">
+              <div class="mini-tv" data-clip="drag" style="--tint: #FFB22E">
+                <div class="glass"><img src="tv/drag-card.webp" alt="Burnout Boulevard: a dragster launches in a cloud of smoke under a HOLESHOT banner." width="480" height="306" loading="lazy" /></div>
+              </div>
+              <div>
+                <h4 class="t-drag" style="--accent: #FFE09A">Burnout Boulevard</h4>
+                <p>A rev-off, the tree, and a quarter mile under the neon.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="channel">
+            <div class="channel-head">
+              <span class="ch-num">CH 03</span>
+              <h3>The Big Race</h3>
+              <p>Thirty minutes, three legs, a field of eight, every half hour.</p>
+            </div>
+            <div class="listing">
+              <div class="mini-tv" data-clip="rally" style="--tint: #FFD23F">
+                <div class="glass"><img src="tv/rally-card.webp" alt="The Jackpot Run: two cars flip off the road under an INTO THE DITCH banner." width="480" height="306" loading="lazy" /></div>
+              </div>
+              <div>
+                <h4 class="t-race" style="--accent: #FFD23F">The Jackpot Run</h4>
+                <p>Coast to casino across the USA: the big city, the heartland, the desert, the neon strip.</p>
+              </div>
+            </div>
+            <div class="listing">
+              <div class="mini-tv" data-clip="moto" style="--tint: #B6FF1A">
+                <div class="glass"><img src="tv/moto-card.webp" alt="Moto Mayhem: dirt bikes in a stadium, and a rider has landed on the camera tower." width="480" height="306" loading="lazy" /></div>
+              </div>
+              <div>
+                <h4 class="t-moto" style="--accent: #B6FF1A">Moto Mayhem</h4>
+                <p>One race, three worlds: the stadium, the mud, the dunes.</p>
+              </div>
+            </div>
+            <div class="listing">
+              <div class="mini-tv" data-clip="tri" style="--tint: #FFD23F">
+                <div class="glass"><img src="tv/tri-card.webp" alt="Ultimate Race: cyclists on the coast road, and one has gone into the hay." width="480" height="306" loading="lazy" /></div>
+              </div>
+              <div>
+                <h4 class="t-race" style="--accent: #FFD23F">Ultimate Race</h4>
+                <p>The resort's triathlon: the lagoon, the coast road, the boardwalk.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-foot">
+          <div class="note-card cam">
+            <div class="mini-tv" data-clip="cam-blackjack" style="--tint: #8CBFA6">
+              <div class="glass"><img src="tv/cam-blackjack-card.webp" alt="Eye in the sky, camera 12: a security camera looks down on the blackjack table as the dealer deals." width="480" height="306" loading="lazy" /></div>
+            </div>
+            <div>
+              <h3><span class="ch-num">CH 07</span> Eye in the sky</h3>
+              <p>The floor's own security feed: thirteen cameras on the doors, the pit, the bar and the tables, and whoever happens to be there.</p>
+            </div>
+          </div>
+          <div class="note-card">
+            <h3>Call your shot</h3>
+            <p>Bet play chips on the next bout, the next leg or the whole show, right from the screen. A winning ticket pays out in chips the moment it's decided, wherever you are on the floor.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- THE CAST — every released character, baked out of the app with its
+         turnaround, and each legendary's own animation and follower
+         (sprites/cast/, written by tools/cast_wall.py from the app's
+         WebSpriteDumpTests cast export). A held drop never appears here. -->
+    <section id="cast">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Collect the cast</span>
+          <h2 class="section-title sign">The cast</h2>
+          <p class="section-sub">Sixty-seven characters. The twelve house regulars are yours from your first visit; the rest you win on the free Prize Wheel, buy with chips at the Gift Shop, earn by playing, or find in a pack. The legendaries bring their own moves.</p>
+        </div>
+<!-- CAST:BEGIN -->
+        <!-- Generated by tools/cast_wall.py from the app's cast export. Do not hand-edit. -->
+        <div class="cast-tabs" role="group" aria-label="Show part of the cast">
+          <button class="cast-tab" type="button" data-filter="all" aria-pressed="true">Everyone<b>67</b></button>
+          <button class="cast-tab" type="button" data-filter="legendary" aria-pressed="false">Legendary<b>10</b></button>
+          <button class="cast-tab" type="button" data-filter="houseRegulars" aria-pressed="false">House Regulars<b>12</b></button>
+          <button class="cast-tab" type="button" data-filter="critters" aria-pressed="false">The Critters<b>6</b></button>
+          <button class="cast-tab" type="button" data-filter="mainStreet" aria-pressed="false">Main Street<b>14</b></button>
+          <button class="cast-tab" type="button" data-filter="lateShow" aria-pressed="false">The Late Show<b>6</b></button>
+          <button class="cast-tab" type="button" data-filter="sportsBook" aria-pressed="false">Sports Book<b>10</b></button>
+          <button class="cast-tab" type="button" data-filter="fantasyTavern" aria-pressed="false">Fantasy Tavern<b>5</b></button>
+          <button class="cast-tab" type="button" data-filter="halloween" aria-pressed="false">Halloween<b>10</b></button>
+          <button class="cast-tab" type="button" data-filter="throwback" aria-pressed="false">The Throwback Season<b>4</b></button>
+        </div>
+        <div class="cast-shelf">
+          <div class="spotlight">
+            <div class="spot-turn">
+              <button type="button" data-turn="-1" aria-label="Turn them to the left">&#x21BA;</button>
+              <button type="button" data-turn="1" aria-label="Turn them to the right">&#x21BB;</button>
+            </div>
+            <div class="spot-stage" aria-hidden="true">
+              <div class="plinth"></div>
+              <div class="figure"><div class="body" style="background-image: url(sprites/cast/ace-turn.webp)"></div><div class="pet"></div></div>
+            </div>
+            <div class="spot-info" aria-live="polite">
+              <h3 class="spot-name">Ace</h3>
+              <div class="spot-meta"><span class="pill rarity" style="color: #9AA3AC">Common</span><span class="pill set">House Regulars</span></div>
+              <p class="spot-tagline"></p>
+              <p class="spot-door">Free. Yours from your first visit.</p>
+            </div>
+          </div>
+          <ul class="cast-wall">
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="ace" data-name="Ace" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/ace.webp" alt="Ace, a casino regular in a green dealer&#x27;s visor" width="192" height="192" loading="lazy" /><span>Ace</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="the-king" data-name="The King" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/the-king.webp" alt="The King, a casino regular in a white jumpsuit and shades" width="192" height="192" loading="lazy" /><span>The King</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="granny-lucky" data-name="Granny Lucky" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/granny-lucky.webp" alt="Granny Lucky, a casino regular with grey hair and round glasses" width="192" height="192" loading="lazy" /><span>Granny Lucky</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="big-slick" data-name="Big Slick" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/big-slick.webp" alt="Big Slick, a casino regular in a navy suit and gold tie" width="192" height="192" loading="lazy" /><span>Big Slick</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="tex" data-name="Tex" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/tex.webp" alt="Tex, a casino regular in a cowboy hat and denim" width="192" height="192" loading="lazy" /><span>Tex</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="ruby" data-name="Ruby" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/ruby.webp" alt="Ruby, a casino regular in a red showgirl dress and feathered headdress" width="192" height="192" loading="lazy" /><span>Ruby</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="bruno" data-name="Bruno" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/bruno.webp" alt="Bruno, a casino regular in a dark suit and shades" width="192" height="192" loading="lazy" /><span>Bruno</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="vinnie" data-name="Vinnie" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/vinnie.webp" alt="Vinnie, a casino regular in a burgundy jacket" width="192" height="192" loading="lazy" /><span>Vinnie</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="chad" data-name="Chad" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/chad.webp" alt="Chad, a casino regular in a visor and teal polo" width="192" height="192" loading="lazy" /><span>Chad</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="mystic-marla" data-name="Mystic Marla" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/mystic-marla.webp" alt="Mystic Marla, a casino regular in a purple hat and robes" width="192" height="192" loading="lazy" /><span>Mystic Marla</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="peaches" data-name="Peaches" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/peaches.webp" alt="Peaches, a casino regular with red hair and a gold top" width="192" height="192" loading="lazy" /><span>Peaches</span></button></li>
+            <li data-shelf="houseRegulars" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="dice" data-name="Dice" data-rarity="Common" data-tint="#9AA3AC" data-set-title="House Regulars" data-tagline="" data-door="Free. Yours from your first visit."><img src="sprites/cast/dice.webp" alt="Dice, a casino regular in a teal tracksuit" width="192" height="192" loading="lazy" /><span>Dice</span></button></li>
+            <li data-shelf="critters" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="lucky-cat" data-name="Lucky" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="The Critters" data-tagline="One paw up, and it&#x27;s been working so far." data-door="On the Prize Wheel, or $70,000 in chips at the Gift Shop."><img src="sprites/cast/lucky-cat.webp" alt="Lucky, the lucky cat" width="192" height="192" loading="lazy" /><span>Lucky</span></button></li>
+            <li data-shelf="critters" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="duke-dog" data-name="Duke" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="The Critters" data-tagline="Good boy. Terrible bluffer." data-door="On the Prize Wheel, or $80,000 in chips at the Gift Shop."><img src="sprites/cast/duke-dog.webp" alt="Duke, the dog" width="192" height="192" loading="lazy" /><span>Duke</span></button></li>
+            <li data-shelf="critters" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="pit-boss-penguin" data-name="Penny" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="The Critters" data-tagline="Wears the suit because he IS the suit." data-door="On the Prize Wheel, or $85,000 in chips at the Gift Shop."><img src="sprites/cast/pit-boss-penguin.webp" alt="Penny, the penguin pit boss" width="192" height="192" loading="lazy" /><span>Penny</span></button></li>
+            <li data-shelf="critters" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="card-shark" data-name="Finn" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Critters" data-tagline="Deals himself in. Nobody has ever seen him cut." data-door="Only in the Opening Night pack. Never on the wheel, never for chips." data-pet="6,110,42"><img src="sprites/cast/card-shark.webp" alt="Finn, the card shark" width="192" height="192" loading="lazy" /><span>Finn</span></button></li>
+            <li data-shelf="critters" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="flamingo-flo" data-name="Flo" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="The Critters" data-tagline="Stands on one leg through the whole shoe." data-door="On the Prize Wheel, or $90,000 in chips at the Gift Shop."><img src="sprites/cast/flamingo-flo.webp" alt="Flo, the flamingo" width="192" height="192" loading="lazy" /><span>Flo</span></button></li>
+            <li data-shelf="critters" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="bull-tank" data-name="Tank" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="The Critters" data-tagline="Only knows one direction, and it&#x27;s forward." data-door="On the Prize Wheel, or $145,000 in chips at the Gift Shop."><img src="sprites/cast/bull-tank.webp" alt="Tank, the bull" width="192" height="192" loading="lazy" /><span>Tank</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="pirate-quinn" data-name="Quinn" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Main Street" data-tagline="Says the eyepatch is for the glare off the felt." data-door="On the Prize Wheel, or $75,000 in chips at the Gift Shop."><img src="sprites/cast/pirate-quinn.webp" alt="Quinn, the pirate" width="192" height="192" loading="lazy" /><span>Quinn</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="doc-hart" data-name="Doc Hart" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Main Street" data-tagline="On call for anyone who just went all-in." data-door="On the Prize Wheel, or $75,000 in chips at the Gift Shop."><img src="sprites/cast/doc-hart.webp" alt="Doc Hart, the doctor" width="192" height="192" loading="lazy" /><span>Doc Hart</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="skater-jinx" data-name="Jinx" data-rarity="Common" data-tint="#9AA3AC" data-set-title="Main Street" data-tagline="Kickflips the escalator. Has never once landed it." data-door="On the Prize Wheel, or $25,000 in chips at the Gift Shop."><img src="sprites/cast/skater-jinx.webp" alt="Jinx, the skater" width="192" height="192" loading="lazy" /><span>Jinx</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="clown-giggles" data-name="Giggles" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Main Street" data-tagline="Turns up the moment a jackpot does. Nobody called him." data-door="Earned with the Jackpot badge: hit a jackpot."><img src="sprites/cast/clown-giggles.webp" alt="Giggles, the clown" width="192" height="192" loading="lazy" /><span>Giggles</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="astro-nova" data-name="Nova" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Main Street" data-tagline="Came a very long way for a $5 blackjack table." data-door="Only in the Opening Night pack. Never on the wheel, never for chips."><img src="sprites/cast/astro-nova.webp" alt="Nova, the astronaut" width="192" height="192" loading="lazy" /><span>Nova</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="chef-marco" data-name="Marco" data-rarity="Common" data-tint="#9AA3AC" data-set-title="Main Street" data-tagline="Runs the diner. Will not discuss the buffet." data-door="On the Prize Wheel, or $40,000 in chips at the Gift Shop."><img src="sprites/cast/chef-marco.webp" alt="Marco, the chef" width="192" height="192" loading="lazy" /><span>Marco</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="ninja-kuro" data-name="Kuro" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Main Street" data-tagline="Has been at your table all night. You didn&#x27;t notice." data-door="Earned with the Collector badge: earn ten badges."><img src="sprites/cast/ninja-kuro.webp" alt="Kuro, the ninja" width="192" height="192" loading="lazy" /><span>Kuro</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="lucha-rey" data-name="Rey" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Main Street" data-tagline="Never removes the mask. Not once, not for anyone." data-door="On the Prize Wheel, or $120,000 in chips at the Gift Shop."><img src="sprites/cast/lucha-rey.webp" alt="Rey, the luchador" width="192" height="192" loading="lazy" /><span>Rey</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="rock-axel" data-name="Axel" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Main Street" data-tagline="Turns the table into a stage." data-door="On the Prize Wheel, or $115,000 in chips at the Gift Shop."><img src="sprites/cast/rock-axel.webp" alt="Axel, the rock star" width="192" height="192" loading="lazy" /><span>Axel</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="fire-blaze" data-name="Blaze" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Main Street" data-tagline="Has been to every game in the house. Twice." data-door="Earned with the Whole Floor badge: bet at every game in the house."><img src="sprites/cast/fire-blaze.webp" alt="Blaze, the firefighter" width="192" height="192" loading="lazy" /><span>Blaze</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="boxer-rocky" data-name="Rocky" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Main Street" data-tagline="Hits a $10,000 pot the way he hits everything else." data-door="Earned with the Big Hit badge: win $10,000 on one wager."><img src="sprites/cast/boxer-rocky.webp" alt="Rocky, the boxer" width="192" height="192" loading="lazy" /><span>Rocky</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="robot-b0t" data-name="B0T" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Main Street" data-tagline="Counts everything. Admits nothing." data-door="Only in the Opening Night pack. Never on the wheel, never for chips."><img src="sprites/cast/robot-b0t.webp" alt="B0T, the robot" width="192" height="192" loading="lazy" /><span>B0T</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="hero-comet" data-name="Comet" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Main Street" data-tagline="Saves the day, then splits the pot." data-door="Only in the Opening Night pack. Never on the wheel, never for chips."><img src="sprites/cast/hero-comet.webp" alt="Comet, the superhero" width="192" height="192" loading="lazy" /><span>Comet</span></button></li>
+            <li data-shelf="mainStreet" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="alien-zeta" data-name="Zeta" data-rarity="Legendary" data-tint="#F2842B" data-set-title="Main Street" data-tagline="Came for the buffet. Brought his own ride." data-door="Only in the Opening Night pack. Never on the wheel, never for chips." data-pet="5,220,42"><img src="sprites/cast/alien-zeta.webp" alt="Zeta, the alien" width="192" height="192" loading="lazy" /><span>Zeta</span></button></li>
+            <li data-shelf="lateShow" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="magic-presto" data-name="Presto" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="The Late Show" data-tagline="Your card was the ace. It is always the ace." data-door="Only in the Curtain Up pack. Never on the wheel, never for chips."><img src="sprites/cast/magic-presto.webp" alt="Presto, the magician" width="192" height="192" loading="lazy" /><span>Presto</span></button></li>
+            <li data-shelf="lateShow" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="dj-vex" data-name="Vex" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="The Late Show" data-tagline="Has been beat-matching the slot machines all night." data-door="On the Prize Wheel, or $55,000 in chips at the Gift Shop."><img src="sprites/cast/dj-vex.webp" alt="Vex, the DJ" width="192" height="192" loading="lazy" /><span>Vex</span></button></li>
+            <li data-shelf="lateShow" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="ballet-mira" data-name="Mira" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="The Late Show" data-tagline="Crosses the floor without touching it." data-door="Earned with the Ensemble badge: unlock seven characters."><img src="sprites/cast/ballet-mira.webp" alt="Mira, the ballerina" width="192" height="192" loading="lazy" /><span>Mira</span></button></li>
+            <li data-shelf="lateShow" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="mime-blanc" data-name="Blanc" data-rarity="Common" data-tint="#9AA3AC" data-set-title="The Late Show" data-tagline="Says nothing. Somehow still talks trash." data-door="On the Prize Wheel, or $30,000 in chips at the Gift Shop."><img src="sprites/cast/mime-blanc.webp" alt="Blanc, the mime" width="192" height="192" loading="lazy" /><span>Blanc</span></button></li>
+            <li data-shelf="lateShow" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="octo-octavia" data-name="Octavia" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Late Show" data-tagline="Plays eight hands at once. The pit boss has questions." data-door="Only in the Curtain Up pack. Never on the wheel, never for chips." data-fx="14,60" data-pet="8,160,34"><img src="sprites/cast/octo-octavia.webp" alt="Octavia, the octopus" width="192" height="192" loading="lazy" /><span>Octavia</span></button></li>
+            <li data-shelf="lateShow" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="crooner-sal" data-name="Sal" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="The Late Show" data-tagline="One more number. There is always one more number." data-door="Only in the Curtain Up pack. Never on the wheel, never for chips."><img src="sprites/cast/crooner-sal.webp" alt="Sal, the crooner" width="192" height="192" loading="lazy" /><span>Sal</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="jockey-pip" data-name="Pip" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Sports Book" data-tagline="Weighs less than the pot. Rides like it." data-door="On the Prize Wheel, or $60,000 in chips at the Gift Shop."><img src="sprites/cast/jockey-pip.webp" alt="Pip, the jockey" width="192" height="192" loading="lazy" /><span>Pip</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="sumo-tora" data-name="Tora" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Sports Book" data-tagline="Immovable at the table. Ask the man who tried." data-door="Earned with the Load-Bearing badge: play 2,500 hands."><img src="sprites/cast/sumo-tora.webp" alt="Tora, the sumo wrestler" width="192" height="192" loading="lazy" /><span>Tora</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="goalie-dex" data-name="Dex" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Sports Book" data-tagline="Nothing gets past him. Not even a bad beat." data-door="Only in the Sports Book pack. Never on the wheel, never for chips."><img src="sprites/cast/goalie-dex.webp" alt="Dex, the goalie" width="192" height="192" loading="lazy" /><span>Dex</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="racer-vito" data-name="Vito" data-rarity="Legendary" data-tint="#F2842B" data-set-title="Sports Book" data-tagline="Doubles down before the light turns green." data-door="Only in the Sports Book pack. Never on the wheel, never for chips." data-fx="8,140" data-pet="12,70,30"><img src="sprites/cast/racer-vito.webp" alt="Vito, the racing driver" width="192" height="192" loading="lazy" /><span>Vito</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="golfer-chip" data-name="Chip" data-rarity="Common" data-tint="#9AA3AC" data-set-title="Sports Book" data-tagline="Plays every hand like it&#x27;s a short putt." data-door="On the Prize Wheel, or $35,000 in chips at the Gift Shop."><img src="sprites/cast/golfer-chip.webp" alt="Chip, the golfer" width="192" height="192" loading="lazy" /><span>Chip</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="qb-slinger" data-name="Slinger" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Sports Book" data-tagline="Reads the whole field. Throws into it anyway." data-door="Only in the Sports Book pack. Never on the wheel, never for chips."><img src="sprites/cast/qb-slinger.webp" alt="Slinger, the quarterback" width="192" height="192" loading="lazy" /><span>Slinger</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="hoops-tower" data-name="Tower" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Sports Book" data-tagline="Never needs the odds. He IS the mismatch." data-door="Only in the Sports Book pack. Never on the wheel, never for chips."><img src="sprites/cast/hoops-tower.webp" alt="Tower, the basketball center" width="192" height="192" loading="lazy" /><span>Tower</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="bookie-sharp" data-name="Sharp" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Sports Book" data-tagline="Wins by a hundredth. Has the photo to prove it." data-door="Only in the Sports Book pack. Never on the wheel, never for chips."><img src="sprites/cast/bookie-sharp.webp" alt="Sharp, the sprinter" width="192" height="192" loading="lazy" /><span>Sharp</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="slugger-mick" data-name="Mick" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Sports Book" data-tagline="Swings at everything. Connects enough." data-door="On the Prize Wheel, or $30,000 in chips at the Gift Shop."><img src="sprites/cast/slugger-mick.webp" alt="Mick, the slugger" width="192" height="192" loading="lazy" /><span>Mick</span></button></li>
+            <li data-shelf="sportsBook" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="winger-boaz" data-name="Boaz" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Sports Book" data-tagline="Forechecks the buffet line." data-door="On the Prize Wheel, or $34,000 in chips at the Gift Shop."><img src="sprites/cast/winger-boaz.webp" alt="Boaz, the hockey winger" width="192" height="192" loading="lazy" /><span>Boaz</span></button></li>
+            <li data-shelf="fantasyTavern" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="wizard-mordrin" data-name="Mordrin" data-rarity="Legendary" data-tint="#F2842B" data-set-title="Fantasy Tavern" data-tagline="Insists the dice are fine. He checked them himself." data-door="Only in the Curtain Up pack. Never on the wheel, never for chips." data-fx="12,75" data-pet="8,90,34"><img src="sprites/cast/wizard-mordrin.webp" alt="Mordrin, the wizard" width="192" height="192" loading="lazy" /><span>Mordrin</span></button></li>
+            <li data-shelf="fantasyTavern" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="knight-galla" data-name="Galla" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Fantasy Tavern" data-tagline="Never folds. Physically cannot, in that." data-door="On the Prize Wheel, or $95,000 in chips at the Gift Shop."><img src="sprites/cast/knight-galla.webp" alt="Galla, the knight" width="192" height="192" loading="lazy" /><span>Galla</span></button></li>
+            <li data-shelf="fantasyTavern" data-rarity="common"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #9AA3AC" data-id="barbarian-krug" data-name="Krug" data-rarity="Common" data-tint="#9AA3AC" data-set-title="Fantasy Tavern" data-tagline="Splits the pot the way he splits everything else." data-door="On the Prize Wheel, or $45,000 in chips at the Gift Shop."><img src="sprites/cast/barbarian-krug.webp" alt="Krug, the barbarian" width="192" height="192" loading="lazy" /><span>Krug</span></button></li>
+            <li data-shelf="fantasyTavern" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="elf-sylva" data-name="Sylva" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Fantasy Tavern" data-tagline="Reads the table like it was written down." data-door="On the Prize Wheel, or $65,000 in chips at the Gift Shop."><img src="sprites/cast/elf-sylva.webp" alt="Sylva, the elf" width="192" height="192" loading="lazy" /><span>Sylva</span></button></li>
+            <li data-shelf="fantasyTavern" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="dragon-ember" data-name="Ember" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Fantasy Tavern" data-tagline="Sits on the bankroll. Literally, if you let her." data-door="Only in the Curtain Up pack. Never on the wheel, never for chips."><img src="sprites/cast/dragon-ember.webp" alt="Ember, the dragon" width="192" height="192" loading="lazy" /><span>Ember</span></button></li>
+            <li data-shelf="halloween" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="nyx-cat" data-name="Nyx" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Halloween" data-tagline="Crosses your path on purpose. Every time." data-door="On the Prize Wheel, or $60,000 in chips at the Gift Shop."><img src="sprites/cast/nyx-cat.webp" alt="Nyx, the black cat" width="192" height="192" loading="lazy" /><span>Nyx</span></button></li>
+            <li data-shelf="halloween" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="rot-zombie" data-name="Rot" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Halloween" data-tagline="Shuffles to the table. Shuffles the deck worse." data-door="On the Prize Wheel, or $65,000 in chips at the Gift Shop."><img src="sprites/cast/rot-zombie.webp" alt="Rot, the zombie" width="192" height="192" loading="lazy" /><span>Rot</span></button></li>
+            <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="scratch-devil" data-name="Scratch" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Will make you a deal. Read the fine print." data-door="On the Prize Wheel, or $120,000 in chips at the Gift Shop."><img src="sprites/cast/scratch-devil.webp" alt="Scratch, the devil" width="192" height="192" loading="lazy" /><span>Scratch</span></button></li>
+            <li data-shelf="halloween" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="morgana-witch" data-name="Morgana" data-rarity="Legendary" data-tint="#F2842B" data-set-title="Halloween" data-tagline="The hat came with the bat, or the other way round." data-door="Only in the Halloween pack. Never on the wheel, never for chips." data-pet="6,70,36"><img src="sprites/cast/morgana-witch.webp" alt="Morgana, the witch" width="192" height="192" loading="lazy" /><span>Morgana</span></button></li>
+            <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="fang-wolf" data-name="Fang" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Only plays on a full moon. Says it&#x27;s a system." data-door="On the Prize Wheel, or $125,000 in chips at the Gift Shop."><img src="sprites/cast/fang-wolf.webp" alt="Fang, the werewolf" width="192" height="192" loading="lazy" /><span>Fang</span></button></li>
+            <li data-shelf="halloween" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="wraps-mummy" data-name="Wraps" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Halloween" data-tagline="Four thousand years old and still chasing a straight." data-door="On the Prize Wheel, or $70,000 in chips at the Gift Shop."><img src="sprites/cast/wraps-mummy.webp" alt="Wraps, the mummy" width="192" height="192" loading="lazy" /><span>Wraps</span></button></li>
+            <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="bones-skeleton" data-name="Bones" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Nothing up his sleeve. Nothing in it either." data-door="Only in the Halloween pack. Never on the wheel, never for chips."><img src="sprites/cast/bones-skeleton.webp" alt="Bones, the skeleton" width="192" height="192" loading="lazy" /><span>Bones</span></button></li>
+            <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="vlad-vampire" data-name="Vlad" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Never plays before dark. Never loses after it." data-door="Only in the Halloween pack. Never on the wheel, never for chips."><img src="sprites/cast/vlad-vampire.webp" alt="Vlad, the vampire" width="192" height="192" loading="lazy" /><span>Vlad</span></button></li>
+            <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="stitch-frank" data-name="Stitch" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Built for this. Assembled, anyway." data-door="Only in the Halloween pack. Never on the wheel, never for chips."><img src="sprites/cast/stitch-frank.webp" alt="Stitch, the monster" width="192" height="192" loading="lazy" /><span>Stitch</span></button></li>
+            <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="reaper-mort" data-name="Mort" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Comes for everyone. Waits for the river first." data-door="Only in the Halloween pack. Never on the wheel, never for chips."><img src="sprites/cast/reaper-mort.webp" alt="Mort, the reaper" width="192" height="192" loading="lazy" /><span>Mort</span></button></li>
+            <li data-shelf="throwback" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="hippie-daisy" data-name="Daisy" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Sixties · Throwback" data-tagline="Leaves a trail of bubbles and nobody minds." data-door="Earned with the Giant Leap badge: claim day 7 of the Throwback season." data-fx="16,110" data-pet="12,90,40"><img src="sprites/cast/hippie-daisy.webp" alt="Daisy, the flower child" width="192" height="192" loading="lazy" /><span>Daisy</span></button></li>
+            <li data-shelf="throwback" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="disco-boogie" data-name="Boogie" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Seventies · Throwback" data-tagline="The floor lights up wherever he&#x27;s standing." data-door="Earned with the Saturday Night badge: claim day 14 of the Throwback season." data-fx="12,240" data-pet="16,80,36"><img src="sprites/cast/disco-boogie.webp" alt="Boogie, the disco king" width="192" height="192" loading="lazy" /><span>Boogie</span></button></li>
+            <li data-shelf="throwback" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="synth-roxy" data-name="Roxy" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Eighties · Throwback" data-tagline="Plays one long chord on her way past the bar." data-door="Earned with the High Score badge: claim day 21 of the Throwback season." data-fx="12,90" data-pet="12,90,40"><img src="sprites/cast/synth-roxy.webp" alt="Roxy, the synth star" width="192" height="192" loading="lazy" /><span>Roxy</span></button></li>
+            <li data-shelf="throwback" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="blader-jett" data-name="Jett" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Nineties · Throwback" data-tagline="Never walks anywhere. Rolls in when he feels like it." data-door="Earned with the Page Me badge: claim day 28 of the Throwback season." data-fx="20,80" data-pet="8,75,36"><img src="sprites/cast/blader-jett.webp" alt="Jett, the rollerblader" width="192" height="192" loading="lazy" /><span>Jett</span></button></li>
+          </ul>
+        </div>
+<!-- CAST:END -->
+        <p class="cast-foot">Pick who you play as before you walk in; who you are changes nothing about the odds. Packs are a one-time purchase that shows exactly who's inside before you buy, and nothing for sale is a random draw. Chips are never for sale.</p>
       </div>
     </section>
 
@@ -150,10 +402,8 @@
         <div class="showcase">
           <div class="showcase-art">
             <div class="phone">
-              <picture>
-                <source srcset="shot-floor.webp" type="image/webp" />
-                <img src="shot-floor.png" alt="Walking the casino floor past the Ultimate Hold'em, Horse Racing and Roulette tables toward the Lucky 7s slot machines." width="460" height="1000" />
-              </picture>
+              <video class="phone-video" muted playsinline loop preload="none" poster="clips/trailer.webp" data-src="clips/trailer.mp4" width="444" height="962" aria-label="The Casino Floor Live! App Store preview: friends in a conga line on the casino floor, blackjack, Ultimate Hold'em, craps, slots, Plinko, the Prize Wheel, and the Lounge."></video>
+              <button class="sound" type="button" aria-pressed="false">Sound on</button>
             </div>
           </div>
           <div>
@@ -161,9 +411,10 @@
             <h2>Walk in, look around, sit down</h2>
             <p>Casino Floor Live! is a whole casino you explore on foot with your friends. Wander past the tables, watch a stranger hit a jackpot, and pull up a seat wherever you like.</p>
             <ul>
-              <li><strong>Everyone's got their own stack.</strong> No shared pot — each player rides their own bankroll and keeps their own winnings.</li>
-              <li><strong>No clock, no pressure.</strong> No timer, no daily goal. Stay as long as you like and stop whenever.</li>
+              <li><strong>The floor comes alive.</strong> Join the conga line, grab an autograph, or catch the casino cat when it gets loose.</li>
+              <li><strong>Call anyone out.</strong> Challenge anybody on the floor to rock-paper-scissors for chips.</li>
               <li><strong>More than tables.</strong> Hit the ATM, grab a round at the bar, order from the diner, or load up the jukebox.</li>
+              <li><strong>No clock, no pressure.</strong> No timer, no daily goal, no streak to keep. Stay as long as you like.</li>
             </ul>
           </div>
         </div>
@@ -174,58 +425,27 @@
 
     <section id="games">
       <div class="wrap">
-        <h2 class="section-title">The games</h2>
-        <p class="section-sub">Every classic on one floor, each with real rules and real odds — just none of your real money.</p>
+        <div class="section-head">
+          <span class="eyebrow">Every table in the house</span>
+          <h2 class="section-title">The games</h2>
+          <p class="section-sub">Every classic on one floor, each with real rules and real odds, just none of your real money.</p>
+        </div>
         <div class="games">
-          <div class="game-chip"><span>♠</span>Blackjack</div>
-          <div class="game-chip"><span>♥</span>Texas Hold'em Poker</div>
-          <div class="game-chip"><span>♦</span>Ultimate Texas Hold'em</div>
-          <div class="game-chip"><span>🎯</span>Craps</div>
-          <div class="game-chip"><span>♣</span>Video Poker</div>
-          <div class="game-chip"><span>🎡</span>Roulette</div>
-          <div class="game-chip"><span>🍒</span>Slots</div>
-          <div class="game-chip"><span>🎲</span>Dice</div>
-          <div class="game-chip"><span>🐎</span>Horse Racing</div>
-          <div class="game-chip"><span>🔻</span>Plinko</div>
-          <div class="game-chip"><span>💣</span>Mines</div>
+          <a class="game-chip" href="games.html#blackjack"><span><img src="sprites/emblems/aceCard.webp" alt="" width="128" height="128" /></span>Blackjack</a>
+          <a class="game-chip" href="games.html#holdem"><span><img src="sprites/emblems/spadeSuit.webp" alt="" width="128" height="128" /></span>Texas Hold'em Poker</a>
+          <a class="game-chip" href="games.html#ultimate"><span><img src="sprites/emblems/diamondSuit.webp" alt="" width="128" height="128" /></span>Ultimate Texas Hold'em</a>
+          <a class="game-chip" href="games.html#craps"><span><img src="sprites/emblems/dicePair.webp" alt="" width="128" height="128" /></span>Craps</a>
+          <a class="game-chip" href="games.html#video-poker"><span><img src="sprites/emblems/joker.webp" alt="" width="128" height="128" /></span>Video Poker</a>
+          <a class="game-chip" href="games.html#roulette"><span><img src="sprites/emblems/rouletteWheel.webp" alt="" width="128" height="128" /></span>Roulette</a>
+          <a class="game-chip" href="games.html#slots"><span><img src="sprites/emblems/slotMachine.webp" alt="" width="128" height="128" /></span>Slots</a>
+          <a class="game-chip" href="games.html#dice"><span><img src="sprites/emblems/jackpotBurst.webp" alt="" width="128" height="128" /></span>Dice</a>
+          <a class="game-chip" href="games.html#horses"><span><img src="sprites/emblems/racehorse.webp" alt="" width="128" height="128" /></span>Horse Racing</a>
+          <a class="game-chip" href="games.html#plinko"><span><img src="sprites/emblems/chipBurst.webp" alt="" width="128" height="128" /></span>Plinko</a>
+          <a class="game-chip" href="games.html#mines"><span><img src="sprites/emblems/vaultDoor.webp" alt="" width="128" height="128" /></span>Mines</a>
         </div>
         <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
           <a href="games.html">See the rules and payouts for every game →</a>
         </p>
-        <!-- FUTURE (v1.1): the Sports Book — the odds board, the betting
-             windows and the TV-wall lounge above it. Not announced yet, so it
-             stays off this list until the build that carries it ships. -->
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- The cast, straight out of the game's own art. Only the house
-         regulars — the twelve every player can pick for free on day one.
-         FUTURE: the critters, Main Street, the Late Show, the Fantasy
-         Tavern and the seasonal casts arrive on the monthly drops, and the
-         badge case (fifty-two of them) rides along with them. Both are drawn
-         and in the binary already; neither is announced, so neither is shown
-         here yet. When a drop opens, re-run the sprite dump with
-         CFL_DUMP_IDS naming the new cast and add a row. -->
-    <section id="cast">
-      <div class="wrap">
-        <h2 class="section-title">Meet the house regulars</h2>
-        <p class="section-sub">Twelve characters, free to everyone, and yours to pick before you walk in. They're the ones up on the floor at the top of this page.</p>
-        <ul class="cast">
-          <li class="cast-card"><img src="sprites/bro-ace.png" alt="Ace, a chibi casino character in a green dealer's visor." width="256" height="256" loading="lazy" /><span>Ace</span></li>
-          <li class="cast-card"><img src="sprites/bro-the-king.png" alt="The King, a chibi casino character in a white jumpsuit and shades." width="256" height="256" loading="lazy" /><span>The King</span></li>
-          <li class="cast-card"><img src="sprites/bro-granny-lucky.png" alt="Granny Lucky, a chibi casino character with grey hair and round glasses." width="256" height="256" loading="lazy" /><span>Granny Lucky</span></li>
-          <li class="cast-card"><img src="sprites/bro-big-slick.png" alt="Big Slick, a chibi casino character in a navy suit and gold tie." width="256" height="256" loading="lazy" /><span>Big Slick</span></li>
-          <li class="cast-card"><img src="sprites/bro-tex.png" alt="Tex, a chibi casino character in a cowboy hat and denim." width="256" height="256" loading="lazy" /><span>Tex</span></li>
-          <li class="cast-card"><img src="sprites/bro-ruby.png" alt="Ruby, a chibi casino character in a red showgirl dress and feathered headdress." width="256" height="256" loading="lazy" /><span>Ruby</span></li>
-          <li class="cast-card"><img src="sprites/bro-bruno.png" alt="Bruno, a chibi casino character in a dark suit and shades." width="256" height="256" loading="lazy" /><span>Bruno</span></li>
-          <li class="cast-card"><img src="sprites/bro-vinnie.png" alt="Vinnie, a chibi casino character in a burgundy jacket." width="256" height="256" loading="lazy" /><span>Vinnie</span></li>
-          <li class="cast-card"><img src="sprites/bro-chad.png" alt="Chad, a chibi casino character in a visor and teal polo." width="256" height="256" loading="lazy" /><span>Chad</span></li>
-          <li class="cast-card"><img src="sprites/bro-mystic-marla.png" alt="Mystic Marla, a chibi casino character in a purple hat and robes." width="256" height="256" loading="lazy" /><span>Mystic Marla</span></li>
-          <li class="cast-card"><img src="sprites/bro-peaches.png" alt="Peaches, a chibi casino character with red hair and a gold top." width="256" height="256" loading="lazy" /><span>Peaches</span></li>
-          <li class="cast-card"><img src="sprites/bro-dice.png" alt="Dice, a chibi casino character in a teal tracksuit." width="256" height="256" loading="lazy" /><span>Dice</span></li>
-        </ul>
       </div>
     </section>
 
@@ -236,10 +456,7 @@
         <div class="showcase flip">
           <div class="showcase-art">
             <div class="phone">
-              <picture>
-                <source srcset="shot-blackjack.webp" type="image/webp" />
-                <img src="shot-blackjack.png" alt="A blackjack hand in progress: dealer showing a 5, player holding 17 with $25 riding, and the chip tray along the bottom." width="460" height="1000" />
-              </picture>
+              <video class="phone-video" muted playsinline loop preload="none" poster="clips/blackjack.webp" data-src="clips/blackjack.mp4" width="444" height="964" aria-label="A blackjack hand: the player holds ace-king for blackjack, the dealer busts, and the table pays $125 on a $50 bet."></video>
             </div>
           </div>
           <div>
@@ -247,7 +464,7 @@
             <h2>Then play it straight</h2>
             <p>Sit down and it's the game you know. Blackjack pays 3 to 2, the table has limits, the dealer plays by the book, and the odds are the ones you'd get in a real house.</p>
             <ul>
-              <li><strong>Nothing is rigged for you.</strong> Real odds, win or lose — that's the whole point.</li>
+              <li><strong>Nothing is rigged for you.</strong> Real odds, win or lose. That's the whole point.</li>
               <li><strong>Chips you can't buy.</strong> There is no purchase anywhere that tops up your stack.</li>
               <li><strong>Talk at the table.</strong> Live chat and emotes while the hand plays out.</li>
             </ul>
@@ -260,28 +477,31 @@
 
     <section id="multiplayer">
       <div class="wrap">
-        <h2 class="section-title">Better with friends</h2>
-        <p class="section-sub">Rooms hold up to 10 players. Invite friends through Game Center, jump into a live floor, and share the highs (and the busts) in real time.</p>
+        <div class="section-head">
+          <span class="eyebrow">Better with friends</span>
+          <h2 class="section-title">One floor, ten friends</h2>
+          <p class="section-sub">Rooms hold up to 10 players, across iPhone, iPad and Apple Vision Pro. Jump onto the live floor, or open a private one and bring your crew.</p>
+        </div>
         <div class="grid">
           <div class="card">
-            <div class="ico">👥</div>
+            <div class="ico"><img src="sprites/emblems/ensemble.webp" alt="" width="128" height="128" /></div>
             <h3>Up to 10 in a room</h3>
-            <p>Fill a floor with your crew and crowd the same tables — Poker, Blackjack, and beyond.</p>
+            <p>Fill a floor with your crew and crowd the same tables: poker, blackjack, craps and beyond.</p>
           </div>
           <div class="card">
-            <div class="ico">🎮</div>
-            <h3>Game Center friends</h3>
-            <p>Sign in with Game Center to invite friends and show off your name at the table. That's the only sign-in you'll do — we never store your name on our servers.</p>
+            <div class="ico"><img src="sprites/emblems/padlock.webp" alt="" width="128" height="128" /></div>
+            <h3>Private tables</h3>
+            <p>Open a private room and send the code or a link. Game Center is the only sign-in, and we never store your name on our servers.</p>
           </div>
           <div class="card">
-            <div class="ico">💬</div>
+            <div class="ico"><img src="sprites/emblems/megaphone.webp" alt="" width="128" height="128" /></div>
             <h3>Table talk</h3>
-            <p>Live chat keeps the trash-talk flowing. Kept civil with an on-device profanity filter, plus mute, block, and report anyone in a tap.</p>
+            <p>Live chat keeps the trash-talk flowing, kept civil with an on-device filter, plus mute, block and report in a tap.</p>
           </div>
           <div class="card">
-            <div class="ico">🎉</div>
-            <h3>Big-win energy</h3>
-            <p>Emotes and floor-wide celebrations when someone hits — the table stays loud and the vibe stays electric.</p>
+            <div class="ico"><img src="sprites/emblems/maracas.webp" alt="" width="128" height="128" /></div>
+            <h3>The floor comes alive</h3>
+            <p>Conga lines, autographs, a cat on the loose: everyone in the room sees it happen, and everyone can join in.</p>
           </div>
         </div>
         <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
@@ -294,36 +514,38 @@
 
     <section id="vision">
       <div class="wrap">
-        <span class="eyebrow center">Also on Apple Vision Pro</span>
-        <h2 class="section-title">Put the whole casino on your coffee table</h2>
-        <p class="section-sub">On Vision Pro the floor isn't on a screen — it's a real object in your room. The same live floor, the same friends on their phones, sitting in your actual space.</p>
+        <div class="section-head">
+          <span class="eyebrow">Also on Apple Vision Pro</span>
+          <h2 class="section-title">Put the whole casino on your coffee table</h2>
+          <p class="section-sub">On Vision Pro the floor isn't on a screen: it's a real object in your room. The same live floor, the same friends on their phones, sitting in your actual space.</p>
+        </div>
 
         <figure class="visor">
           <picture>
             <source srcset="shot-vision.webp" type="image/webp" />
             <img src="shot-vision.jpg" alt="The Casino Floor Live! casino floor rendered as a miniature diorama sitting in a real backyard, seen through Apple Vision Pro passthrough — tables, slot machines, the high-limit room and other players are all visible in the grass." width="1600" height="900" loading="lazy" />
           </picture>
-          <figcaption>An actual Vision Pro capture — the floor is in the yard, the yard is really there.</figcaption>
+          <figcaption>Captured on Apple Vision Pro.</figcaption>
         </figure>
 
         <div class="grid vision-grid">
           <div class="card">
-            <div class="ico">🏠</div>
+            <div class="ico"><img src="sprites/emblems/floorMap.webp" alt="" width="128" height="128" /></div>
             <h3>A casino in your room</h3>
-            <p>Passthrough stays on, so the floor lands on your table, your rug, or the lawn. Pinch and pull to size it — pocket diorama or half the living room.</p>
+            <p>Passthrough stays on, so the floor lands on your table, your rug, or the lawn. Pinch and pull to size it.</p>
           </div>
           <div class="card">
-            <div class="ico">🎰</div>
+            <div class="ico"><img src="sprites/emblems/slotMachine.webp" alt="" width="128" height="128" /></div>
             <h3>Pull a machine out</h3>
-            <p>Grab any cabinet off the floor and it grows to full size in front of you. Walk up, play a few spins, put it back.</p>
+            <p>Grab a cabinet or a TV off the floor and it grows to full size in front of you. Play it where you stand.</p>
           </div>
           <div class="card">
-            <div class="ico">👀</div>
+            <div class="ico"><img src="sprites/emblems/compass.webp" alt="" width="128" height="128" /></div>
             <h3>Look where you're going</h3>
-            <p>Look at a spot on the floor and tap — your character walks there. No teleports, no controllers, nothing strapped to your hands.</p>
+            <p>Look at a spot on the floor and tap: your character walks there. No controllers, nothing strapped to your hands.</p>
           </div>
           <div class="card">
-            <div class="ico">📱</div>
+            <div class="ico"><img src="sprites/emblems/ensemble.webp" alt="" width="128" height="128" /></div>
             <h3>Same floor as your friends</h3>
             <p>Vision Pro joins the exact same live rooms as iPhone and iPad. Your friends on their phones see you walking the floor, and you see them.</p>
           </div>
@@ -365,7 +587,7 @@
     <section id="get">
       <div class="wrap">
         <div class="get-band">
-          <img class="get-icon" src="apple-touch-icon.png" alt="" width="96" height="96" loading="lazy" />
+          <img class="get-icon" src="app-icon.jpg?v=20261015" alt="" width="104" height="104" loading="lazy" />
           <h2>Pull up a seat</h2>
           <p>Casino Floor Live! is out now. Free on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro — bring your crew.</p>
           <a class="cta" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free on the App&nbsp;Store</a>
@@ -379,10 +601,10 @@
       <div class="footer-inner">
         <a class="brand" href="index.html">
           <span class="crown" aria-hidden="true"></span>
-          <span class="brand-text">Casino Floor <em>Live!</em></span>
+          <span class="brand-text">Casino Floor Live!</span>
         </a>
         <!-- The three product pages live here on every page: the header's
-             section links hide below 560px, so the footer is what actually
+             section links hide below 760px, so the footer is what actually
              carries site-wide internal linking. -->
         <div class="footer-links">
           <a href="games.html">The games</a>
@@ -405,6 +627,8 @@
     </div>
   </footer>
 
-  <script src="floor.js?v=20260825" defer></script>
+  <script src="floor.js?v=20261015" defer></script>
+  <script src="tv.js?v=20261015" defer></script>
+  <script src="cast.js?v=20261015" defer></script>
 </body>
 </html>
