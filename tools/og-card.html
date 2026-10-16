@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- The share card: what a link to the site shows in Messages, Slack, X,
+       Facebook and the rest (og:image / twitter:image → og-image.jpg).
+       Rendered by tools/og-card.sh; every path resolves from the site root.
+
+       An ad in the app's own pieces: the icon and the home screen's name
+       line on the left with one line on what it is; on the right the home
+       screen's TV showing a house show, the cast crowding the set, all of it
+       standing on the live floor (floor.js, seeded so the render is stable). -->
+  <base href="../" />
+  <title>Share card</title>
+  <style>
+    html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #05100a; }
+    body {
+      font-family: "Avenir Next", "Avenir", "Nunito Sans", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      color: #fff7e4;
+    }
+    .card { position: relative; width: 1200px; height: 630px; overflow: hidden; isolation: isolate; }
+
+    /* The floor, as on the site: the players walking it are the point. */
+    #floor-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -3; display: block; }
+    .veil {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(5, 16, 10, 0.96) 0%, rgba(5, 16, 10, 0.92) 40%, rgba(5, 16, 10, 0.5) 50%, rgba(5, 16, 10, 0.1) 62%, rgba(5, 16, 10, 0) 72%),
+        radial-gradient(130% 120% at 72% 45%, rgba(5, 16, 10, 0) 52%, rgba(5, 16, 10, 0.55) 100%);
+    }
+
+    /* ?format=square — the same card stacked for a 1:1 frame (Google's
+       mobile thumbnail crops toward square). */
+    html.square, html.square body, html.square .card { height: 1200px; }
+    html.square .veil {
+      background:
+        linear-gradient(180deg, rgba(5, 16, 10, 0.95) 0%, rgba(5, 16, 10, 0.9) 21%, rgba(5, 16, 10, 0.3) 27%, rgba(5, 16, 10, 0) 33%),
+        radial-gradient(120% 110% at 50% 60%, rgba(5, 16, 10, 0) 50%, rgba(5, 16, 10, 0.6) 100%);
+    }
+    html.square .copy {
+      left: 70px;
+      top: 58px;
+      width: auto;
+      display: grid;
+      grid-template-columns: 150px auto;
+      column-gap: 34px;
+      align-items: center;
+    }
+    html.square .icon { width: 150px; height: 150px; border-radius: 34px; grid-row: 1 / span 3; }
+    html.square .name { margin: 0; font-size: 40px; }
+    html.square .line { margin: 6px 0 0; font-size: 50px; }
+    html.square .platforms { margin: 12px 0 0; font-size: 18px; }
+    html.square .pill, html.square .fine { display: none; }
+    html.square .set { left: 70px; right: 70px; top: 300px; width: auto; }
+    html.square .on-air { height: 40px; font-size: 16px; }
+    html.square .tv { --bezel: 22px; }
+    html.square .crowd { left: 50%; right: auto; bottom: -22px; width: 900px; height: 330px; transform: translateX(-50%); }
+    html.square .bro { width: 290px; height: 290px; }
+    html.square .bro.big { width: 326px; height: 326px; }
+
+    /* The left: the icon, the name, what it is. */
+    .copy { position: absolute; left: 62px; top: 58px; width: 470px; }
+    .icon {
+      display: block;
+      width: 116px;
+      height: 116px;
+      border-radius: 26px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    .name {
+      margin: 26px 0 0;
+      font-weight: 900;
+      font-size: 33px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: #ffd14d;
+      text-shadow: 0 0.08em 0.12em rgba(3, 20, 11, 0.8), 0 0 0.5em rgba(255, 209, 77, 0.55);
+    }
+    .line {
+      margin: 14px 0 0;
+      font-weight: 800;
+      font-size: 42px;
+      line-height: 1.07;
+      letter-spacing: -0.01em;
+      color: #fff7e4;
+    }
+    .platforms {
+      margin: 18px 0 0;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 247, 228, 0.74);
+    }
+    .pill {
+      display: inline-block;
+      margin-top: 26px;
+      padding: 13px 22px;
+      border-radius: 16px;
+      background: #f7c948;
+      color: #08120d;
+      font-weight: 900;
+      font-size: 19px;
+      letter-spacing: 0.06em;
+      box-shadow: 0 5px 0 #8f6f17, inset 0 1.5px 0 rgba(255, 255, 255, 0.35), 0 16px 30px rgba(0, 0, 0, 0.45);
+    }
+    .fine {
+      position: absolute;
+      left: 62px;
+      bottom: 24px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 247, 228, 0.42);
+    }
+
+    /* The right: the home screen's set (TVSetNode), with its ON AIR head. */
+    .set { position: absolute; right: 52px; top: 30px; width: 628px; }
+    .on-air {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      height: 32px;
+      margin-bottom: 10px;
+      padding: 0 14px;
+      border-radius: 10px;
+      background: rgba(5, 16, 10, 0.82);
+      box-shadow: 0 0 0 1px rgba(247, 201, 72, 0.14);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .on-air .dot { width: 8px; height: 8px; border-radius: 50%; background: #ff4238; flex: none; }
+    .on-air .label { color: #f7c948; }
+    .on-air .show { color: #ffe7a3; }
+    .on-air .rule { flex: 1; height: 1px; background: rgba(247, 201, 72, 0.28); }
+    .tv { position: relative; isolation: isolate; --bezel: 16px; }
+    .tv::before,
+    .tv::after { content: ""; position: absolute; z-index: -1; background: var(--tint, #f5c84a); pointer-events: none; }
+    .tv::before { inset: -12px; border-radius: 34px; filter: blur(28px); opacity: 0.55; }
+    .tv::after { inset: -22% -18%; border-radius: 50%; filter: blur(90px); opacity: 0.2; }
+    .slab {
+      padding: var(--bezel);
+      border-radius: calc(9px + var(--bezel));
+      background: linear-gradient(180deg, #292929 0%, #0d0d0d 18%, #080808 100%);
+      box-shadow: 0 0 0 1px rgba(227, 175, 37, 0.45), 0 30px 60px rgba(0, 0, 0, 0.55);
+    }
+    .glass { position: relative; overflow: hidden; border-radius: 9px; aspect-ratio: 1752 / 1118; background: #000; }
+    .glass img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* The cast, crowding the set. Each figure is the app's own art: the
+       turnaround strip's first frame (front on, FX at rest), and a
+       legendary's follower at its shoulder (CompanionArt's anchor). */
+    .crowd { position: absolute; right: 64px; bottom: -14px; width: 612px; height: 236px; }
+    .bro {
+      position: absolute;
+      bottom: 0;
+      width: 196px;
+      height: 196px;
+      background-repeat: no-repeat;
+      background-size: 800% 100%;
+      background-position: 0 0;
+      filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.5));
+    }
+    .bro.big { width: 222px; height: 222px; z-index: 2; }
+    .pet { position: absolute; background-repeat: no-repeat; background-position: 0 0; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <canvas id="floor-canvas"></canvas>
+    <div class="veil"></div>
+
+    <div class="copy">
+      <img class="icon" src="app-icon.jpg" alt="" />
+      <div class="name">Casino Floor Live!</div>
+      <div class="line">Play a live casino with your friends</div>
+      <div class="platforms">iPhone · iPad · Apple Vision Pro</div>
+      <div class="pill">FREE ON THE APP STORE</div>
+    </div>
+    <div class="fine">Virtual chips only · 18+</div>
+
+    <div class="set">
+      <div class="on-air"><i class="dot"></i><span class="label">On air</span><span class="show" id="show">Fight Night · Live</span><span class="rule"></span></div>
+      <div class="tv" id="tv">
+        <div class="slab"><div class="glass"><img id="picture" src="tools/og/tv-knockdown.jpg" alt="" /></div></div>
+      </div>
+    </div>
+
+    <div class="crowd" id="crowd"></div>
+  </div>
+
+  <script>
+    // A stable crowd on the floor: floor.js picks its walkers with Math.random.
+    (function () {
+      var seed = Number(new URLSearchParams(location.search).get('seed') || 11);
+      Math.random = function () {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+      };
+    })();
+
+    var square = new URLSearchParams(location.search).get('format') === 'square';
+    if (square) document.documentElement.classList.add('square');
+
+    // ?show=ditch puts THE JACKPOT RUN on the set instead.
+    if (new URLSearchParams(location.search).get('show') === 'ditch') {
+      document.getElementById('picture').src = 'tools/og/tv-ditch.jpg';
+      document.getElementById('show').textContent = 'The Jackpot Run · Live';
+      document.getElementById('tv').style.setProperty('--tint', '#ffd23f');
+    }
+
+    // Left to right; `x` is the figure box's left edge in the crowd.
+    var CROWD = [
+      { id: 'the-king', x: 0 },
+      { id: 'ruby', x: 104 },
+      { id: 'disco-boogie', x: 196, big: true, pet: 36 },
+      { id: 'granny-lucky', x: 312 },
+      { id: 'alien-zeta', x: 396, pet: 42 }
+    ];
+    var scale = square ? 290 / 196 : 1;
+    var crowd = document.getElementById('crowd');
+    CROWD.forEach(function (c) {
+      var bro = document.createElement('div');
+      bro.className = 'bro' + (c.big ? ' big' : '');
+      bro.style.left = Math.round(c.x * scale) + 'px';
+      bro.style.backgroundImage = 'url(sprites/cast/' + c.id + '-turn.webp)';
+      crowd.appendChild(bro);
+      if (c.pet) {
+        var box = Math.round((c.big ? 222 : 196) * scale);
+        var side = Math.round(box * c.pet / 100);
+        var pet = document.createElement('div');
+        pet.className = 'pet';
+        pet.style.width = side + 'px';
+        pet.style.height = side + 'px';
+        pet.style.left = Math.round(box * 0.86 - side / 2) + 'px';
+        pet.style.top = Math.round(box * 0.16 - side / 2) + 'px';
+        pet.style.backgroundImage = 'url(sprites/cast/' + c.id + '-pet.webp)';
+        pet.style.backgroundSize = 'auto 100%';
+        bro.appendChild(pet);
+      }
+    });
+  </script>
+  <script src="floor.js"></script>
+</body>
+</html>

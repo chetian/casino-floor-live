@@ -18,10 +18,12 @@ Served via GitHub Pages as a plain static site.
 - `floor.js` — the live casino floor behind the hero
 - `tv.js` — the hero's television, surfing the house's channels
 - `cast.js` — the cast wall's spotlight, and the hero card's huddle
-- `favicon.svg` — the VIP crown mark
-- `apple-touch-icon.png`, `app-icon.jpg` — the app icon (crown on felt), copied
-  from the game's `AppIcon.appiconset` (`icon-180.png`; `icon-1024.png` →
+- `favicon.ico`, `favicon-{48,96,192,512}.png`, `site.webmanifest` — the app
+  icon (crown on felt) at the sizes browsers and Google's results use
+- `apple-touch-icon.png`, `app-icon.jpg` — the app icon, copied from the
+  game's `AppIcon.appiconset` (`icon-180.png`; `icon-1024.png` →
   `sips -Z 640 -s format jpeg`)
+- `og-image.jpg`, `og-image-square.jpg` — the share card (see below)
 - `sprites/` — art baked out of the game (see below)
 - `tv/` — the hero set's channels, filmed from the app (see below)
 - `clips/` — the phone frames' video: the App Store preview and a table loop
@@ -136,6 +138,40 @@ Announced content only:
   as the site's icons.
 - **Real games** — the sports broadcasts are parked in the app (`RealGames.enabled`
   is false). Nothing on the site shows or names a real team or league.
+
+## The share card and the search listing
+
+**The share card** is what a link shows in Messages, Slack, X, Facebook and
+the rest: `og-image.jpg` (1200×630) on every page's `og:image` and
+`twitter:image`, with `og-image-square.jpg` (1200×1200) beside it in the home
+page's `VideoGame.image` for Google's square-ish mobile thumbnails. It's an ad
+built from the app's own pieces — the icon and the home screen's name line,
+one line on what it is, the home screen's TV airing a house show with the cast
+crowding the set, on the live floor. Its source is `tools/og-card.html`
+(`?show=ditch` puts THE JACKPOT RUN on the set; `?seed=` deals another crowd
+on the floor); render both sizes with:
+
+```sh
+tools/og-card.sh          # needs Google Chrome; SHOW=ditch / SEED=4 pass through
+```
+
+Platforms cache a card by URL: after changing it, rename the file (or add a
+`?v=`) and re-scrape with Facebook's Sharing Debugger / LinkedIn's Post
+Inspector. Messages caches per device.
+
+**The search listing** — what Google shows for the site:
+- *Favicon:* the app icon, from `favicon.ico` (16/32/48) and the 96/192 PNGs.
+  Google wants a square at a multiple of 48 px on a stable URL, read from the
+  home page, and refreshes it when it recrawls (days to weeks).
+- *Site name:* `WebSite.name` "Casino Floor Live!" with `alternateName`s.
+- *Title and snippet:* the home page `<title>` and meta description (≤ 160
+  characters, or Google cuts it).
+- *Thumbnail* (mobile): Google picks from `og:image` and the structured data
+  `image`s — hence the square card.
+- *Video:* the App Store preview is marked up as a `VideoObject` (the game's
+  `trailer`), which makes it eligible for the Videos tab.
+- No star ratings: Google only shows them for real ratings marked up on the
+  page, and the site has none of its own. Don't import the App Store's.
 
 ## SEO
 

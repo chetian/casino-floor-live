@@ -7,7 +7,7 @@
        when it picks the site name shown above the result, and a padded one
        reads as less confident. Keep it under ~60 characters. -->
   <title>Casino Floor Live! — Casino Game for iPhone &amp; Vision Pro</title>
-  <meta name="description" content="A social casino you walk into with up to 10 friends on iPhone, iPad and Apple Vision Pro, with the house's own shows on TV. Virtual chips only. Free, 18+." />
+  <meta name="description" content="Play a live casino with your friends on iPhone, iPad and Vision Pro: blackjack, poker, slots and the house's own shows on TV. Virtual chips only. Free, 18+." />
   <link rel="canonical" href="https://casinofloorlive.app/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#05100a" />
@@ -19,15 +19,22 @@
   <meta property="og:description" content="Free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 67 to collect. Virtual chips only." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://casinofloorlive.app/" />
-  <meta property="og:image" content="https://casinofloorlive.app/shot-vision.jpg" />
-  <meta property="og:image:width" content="1600" />
-  <meta property="og:image:height" content="900" />
-  <meta property="og:image:alt" content="The Casino Floor Live! casino floor as a miniature diorama sitting in a real backyard, seen through Apple Vision Pro." />
+  <meta property="og:image" content="https://casinofloorlive.app/og-image.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Casino Floor Live!" />
   <meta name="twitter:description" content="Free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 67 to collect." />
-  <meta name="twitter:image" content="https://casinofloorlive.app/shot-vision.jpg" />
-  <link rel="icon" href="favicon.svg?v=20260825" type="image/svg+xml" />
+  <meta name="twitter:image" content="https://casinofloorlive.app/og-image.jpg" />
+  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <!-- The app icon, the crown on felt, at the sizes browsers and Google's
+       results pick from (multiples of 48; the .ico carries 16, 32 and 48). -->
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+  <link rel="icon" href="favicon-96.png" type="image/png" sizes="96x96" />
+  <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192" />
+  <link rel="manifest" href="site.webmanifest" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png?v=20261015" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,7 +70,11 @@
         "name": "Casino Floor Live!",
         "alternateName": ["Casino Floor Live", "CFL"],
         "url": "https://casinofloorlive.app/",
-        "image": "https://casinofloorlive.app/shot-vision.jpg",
+        "image": [
+          "https://casinofloorlive.app/og-image.jpg",
+          "https://casinofloorlive.app/og-image-square.jpg"
+        ],
+        "trailer": { "@id": "https://casinofloorlive.app/#trailer" },
         "description": "A social casino party game. Up to 10 friends share one live casino floor and play Blackjack, Poker, Roulette, Slots, Craps and more with virtual chips only — no real-money gambling. The house runs its own shows on TV, and there is a cast of 67 characters to collect.",
         "applicationCategory": "GameApplication",
         "genre": ["Casino", "Party", "Multiplayer"],
@@ -83,6 +94,20 @@
         },
         "publisher": { "@id": "https://chetianholdings.com/#org" },
         "author": { "@id": "https://chetianholdings.com/#org" }
+      },
+      {
+        "@type": "VideoObject",
+        "@id": "https://casinofloorlive.app/#trailer",
+        "name": "Casino Floor Live! — App Store preview",
+        "description": "Twenty-nine seconds of the app: friends in a conga line on the casino floor, a blackjack natural, a royal flush at Ultimate Hold'em, craps, slots, Plinko, the free Prize Wheel, and the house's drag race on the Lounge's big screen.",
+        "thumbnailUrl": [
+          "https://casinofloorlive.app/clips/trailer.webp",
+          "https://casinofloorlive.app/og-image.jpg"
+        ],
+        "uploadDate": "2026-10-15T23:42:00-05:00",
+        "duration": "PT29S",
+        "contentUrl": "https://casinofloorlive.app/clips/trailer.mp4",
+        "publisher": { "@id": "https://chetianholdings.com/#org" }
       }
     ]
   }
