@@ -10,7 +10,7 @@ Served via GitHub Pages as a plain static site.
 - `play-with-friends.html` — the multiplayer landing page
 - `vision-pro.html` — the Apple Vision Pro landing page
 - `privacy.html` — Privacy Policy (App Store privacy URL)
-- `support.html` — Support / FAQ (App Store support URL)
+- `support.html` — Support / FAQ (App Store support URL). Its FAQPage JSON-LD must match the visible h3/p pairs word for word; edit both or neither.
 - `terms.html` — Terms of Use / EULA
 - `age-rating.html` — Age Suitability disclosure (App Store age suitability URL)
 - `styles.css` — shared styles: the app's design system (DesignTokens palette,
