@@ -15,6 +15,11 @@ The windows below fit the 2026-10-15 takes. A re-shoot moves every moment,
 so read a contact sheet of the new take first, and start a clip at least
 2.1 s after a channel change — the app's own CH readout is on screen until
 then (a race shot as the first channel on has none).
+
+The floor, the set's first channel, isn't the home TV: it's the friends'
+conga from the App Store preview's raw takes (~/Movies/cfl-promo/raw, the
+game repo's /promo-video skill), shot on the iPhone Duo, with its own crop —
+the floor between the HUD and the tab bar, at the glass's shape.
 """
 import os
 import subprocess
@@ -24,8 +29,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'tv')
 CROP = 'crop=1752:1118:156:780'
 
-# clip -> (take, [(start, end), ...], card time within the clip)
+# clip -> (take, [(start, end), ...], card time within the clip[, crop])
+# A take is a name in the takes dir, or a path of its own.
 CLIPS = {
+    # The floor before the shows: West Hall, the bar, the pit.
+    'floor': ('~/Movies/cfl-promo/raw/duo_conga', [(21.9, 25.6), (29.0, 33.0), (37.6, 41.6)], 5.9,
+              'crop=2162:1380:345:295'),
     'banquet': ('banquet', [(5.9, 14.1)], 2.4),            # the joust: Glancing Blow, Sir Tex Advances
     'fight': ('boxing', [(36.0, 43.95)], 4.3),             # KNOCKDOWN!, then the count
     'drag': ('drag', [(5.9, 14.15)], 5.0),                 # the tree, the launch, HOLESHOT!
@@ -45,9 +54,10 @@ def run(args):
 
 
 def encode(takes, name):
-    take, pieces, card = CLIPS[name]
-    src = os.path.join(takes, f'{take}.mp4')
-    parts = [f'[0:v]trim=start={a}:end={b},setpts=PTS-STARTPTS,{CROP}[p{i}]'
+    take, pieces, card, *crop = CLIPS[name]
+    crop = crop[0] if crop else CROP
+    src = os.path.join(takes, os.path.expanduser(take) + '.mp4')
+    parts = [f'[0:v]trim=start={a}:end={b},setpts=PTS-STARTPTS,{crop}[p{i}]'
              for i, (a, b) in enumerate(pieces)]
     if len(pieces) > 1:
         joined = ''.join(f'[p{i}]' for i in range(len(pieces)))

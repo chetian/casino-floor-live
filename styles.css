@@ -1154,6 +1154,101 @@ section { padding: 72px 0; }
 .game-chip:nth-child(4n + 4) span { background: #1f1f1f; }
 .game-chip span img { width: 26px; height: 26px; }
 
+/* ---------- Pick a game: the phone and the wall ---------- */
+.game-shelf {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) 1fr;
+  gap: 28px;
+  align-items: start;
+}
+/* The spotlight: the game on the app's own screen, on the cast's lit felt. */
+.game-spot {
+  position: sticky;
+  top: 76px;
+  scroll-margin-top: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(70% 40% at 50% 0%, rgba(255, 236, 180, 0.15), transparent 70%),
+    linear-gradient(180deg, rgba(17, 48, 32, 0.94), rgba(5, 16, 10, 0.97));
+  box-shadow: var(--shadow);
+  padding: 22px 20px;
+}
+.game-spot .phone { width: 228px; }
+/* A cut between games: the screen drops to black and comes up on the deal. */
+.game-video { transition: filter 0.25s ease; }
+.game-video.cut { filter: brightness(0); transition: none; }
+.game-info { text-align: center; margin-top: 18px; max-width: 320px; }
+.game-info .spot-name { font-size: 1.7rem; }
+.game-info .pill { color: var(--gold); }
+.game-info .pill.set { color: var(--cream-dim); }
+.game-line { margin: 0; color: var(--cream); font-size: 0.96rem; min-height: 4.5em; }
+.game-rules {
+  display: block;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.game-wall {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+.game-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 7px 7px 10px;
+  border-radius: 16px;
+  border: 1px solid var(--line-soft);
+  background:
+    radial-gradient(80% 60% at 50% 30%, rgba(35, 144, 90, 0.22), transparent 70%),
+    linear-gradient(180deg, rgba(17, 48, 32, 0.8), rgba(5, 16, 10, 0.85));
+  color: var(--cream);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.game-card > img { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 11px; background: #000; }
+.game-card span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 3px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: left;
+}
+/* The game's chip, as on the games page. */
+.game-card .chip {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #21803f;
+  border: 2px dashed rgba(255, 255, 255, 0.65);
+}
+.game-wall li:nth-child(4n + 2) .chip { background: #c93327; }
+.game-wall li:nth-child(4n + 3) .chip { background: #6b4fc0; }
+.game-wall li:nth-child(4n + 4) .chip { background: #1f1f1f; }
+.game-card .chip img { width: 18px; height: 18px; }
+.game-card:hover { transform: translateY(-3px); border-color: rgba(247, 201, 72, 0.4); }
+.game-card[aria-pressed="true"] { border-color: var(--gold-400); box-shadow: 0 0 0 2px var(--gold-400), 0 10px 24px rgba(0, 0, 0, 0.4); }
+.game-foot { margin: 26px auto 0; text-align: center; color: var(--cream-dim); font-size: 0.92rem; max-width: 760px; }
+
 /* ---------- Vision Pro visor ---------- */
 .visor {
   position: relative;
@@ -1300,6 +1395,7 @@ section { padding: 72px 0; }
   padding-top: 16px;
   border-top: 1px solid var(--line);
   color: var(--gold);
+  scroll-margin-top: 76px;    /* a link to a game's rules lands under the header, not behind it */
 }
 .prose h3:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 .prose p { color: var(--cream-dim); margin: 0 0 12px; }
@@ -1356,6 +1452,12 @@ section { padding: 72px 0; }
   .nav-links { gap: 15px; }
   .cast-shelf { grid-template-columns: 1fr; }
   .spotlight { position: relative; top: 0; max-width: 520px; margin: 0 auto; width: 100%; }
+  /* The phone beside its words, the wall under them. */
+  .game-shelf { grid-template-columns: 1fr; }
+  .game-spot { position: relative; top: 0; flex-direction: row; justify-content: center; gap: 26px; max-width: 640px; margin: 0 auto; width: 100%; }
+  .game-spot .phone { width: 210px; }
+  .game-info { text-align: left; margin-top: 0; }
+  .game-info .spot-meta { justify-content: flex-start; }
 }
 @media (max-width: 1040px) {
   /* The bar keeps one line: the two product pages go first — the hero's
@@ -1412,6 +1514,18 @@ section { padding: 72px 0; }
   .cast-tab { flex: none; }
   .cast-card img { width: 64px; height: 64px; }
   .cast-card span { font-size: 0.7rem; }
+  .game-spot { flex-direction: column; gap: 0; padding: 18px 14px; }
+  .game-spot .phone { width: 200px; }
+  .game-info { text-align: center; margin-top: 16px; }
+  .game-info .spot-meta { justify-content: center; }
+  .game-info .spot-name { font-size: 1.45rem; }
+  .game-line { min-height: 0; }
+  .game-wall { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .game-card { padding: 5px 5px 8px; gap: 6px; border-radius: 13px; }
+  .game-card > img { border-radius: 9px; }
+  .game-card span { gap: 5px; padding: 0 1px; font-size: 0.7rem; }
+  .game-card .chip { width: 20px; height: 20px; border-width: 1.5px; }
+  .game-card .chip img { width: 14px; height: 14px; }
   .cast-tab { padding: 6px 11px; font-size: 0.66rem; }
   .showcase-art .phone { width: 250px; }
   .cta, .cta.ghost { width: 100%; text-align: center; }

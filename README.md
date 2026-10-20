@@ -16,7 +16,8 @@ Served via GitHub Pages as a plain static site.
 - `styles.css` — shared styles: the app's design system (DesignTokens palette,
   Avenir Next, the home screen's chunky cards and TV set)
 - `floor.js` — the live casino floor behind the hero
-- `tv.js` — the hero's television, surfing the house's channels
+- `tv.js` — the hero's television: the floor, then the house's channels
+- `games.js` — the game picker: the phone in the spotlight, the wall of games
 - `cast.js` — the cast wall's spotlight, and the hero card's huddle
 - `favicon.ico`, `favicon-{48,96,192,512}.png`, `site.webmanifest` — the app
   icon (crown on felt) at the sizes browsers and Google's results use
@@ -26,8 +27,9 @@ Served via GitHub Pages as a plain static site.
 - `og-image.jpg`, `og-image-square.jpg` — the share card (see below)
 - `sprites/` — art baked out of the game (see below)
 - `tv/` — the hero set's channels, filmed from the app (see below)
-- `clips/` — the phone frames' video: the App Store preview and a table loop
-- `tools/` — the scripts that rebuild the cast wall and the TV clips
+- `games/` — the game picker's clips, stills and cards, cut from the app (see below)
+- `clips/` — the App Store preview, and stills for the other pages' phones
+- `tools/` — the scripts that rebuild the cast wall, the TV and the game clips
 
 Add a page and it needs three things or it may as well not exist: an entry in
 `sitemap.xml`, a link in the footer of every other page, and the same head
@@ -50,11 +52,13 @@ characters are baked art, not redrawn.
 **The television** is the home screen's set (`TVSetNode`): a satin-black slab
 with a brass hairline, the picture's light round it in the show's colour, a
 CRT line when it comes on, and on every channel change a burst of snow and
-the channel number in old-set green (`ChannelFlipNode`). `tv.js` surfs the
-app's own lineup — the house show on CH 02, THE BIG RACE on CH 03, EYE IN THE
-SKY on CH 07 — with the app's words for each. It is silent, like the app's
-home set. Phones get the 768-wide clips; posters only under reduced motion or
-Save-Data.
+the channel number in old-set green (`ChannelFlipNode`). `tv.js` comes on to
+THE FLOOR — the site's own CH 01, friends in the conga line past West Hall's
+slots, the bar and the pit, held for its whole clip — then surfs the app's own
+lineup: the house show on CH 02, THE BIG RACE on CH 03, EYE IN THE SKY on
+CH 07, with the app's words for each. It is silent, like the app's home set.
+Phones get the 768-wide clips; posters only under reduced motion or
+Save-Data, where the set stays on the floor.
 
 The TV guide's little sets (`#tv`) play their clip on hover, focus or tap.
 
@@ -119,13 +123,66 @@ of any new take before cutting it. No real-world teams or games ever go on
 this set — v1.1 ships with real games off, and the clips are house shows and
 the floor's own cameras only.
 
+THE FLOOR isn't a TV take: `tv-encode.py` cuts it from the iPhone Duo App
+Store preview's conga take (`~/Movies/cfl-promo/raw/duo_conga.mp4`, see the
+game repo's `/promo-video` skill) with a crop of its own that leaves out the
+HUD and the tab bar. Its place names (`cams` on CH 01 in `tv.js`) are timed to
+the cuts in that window; move one and re-time the other.
+`python3 tools/tv-encode.py ~/Movies/cfl-site-tv floor` cuts it alone.
+
+### The game picker
+
+`#games`, the first section after the hero, is the cast wall's pattern for
+the games: a phone in the spotlight and a wall of eleven cards. Left alone,
+the phone deals the whole floor in turn, holding each payoff a beat; a pick
+stays on that game (`games.js`). Each game's words — its two pills, its line,
+the clip's description for screen readers — are `data-*` on its card in
+`index.html`, and its rules link is its `games.html` anchor. Every claim in
+them is checked against the app's code. The Prize Wheel has no card (its bench
+can't show a win); the section's foot mentions it.
+
+The clips are the game repo's promo benches (`~/Movies/cfl-promo/raw`, the
+`/promo-video` skill): an iPhone 17 Pro Max simulator, each game booted full
+screen and playing itself, rigged where the bench can rig it.
+`tools/game-clips.py` cuts each game's windows, paints out the Dynamic Island
+with the preview's own `delogo` (so the CSS frame's island sits on it), and
+writes `games/<game>.mp4` (520 wide, silent), the payoff still
+`games/<game>.webp` (the poster, and all there is under reduced motion or
+Save-Data) and the wall's square `games/<game>-card.webp`:
+
+```sh
+python3 tools/game-clips.py                  # all eleven
+python3 tools/game-clips.py roulette mines   # just these
+```
+
+Blackjack, Ultimate Hold'em, craps, slots and plinko are the preview's own
+takes. The rest were shot for the site on 2026-10-19 (from
+`scripts/promo-video/` in the game repo):
+
+```sh
+./shoot.sh web_poker 180 CFL_DEBUG_GAME=poker CFL_DEBUG_FILL=1 CFL_DEBUG_AUTOBET=1 CFL_DEBUG_BRO=ace
+./shoot.sh web_roulette 75 CFL_DEBUG_GAME=roulette CFL_DEBUG_FILL=1 CFL_DEBUG_AUTOSPIN=1 CFL_DEBUG_BRO=ace
+./shoot.sh web_dice 48 CFL_DEBUG_GAME=dice CFL_DEBUG_FILL=1 CFL_DEBUG_DICE_AUTOPILOT=1 CFL_DEBUG_DICE_PAUSE=2 CFL_DEBUG_BRO=ace
+./shoot.sh web_horse 55 CFL_DEBUG_GAME=horseRacing CFL_DEBUG_HORSE_SEED=7 CFL_DEBUG_AUTOSPIN=1 CFL_DEBUG_BRO=ace
+./shoot.sh web_vp 70 CFL_DEBUG_GAME=videoPoker CFL_DEBUG_AUTOSPIN=1 CFL_DEBUG_BRO=ace
+./shoot.sh web_mines 60 CFL_DEBUG_GAME=mines CFL_DEBUG_AUTOSPIN=1 CFL_DEBUG_BRO=ace
+```
+
+None of those six can be rigged, so a take is a long run with a payoff in it:
+the poker bench calls every hand down until you take a pot, and roulette's
+autospin bets red or black at random. Two clips end without a win — the mines
+bench never cashes out (the clip digs four gems, then finds a mine), and the
+horse racing clip ends on the OFFICIAL board with your ticket out of the
+money. The windows in `game-clips.py` fit these takes; a re-shoot moves every
+moment, so read a contact sheet of the new take first.
+
 ### The phones
 
 `clips/trailer.mp4` is the approved iPhone App Store preview (v3) at half
-size, music kept behind the SOUND ON button. `clips/blackjack.mp4` and the
-stills are cut from that preview's raw takes (`~/Movies/cfl-promo/raw`, see the
-game repo's `/promo-video` skill), the Dynamic Island painted out with the
-preview's own `delogo` so the CSS frame's island sits on it.
+size, music kept behind the SOUND ON button. The other pages' phone stills
+(`clips/blackjack.webp`, `clips/floor.webp`) are cut from that preview's raw
+takes the same way. `clips/blackjack.mp4`, the home page's old table loop, is
+no longer on any page.
 
 ## Parked until it ships
 

@@ -1,15 +1,18 @@
 /* Casino Floor Live! — the television in the hero.
  *
  * The home screen's set (`TVSetNode` around `ChannelSurferNode`), on the web.
- * Nobody works it: it surfs by itself, a channel every few seconds — the
- * house show on 2, THE BIG RACE on 3, and EYE IN THE SKY, the floor's
- * security feed, on 7 — with a burst of analogue snow and the channel's
- * number in old-set green on every change, the picture's light round the set
- * in the show's own colour, and a CRT's line when it comes on.
+ * Nobody works it: it comes on to the floor itself — friends in the conga
+ * line, past the slots, the bar and the tables — then surfs by itself, a
+ * channel every few seconds: the house show on 2, THE BIG RACE on 3, and EYE
+ * IN THE SKY, the floor's security feed, on 7. Every change is a burst of
+ * analogue snow and the channel's number in old-set green, the picture's
+ * light round the set in the show's own colour, and a CRT's line when it
+ * comes on.
  *
- * The pictures are the app's own: each clip is the home screen's TV filmed
- * in the simulator against a local relay, cropped to the glass. Silent, as
- * the app's home set is. A click (or NEXT CHANNEL) changes the channel.
+ * The pictures are the app's own: each show is the home screen's TV filmed
+ * in the simulator against a local relay, cropped to the glass; the floor is
+ * the App Store preview's conga take. Silent, as the app's home set is. A
+ * click (or NEXT CHANNEL) changes the channel.
  */
 (function () {
   'use strict';
@@ -25,17 +28,21 @@
   var headShow = document.querySelector('.on-air-show');
   var headNext = document.querySelector('.on-air-next');
 
-  /* The lineup, in surf order: a house show, the security feed, the race —
-     the app's own rhythm (the feed follows every two channels). The words
-     are the app's (ChannelLineup.osd, ChannelSurferNode.guide). `tint` is
-     the show's accent, the colour the set's glow takes (HouseLook.accent);
-     `pale` is the ON AIR line's (HouseLook.accentPale). The security feed
-     isn't live television, so its line has no red dot, and it names each
-     camera as the feed cuts to it. */
+  /* The lineup, in surf order: the floor, then a house show, the security
+     feed, the race — the app's own rhythm (the feed follows every two
+     channels). The words are the app's (ChannelLineup.osd,
+     ChannelSurferNode.guide). `tint` is the show's accent, the colour the
+     set's glow takes (HouseLook.accent); `pale` is the ON AIR line's
+     (HouseLook.accentPale). The security feed isn't live television, so its
+     line has no red dot. It and the floor name each place as the picture
+     cuts to it. The floor isn't one of the app's channels: it's the site's
+     own, the room before the shows, held for its whole clip (`dwell`). */
   var HOUSE = { live: true };
   var CAM = { live: false, tint: '#8CBFA6', pale: 'rgba(255, 247, 228, 0.7)' };
   function ch(o, base) { for (var k in base) if (!(k in o)) o[k] = base[k]; return o; }
   var CHANNELS = [
+    ch({ ch: 1, name: 'THE FLOOR', clip: 'floor', tint: '#4BD07A', pale: '#DDF8E6', dwell: 12000,
+         cams: [[0, 'WEST HALL'], [3.7, 'THE BAR'], [7.7, 'THE PIT']] }, HOUSE),
     ch({ ch: 2, name: 'BATTLE BANQUET', clip: 'banquet', tint: '#F7C948', pale: '#FFDF7E' }, HOUSE),
     ch({ ch: 7, name: 'EYE IN THE SKY', clip: 'cam-doors', cams: [[0, 'CAM 01 · THE DOORS'], [3.5, 'CAM 02 · THE PIT']] }, CAM),
     ch({ ch: 3, name: 'THE JACKPOT RUN', clip: 'rally', tint: '#FFD23F', pale: '#F4E9D0' }, HOUSE),
@@ -46,7 +53,7 @@
     ch({ ch: 7, name: 'EYE IN THE SKY', clip: 'cam-bar', cams: [[0, 'CAM 13 · BAR TOP'], [3.53, 'CAM 09 · POKER ROOM']] }, CAM),
     ch({ ch: 3, name: 'ULTIMATE RACE', clip: 'tri', tint: '#FFD23F', pale: '#FFF4E0' }, HOUSE)
   ];
-  var DWELL = 9000;          // the longest a channel holds; a clip ends it sooner
+  var DWELL = 9000;          // the longest a channel holds (unless it says); a clip ends it sooner
   var MIN_DWELL = 3500;
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -157,9 +164,10 @@
   function schedule(video) {
     clearTimeout(timer);
     if (!running || stills && reduceMotion) return;
-    var wait = DWELL;
+    var dwell = CHANNELS[index].dwell || DWELL;
+    var wait = dwell;
     if (!stills && video.duration && isFinite(video.duration)) {
-      wait = Math.max(MIN_DWELL, Math.min(DWELL, (video.duration - (video.currentTime || 0)) * 1000 - 120));
+      wait = Math.max(MIN_DWELL, Math.min(dwell, (video.duration - (video.currentTime || 0)) * 1000 - 120));
     }
     timer = setTimeout(function () { tune(index + 1); }, wait);
   }
@@ -214,10 +222,9 @@
 
   /* ---------------------------------------------------------------- start
      The set comes on dark and switches on: the line across the glass,
-     opening to the picture. The first channel is a house show, picked at
-     random — the room is already running when you walk in. */
-  var houses = [0, 3, 6];
-  index = houses[(Math.random() * houses.length) | 0];
+     opening to the picture. The first channel is the floor — the room is
+     already running when you walk in — and the shows follow it. */
+  index = 0;
   var first = CHANNELS[index];
   pics[0].classList.remove('hidden');
   pics[1].classList.add('hidden');
@@ -253,7 +260,7 @@
   if (hit) hit.addEventListener('click', change);
   if (headNext) headNext.addEventListener('click', change);
 
-  // The security feed names each camera as it cuts to it.
+  // The security feed names each camera as it cuts to it; the floor, each place.
   pics.forEach(function (video) {
     video.addEventListener('timeupdate', function () {
       var c = CHANNELS[index];

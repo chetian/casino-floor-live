@@ -37,7 +37,7 @@
        stands in elsewhere. Pirata One is the Battle Banquet's own blackletter
        (the app bundles the same font). -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;family=Pirata+One&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261015" />
+  <link rel="stylesheet" href="styles.css?v=20261020" />
   <link rel="preload" as="image" href="sprites/emblem-crown.png" />
   <script type="application/ld+json">
   {
@@ -116,9 +116,9 @@
         <span class="brand-text">Casino Floor Live!</span>
       </a>
       <div class="nav-links">
+        <a class="nav-jump" href="#games">Games</a>
         <a class="nav-jump" href="#tv">On TV</a>
         <a class="nav-jump" href="#cast">Cast</a>
-        <a class="nav-jump" href="games.html">Games</a>
         <a class="nav-jump nav-more" href="play-with-friends.html">Multiplayer</a>
         <a class="nav-jump nav-more" href="vision-pro.html">Vision Pro</a>
         <a href="support.html">Support</a>
@@ -142,7 +142,7 @@
         <div class="mark">
           <span class="crown-mark" aria-hidden="true"></span>
           <h1 class="wordmark">Casino Floor Live!</h1>
-          <p class="tagline">One live casino floor, up to&nbsp;10 friends, on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro.</p>
+          <p class="tagline">Blackjack, poker, craps and slots on one live casino floor with up to&nbsp;10 friends, on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro.</p>
         </div>
 
         <div class="set">
@@ -187,14 +187,120 @@
       </div>
     </section>
 
-    <!-- The running board: what's on, all night. Decorative — every show on
-         it is listed properly in the guide below. -->
+    <!-- The running board: what's on, all night. Decorative — every game and
+         show on it is listed properly below. -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>The Jackpot Run</span><span>Moto Mayhem</span><span>Ultimate Race</span><span>Eye in the sky</span><span>67 characters</span><span>Up to 10 friends</span>
-        <span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>The Jackpot Run</span><span>Moto Mayhem</span><span>Ultimate Race</span><span>Eye in the sky</span><span>67 characters</span><span>Up to 10 friends</span>
+        <span>Eleven games, one floor</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>67 characters</span>
+        <span>Eleven games, one floor</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>67 characters</span>
       </div>
     </div>
+
+    <!-- PICK A GAME: every game on the floor, on the app's own screen. Each
+         clip is an iPhone bench from the promo takes, from the deal to the
+         payoff (games/, tools/game-clips.py). Pick one and the phone plays
+         it; left alone, it deals the whole floor in turn (games.js). -->
+    <section id="games">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Every table in the house</span>
+          <h2 class="section-title sign">Pick a game</h2>
+          <p class="section-sub">Eleven games on one floor, each with its real rules and real odds, just none of your real money. Pick one to watch it play.</p>
+        </div>
+        <div class="game-shelf">
+          <div class="game-spot">
+            <div class="phone">
+              <video class="game-video" muted playsinline preload="none" poster="games/blackjack.webp" width="520" height="1130" disableremoteplayback aria-label="Blackjack: the player is dealt ace-king for blackjack, the dealer draws to 23 and busts, and the table pays $125 on a $50 bet."></video>
+            </div>
+            <div class="game-info" aria-live="polite">
+              <h3 class="spot-name">Blackjack</h3>
+              <div class="spot-meta"><span class="pill">6 seats</span><span class="pill set">Against the dealer</span></div>
+              <p class="game-line">A six-deck shoe, 3 to 2 on a natural, and the dealer stands on every 17.</p>
+              <a class="game-rules" href="games.html#blackjack">Rules and payouts →</a>
+            </div>
+          </div>
+          <ul class="game-wall">
+            <li><button class="game-card" type="button" aria-pressed="true" data-game="blackjack" data-name="Blackjack" data-pills="6 seats|Against the dealer" data-line="A six-deck shoe, 3 to 2 on a natural, and the dealer stands on every 17." data-alt="Blackjack: the player is dealt ace-king for blackjack, the dealer draws to 23 and busts, and the table pays $125 on a $50 bet."><img src="games/blackjack-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/aceCard.webp" alt="" width="128" height="128" /></i>Blackjack</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="holdem" data-name="Texas Hold&#x27;em" data-pills="6 seats|Player against player" data-line="No-limit and table stakes, against everyone else at the table. Any bet can be your whole stack." data-alt="Texas Hold&#x27;em at a full table: the player calls an all-in with king-two, and two pair, kings and twos, takes a $1,215 pot."><img src="games/holdem-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/spadeSuit.webp" alt="" width="128" height="128" /></i>Texas Hold&#x27;em</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="ultimate" data-name="Ultimate Texas Hold&#x27;em" data-pills="6 seats|Against the dealer" data-line="Raise 3× or 4× before the flop, or wait for the river. A royal flush pays the Blind 500 to 1." data-alt="Ultimate Texas Hold&#x27;em: the player&#x27;s ace-king makes a royal flush, and the table pays $13,481 on a $131 bet."><img src="games/ultimate-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/diamondSuit.webp" alt="" width="128" height="128" /></i>Ultimate Hold&#x27;em</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="craps" data-name="Craps" data-pills="Live shooter|One roll for the rail" data-line="A full layout and a live shooter. Everyone at the rail rides the same roll, with free odds at true odds." data-alt="Craps: the point is eight, the shooter rolls eight, and the bets pay $115 on $75."><img src="games/craps-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/dicePair.webp" alt="" width="128" height="128" /></i>Craps</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="roulette" data-name="Roulette" data-pills="Double zero|38 pockets" data-line="An American wheel in the real pocket order. Straight up pays 35 to 1, red or black even money." data-alt="Roulette: $25 on red, the wheel spins, the ball drops into 19 red, and the table pays $50."><img src="games/roulette-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/rouletteWheel.webp" alt="" width="128" height="128" /></i>Roulette</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="dice" data-name="Dice" data-pills="Over/Under 7|One throw for the table" data-line="Two dice, and one throw settles the whole table. Under or over 7 pays even money, a Lucky 7 pays 4 to 1." data-alt="Dice: the shooter throws a five, under seven, and the bet pays $50 on $25."><img src="games/dice-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/jackpotBurst.webp" alt="" width="128" height="128" /></i>Dice</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="horses" data-name="Horse Racing" data-pills="Six horses|Win, place or show" data-line="A six-horse field and the same six prices on every card, from 2 to 1 up to 12 to 1." data-alt="Horse racing: the field breaks, Comet sets the pace, and after a photo finish the official result is Comet, Lucky Star, Sir Gallop."><img src="games/horses-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/racehorse.webp" alt="" width="128" height="128" /></i>Horse Racing</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="slots" data-name="Slots" data-pills="8 themes|9 paylines" data-line="Eight themes on the floor, each with its own bonus round. Five wilds on a line pays 1,000× the line bet." data-alt="The King&#x27;s Ransom slot machine: a $45 win, then five of a kind on a line pays $165."><img src="games/slots-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/slotMachine.webp" alt="" width="128" height="128" /></i>Slots</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="video-poker" data-name="Video Poker" data-pills="9/6 Jacks or Better|Triple Play" data-line="Full-pay 9/6 Jacks or Better, up to three hands off one hold. A royal pays 800 for 1 with max bet riding." data-alt="Video poker: the player holds two cards and draws three hands, and two of them pay jacks or better for $200."><img src="games/video-poker-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/joker.webp" alt="" width="128" height="128" /></i>Video Poker</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="plinko" data-name="Plinko" data-pills="Ten balls at once|12 rows of pegs" data-line="Drop up to ten balls at once. Every peg is a coin flip, and on Wild the edge buckets pay ×130." data-alt="Plinko: ten balls drop through the pegs at once and pay $104 on a $50 bet."><img src="games/plinko-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/chipBurst.webp" alt="" width="128" height="128" /></i>Plinko</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="mines" data-name="Mines" data-pills="5×5 grid|10 or 15 mines" data-line="Every gem you dig raises the payout. Cash out after any of them, or dig on and risk the lot." data-alt="Mines: the player digs up four gems, the next one would pay $160, and the fifth tile is a mine."><img src="games/mines-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/vaultDoor.webp" alt="" width="128" height="128" /></i>Mines</span></button></li>
+          </ul>
+        </div>
+        <p class="game-foot">Every game plays its real odds, win or lose, and nothing anywhere sells you chips. The Prize Wheel is on the house: a free spin every 20&nbsp;minutes. <a href="games.html">Every rule and payout →</a></p>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section id="what">
+      <div class="wrap">
+        <div class="showcase">
+          <div class="showcase-art">
+            <div class="phone">
+              <video class="phone-video" muted playsinline loop preload="none" poster="clips/trailer.webp" data-src="clips/trailer.mp4" width="444" height="962" aria-label="The Casino Floor Live! App Store preview: friends in a conga line on the casino floor, blackjack, Ultimate Hold'em, craps, slots, Plinko, the Prize Wheel, and the Lounge."></video>
+              <button class="sound" type="button" aria-pressed="false">Sound on</button>
+            </div>
+          </div>
+          <div>
+            <span class="eyebrow">One floor, together</span>
+            <h2>Walk in, look around, sit down</h2>
+            <p>Casino Floor Live! is a whole casino you explore on foot with your friends. Wander past the tables, watch a stranger hit a jackpot, and pull up a seat wherever you like.</p>
+            <ul>
+              <li><strong>The floor comes alive.</strong> Join the conga line, grab an autograph, or catch the casino cat when it gets loose.</li>
+              <li><strong>Call anyone out.</strong> Challenge anybody on the floor to rock-paper-scissors for chips.</li>
+              <li><strong>More than tables.</strong> Hit the ATM, grab a round at the bar, order from the diner, or load up the jukebox.</li>
+              <li><strong>No clock, no pressure.</strong> No timer, no daily goal, no streak to keep. Stay as long as you like.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section id="multiplayer">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Better with friends</span>
+          <h2 class="section-title">One floor, ten friends</h2>
+          <p class="section-sub">Rooms hold up to 10 players, across iPhone, iPad and Apple Vision Pro. Jump onto the live floor, or open a private one and bring your crew.</p>
+        </div>
+        <div class="grid">
+          <div class="card">
+            <div class="ico"><img src="sprites/emblems/ensemble.webp" alt="" width="128" height="128" /></div>
+            <h3>Up to 10 in a room</h3>
+            <p>Fill a floor with your crew and crowd the same tables: poker, blackjack, craps and beyond.</p>
+          </div>
+          <div class="card">
+            <div class="ico"><img src="sprites/emblems/padlock.webp" alt="" width="128" height="128" /></div>
+            <h3>Private tables</h3>
+            <p>Open a private room and send the code or a link. Game Center is the only sign-in, and we never store your name on our servers.</p>
+          </div>
+          <div class="card">
+            <div class="ico"><img src="sprites/emblems/megaphone.webp" alt="" width="128" height="128" /></div>
+            <h3>Table talk</h3>
+            <p>Live chat keeps the trash-talk flowing, kept civil with an on-device filter, plus mute, block and report in a tap.</p>
+          </div>
+          <div class="card">
+            <div class="ico"><img src="sprites/emblems/maracas.webp" alt="" width="128" height="128" /></div>
+            <h3>The floor comes alive</h3>
+            <p>Conga lines, autographs, a cat on the loose: everyone in the room sees it happen, and everyone can join in.</p>
+          </div>
+        </div>
+        <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
+          <a href="play-with-friends.html">How playing with friends works →</a>
+        </p>
+      </div>
+    </section>
+
+    <hr class="divider" />
 
     <!-- ON THE TV TONIGHT: the house's own shows, as a TV guide. Every still
          and clip is the app's home-screen set, filmed (tv/). -->
@@ -417,121 +523,6 @@
 
     <hr class="divider" />
 
-    <section id="what">
-      <div class="wrap">
-        <div class="showcase">
-          <div class="showcase-art">
-            <div class="phone">
-              <video class="phone-video" muted playsinline loop preload="none" poster="clips/trailer.webp" data-src="clips/trailer.mp4" width="444" height="962" aria-label="The Casino Floor Live! App Store preview: friends in a conga line on the casino floor, blackjack, Ultimate Hold'em, craps, slots, Plinko, the Prize Wheel, and the Lounge."></video>
-              <button class="sound" type="button" aria-pressed="false">Sound on</button>
-            </div>
-          </div>
-          <div>
-            <span class="eyebrow">One floor, together</span>
-            <h2>Walk in, look around, sit down</h2>
-            <p>Casino Floor Live! is a whole casino you explore on foot with your friends. Wander past the tables, watch a stranger hit a jackpot, and pull up a seat wherever you like.</p>
-            <ul>
-              <li><strong>The floor comes alive.</strong> Join the conga line, grab an autograph, or catch the casino cat when it gets loose.</li>
-              <li><strong>Call anyone out.</strong> Challenge anybody on the floor to rock-paper-scissors for chips.</li>
-              <li><strong>More than tables.</strong> Hit the ATM, grab a round at the bar, order from the diner, or load up the jukebox.</li>
-              <li><strong>No clock, no pressure.</strong> No timer, no daily goal, no streak to keep. Stay as long as you like.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <section id="games">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">Every table in the house</span>
-          <h2 class="section-title">The games</h2>
-          <p class="section-sub">Every classic on one floor, each with real rules and real odds, just none of your real money.</p>
-        </div>
-        <div class="games">
-          <a class="game-chip" href="games.html#blackjack"><span><img src="sprites/emblems/aceCard.webp" alt="" width="128" height="128" /></span>Blackjack</a>
-          <a class="game-chip" href="games.html#holdem"><span><img src="sprites/emblems/spadeSuit.webp" alt="" width="128" height="128" /></span>Texas Hold'em Poker</a>
-          <a class="game-chip" href="games.html#ultimate"><span><img src="sprites/emblems/diamondSuit.webp" alt="" width="128" height="128" /></span>Ultimate Texas Hold'em</a>
-          <a class="game-chip" href="games.html#craps"><span><img src="sprites/emblems/dicePair.webp" alt="" width="128" height="128" /></span>Craps</a>
-          <a class="game-chip" href="games.html#video-poker"><span><img src="sprites/emblems/joker.webp" alt="" width="128" height="128" /></span>Video Poker</a>
-          <a class="game-chip" href="games.html#roulette"><span><img src="sprites/emblems/rouletteWheel.webp" alt="" width="128" height="128" /></span>Roulette</a>
-          <a class="game-chip" href="games.html#slots"><span><img src="sprites/emblems/slotMachine.webp" alt="" width="128" height="128" /></span>Slots</a>
-          <a class="game-chip" href="games.html#dice"><span><img src="sprites/emblems/jackpotBurst.webp" alt="" width="128" height="128" /></span>Dice</a>
-          <a class="game-chip" href="games.html#horses"><span><img src="sprites/emblems/racehorse.webp" alt="" width="128" height="128" /></span>Horse Racing</a>
-          <a class="game-chip" href="games.html#plinko"><span><img src="sprites/emblems/chipBurst.webp" alt="" width="128" height="128" /></span>Plinko</a>
-          <a class="game-chip" href="games.html#mines"><span><img src="sprites/emblems/vaultDoor.webp" alt="" width="128" height="128" /></span>Mines</a>
-        </div>
-        <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
-          <a href="games.html">See the rules and payouts for every game →</a>
-        </p>
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <section id="tables">
-      <div class="wrap">
-        <div class="showcase flip">
-          <div class="showcase-art">
-            <div class="phone">
-              <video class="phone-video" muted playsinline loop preload="none" poster="clips/blackjack.webp" data-src="clips/blackjack.mp4" width="444" height="964" aria-label="A blackjack hand: the player holds ace-king for blackjack, the dealer busts, and the table pays $125 on a $50 bet."></video>
-            </div>
-          </div>
-          <div>
-            <span class="eyebrow">Real rules, real odds</span>
-            <h2>Then play it straight</h2>
-            <p>Sit down and it's the game you know. Blackjack pays 3 to 2, the table has limits, the dealer plays by the book, and the odds are the ones you'd get in a real house.</p>
-            <ul>
-              <li><strong>Nothing is rigged for you.</strong> Real odds, win or lose. That's the whole point.</li>
-              <li><strong>Chips you can't buy.</strong> There is no purchase anywhere that tops up your stack.</li>
-              <li><strong>Talk at the table.</strong> Live chat and emotes while the hand plays out.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <hr class="divider" />
-
-    <section id="multiplayer">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">Better with friends</span>
-          <h2 class="section-title">One floor, ten friends</h2>
-          <p class="section-sub">Rooms hold up to 10 players, across iPhone, iPad and Apple Vision Pro. Jump onto the live floor, or open a private one and bring your crew.</p>
-        </div>
-        <div class="grid">
-          <div class="card">
-            <div class="ico"><img src="sprites/emblems/ensemble.webp" alt="" width="128" height="128" /></div>
-            <h3>Up to 10 in a room</h3>
-            <p>Fill a floor with your crew and crowd the same tables: poker, blackjack, craps and beyond.</p>
-          </div>
-          <div class="card">
-            <div class="ico"><img src="sprites/emblems/padlock.webp" alt="" width="128" height="128" /></div>
-            <h3>Private tables</h3>
-            <p>Open a private room and send the code or a link. Game Center is the only sign-in, and we never store your name on our servers.</p>
-          </div>
-          <div class="card">
-            <div class="ico"><img src="sprites/emblems/megaphone.webp" alt="" width="128" height="128" /></div>
-            <h3>Table talk</h3>
-            <p>Live chat keeps the trash-talk flowing, kept civil with an on-device filter, plus mute, block and report in a tap.</p>
-          </div>
-          <div class="card">
-            <div class="ico"><img src="sprites/emblems/maracas.webp" alt="" width="128" height="128" /></div>
-            <h3>The floor comes alive</h3>
-            <p>Conga lines, autographs, a cat on the loose: everyone in the room sees it happen, and everyone can join in.</p>
-          </div>
-        </div>
-        <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
-          <a href="play-with-friends.html">How playing with friends works →</a>
-        </p>
-      </div>
-    </section>
-
-    <hr class="divider" />
-
     <section id="vision">
       <div class="wrap">
         <div class="section-head">
@@ -645,7 +636,8 @@
   </footer>
 
   <script src="floor.js?v=20261015" defer></script>
-  <script src="tv.js?v=20261015" defer></script>
+  <script src="tv.js?v=20261020" defer></script>
   <script src="cast.js?v=20261015" defer></script>
+  <script src="games.js?v=20261020" defer></script>
 </body>
 </html>
