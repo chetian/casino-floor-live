@@ -37,8 +37,10 @@
        stands in elsewhere. Pirata One is the Battle Banquet's own blackletter
        (the app bundles the same font). -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;family=Pirata+One&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261020" />
+  <link rel="stylesheet" href="styles.css?v=20261020b" />
   <link rel="preload" as="image" href="sprites/emblem-crown.png" />
+  <!-- The set's first picture, before tv.js has asked for it. -->
+  <link rel="preload" as="image" href="tv/floor-1.webp" fetchpriority="high" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -156,7 +158,7 @@
           <div class="tv">
             <div class="tv-slab">
               <div class="tv-glass">
-                <video class="tv-pic" muted playsinline preload="auto" aria-hidden="true" disableremoteplayback></video>
+                <video class="tv-pic" muted playsinline preload="auto" poster="tv/floor-1.webp" aria-hidden="true" disableremoteplayback></video>
                 <video class="tv-pic hidden" muted playsinline preload="auto" aria-hidden="true" disableremoteplayback></video>
                 <canvas class="tv-snow" aria-hidden="true"></canvas>
                 <div class="tv-osd" aria-hidden="true"></div>
@@ -636,8 +638,8 @@
   </footer>
 
   <script src="floor.js?v=20261015" defer></script>
-  <script src="tv.js?v=20261020" defer></script>
-  <script src="cast.js?v=20261015" defer></script>
+  <script src="tv.js?v=20261020b" defer></script>
+  <script src="cast.js?v=20261020b" defer></script>
   <script src="games.js?v=20261020" defer></script>
 </body>
 </html>

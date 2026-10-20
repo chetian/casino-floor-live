@@ -410,6 +410,10 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.005em; line-height: 1.15; }
   background: #000;
 }
 .tv-pic.hidden { visibility: hidden; }
+/* A cut holds the last frame over the next picture until that one is on the
+   glass (tv.js); the set's own layers stay above both. */
+.tv-pic.held { z-index: 1; }
+.tv-snow, .tv-osd, .tv-power, .tv-hit { z-index: 2; }
 .tv-snow {
   position: absolute;
   inset: 0;

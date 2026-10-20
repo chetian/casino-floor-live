@@ -19,7 +19,11 @@ then (a race shot as the first channel on has none).
 The floor, the set's first channel, isn't the home TV: it's the friends'
 conga from the App Store preview's raw takes (~/Movies/cfl-promo/raw, the
 game repo's /promo-video skill), shot on the iPhone Duo, with its own crop —
-the floor between the HUD and the tab bar, at the glass's shape.
+the floor between the HUD and the tab bar, at the glass's shape. The set
+plays it a place at a time (floor-1, -2, -3, cut together by tv.js): Safari
+plays a clip only once it has all of it, so a phone on a slow line has West
+Hall moving after a third of the bytes. `floor` is the three joined. A clip
+with no card time gets no card.
 """
 import os
 import subprocess
@@ -28,13 +32,17 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'tv')
 CROP = 'crop=1752:1118:156:780'
+CONGA = '~/Movies/cfl-promo/raw/duo_conga'
+CONGA_CROP = 'crop=2162:1380:345:295'
 
 # clip -> (take, [(start, end), ...], card time within the clip[, crop])
 # A take is a name in the takes dir, or a path of its own.
 CLIPS = {
     # The floor before the shows: West Hall, the bar, the pit.
-    'floor': ('~/Movies/cfl-promo/raw/duo_conga', [(21.9, 25.6), (29.0, 33.0), (37.6, 41.6)], 5.9,
-              'crop=2162:1380:345:295'),
+    'floor': (CONGA, [(21.9, 25.6), (29.0, 33.0), (37.6, 41.6)], 5.9, CONGA_CROP),
+    'floor-1': (CONGA, [(21.9, 25.6)], None, CONGA_CROP),   # West Hall
+    'floor-2': (CONGA, [(29.0, 33.0)], None, CONGA_CROP),   # the bar
+    'floor-3': (CONGA, [(37.6, 41.6)], None, CONGA_CROP),   # the pit
     'banquet': ('banquet', [(5.9, 14.1)], 2.4),            # the joust: Glancing Blow, Sir Tex Advances
     'fight': ('boxing', [(36.0, 43.95)], 4.3),             # KNOCKDOWN!, then the count
     'drag': ('drag', [(5.9, 14.15)], 5.0),                 # the tree, the launch, HOLESHOT!
@@ -74,9 +82,11 @@ def encode(takes, name):
          '-map', '[small]', *x264, '-crf', '28', f'{OUT}/{name}-sm.mp4'])
     run(['ffmpeg', '-v', 'error', '-y', '-i', f'{OUT}/{name}.mp4', '-frames:v', '1',
          '-c:v', 'libwebp', '-quality', '72', f'{OUT}/{name}.webp'])
-    run(['ffmpeg', '-v', 'error', '-y', '-ss', str(card), '-i', f'{OUT}/{name}.mp4', '-frames:v', '1',
-         '-vf', 'scale=480:-2:flags=lanczos', '-c:v', 'libwebp', '-quality', '76', f'{OUT}/{name}-card.webp'])
-    sizes = [os.path.getsize(f'{OUT}/{name}{s}') // 1024 for s in ('.mp4', '-sm.mp4', '.webp', '-card.webp')]
+    if card is not None:
+        run(['ffmpeg', '-v', 'error', '-y', '-ss', str(card), '-i', f'{OUT}/{name}.mp4', '-frames:v', '1',
+             '-vf', 'scale=480:-2:flags=lanczos', '-c:v', 'libwebp', '-quality', '76', f'{OUT}/{name}-card.webp'])
+    sizes = [os.path.getsize(f'{OUT}/{name}{s}') // 1024 for s in ('.mp4', '-sm.mp4', '.webp', '-card.webp')
+             if os.path.exists(f'{OUT}/{name}{s}')]
     print(f'{name}: {sizes} KB')
 
 

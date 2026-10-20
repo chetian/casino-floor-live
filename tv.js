@@ -36,13 +36,18 @@
      (HouseLook.accentPale). The security feed isn't live television, so its
      line has no red dot. It and the floor name each place as the picture
      cuts to it. The floor isn't one of the app's channels: it's the site's
-     own, the room before the shows, held for its whole clip (`dwell`). */
+     own, the room before the shows, three places long. Each place is a clip
+     of its own and a `cut` of the same channel — no snow, no number — so a
+     phone has West Hall moving after a third of the floor's bytes (Safari
+     plays a clip only once it has all of it). */
   var HOUSE = { live: true };
   var CAM = { live: false, tint: '#8CBFA6', pale: 'rgba(255, 247, 228, 0.7)' };
+  var FLOOR = { ch: 1, name: 'THE FLOOR', live: true, tint: '#4BD07A', pale: '#DDF8E6' };
   function ch(o, base) { for (var k in base) if (!(k in o)) o[k] = base[k]; return o; }
   var CHANNELS = [
-    ch({ ch: 1, name: 'THE FLOOR', clip: 'floor', tint: '#4BD07A', pale: '#DDF8E6', dwell: 12000,
-         cams: [[0, 'WEST HALL'], [3.7, 'THE BAR'], [7.7, 'THE PIT']] }, HOUSE),
+    ch({ clip: 'floor-1', cams: [[0, 'WEST HALL']], dwell: 3700 }, FLOOR),
+    ch({ clip: 'floor-2', cams: [[0, 'THE BAR']], dwell: 4000, cut: true }, FLOOR),
+    ch({ clip: 'floor-3', cams: [[0, 'THE PIT']], dwell: 4000, cut: true }, FLOOR),
     ch({ ch: 2, name: 'BATTLE BANQUET', clip: 'banquet', tint: '#F7C948', pale: '#FFDF7E' }, HOUSE),
     ch({ ch: 7, name: 'EYE IN THE SKY', clip: 'cam-doors', cams: [[0, 'CAM 01 · THE DOORS'], [3.5, 'CAM 02 · THE PIT']] }, CAM),
     ch({ ch: 3, name: 'THE JACKPOT RUN', clip: 'rally', tint: '#FFD23F', pale: '#F4E9D0' }, HOUSE),
@@ -158,49 +163,95 @@
     if (stills) return;
     video.muted = true;
     var p = video.play();
-    if (p && p.catch) p.catch(function () { /* autoplay refused: the poster stands */ });
+    // Autoplay refused (a phone in Low Power Mode): the poster stands, for
+    // the channel's time.
+    if (p && p.catch) p.catch(function () { if (video === pics[front] && running) schedule(video); });
   }
 
+  function next() { return CHANNELS[(index + 1) % CHANNELS.length]; }
+
+  // Once the video has a frame on the glass (or it's plainly not coming).
+  function onFrame(video, fn) {
+    var done = false;
+    function go() { if (!done) { done = true; fn(); } }
+    if (video.requestVideoFrameCallback) video.requestVideoFrameCallback(go);
+    else video.addEventListener('timeupdate', go, { once: true });
+    setTimeout(go, 600);
+  }
+
+  /* A channel holds for its picture's time, counted from when the picture
+     moves: a clip still on its way holds the set until its first frame. */
+  var waiting = null;
   function schedule(video) {
     clearTimeout(timer);
+    waiting = null;
     if (!running || stills && reduceMotion) return;
     var dwell = CHANNELS[index].dwell || DWELL;
     var wait = dwell;
-    if (!stills && video.duration && isFinite(video.duration)) {
-      wait = Math.max(MIN_DWELL, Math.min(dwell, (video.duration - (video.currentTime || 0)) * 1000 - 120));
+    if (!stills && !video.paused && !video.error) {
+      if (video.readyState < 3) {
+        waiting = video;
+        wait = 20000;      // one that never comes is passed over
+      } else {
+        var left = (video.duration - video.currentTime) * 1000;
+        // The next place cuts in on this one's last frame (`ended`); the
+        // timer only catches a picture that stopped short.
+        wait = next().cut ? left + 600 : Math.max(MIN_DWELL, Math.min(dwell, left - 120));
+      }
     }
     timer = setTimeout(function () { tune(index + 1); }, wait);
   }
+  pics.forEach(function (video) {
+    // moving now, or never (a clip that failed holds as a still)
+    function arrived() { if (video === waiting && video === pics[front]) schedule(video); }
+    video.addEventListener('playing', arrived);
+    video.addEventListener('error', arrived);
+  });
 
   var swapTimer = null;
-  function tune(next, user) {
-    index = (next + CHANNELS.length) % CHANNELS.length;
+  function tune(to, user) {
+    index = (to + CHANNELS.length) % CHANNELS.length;
     var c = CHANNELS[index];
+    var cut = c.cut && !user;
     var incoming = pics[1 - front];
     var outgoing = pics[front];
     front = 1 - front;
     clearTimeout(timer);
     load(incoming, c);
-    burst();
-    showOSD(c);
+    if (!cut) {
+      burst();
+      showOSD(c);
+    }
     show(c);
-    // The swap lands under the snow, a frame in.
-    clearTimeout(swapTimer);
-    swapTimer = setTimeout(function () {
+    function swap() {
       incoming.classList.remove('hidden');
-      outgoing.classList.add('hidden');
       outgoing.pause();
       try { incoming.currentTime = 0; } catch (e) { /* not loaded yet */ }
       if (running) play(incoming);
       tunedAt = Date.now();
-      // Warm the next channel on the set that just went dark.
-      load(outgoing, CHANNELS[(index + 1) % CHANNELS.length]);
-      if (stills || incoming.readyState >= 1) schedule(incoming);
-      else incoming.addEventListener('loadedmetadata', function once() {
-        incoming.removeEventListener('loadedmetadata', once);
-        if (pics[front] === incoming) schedule(incoming);
-      });
-    }, stills ? 0 : 60);
+      schedule(incoming);
+      if (cut && !stills) {
+        // The last frame holds over the next place until that one is on
+        // the glass: Safari shows a video it has just unhidden black for a
+        // frame or two.
+        outgoing.classList.add('held');
+        onFrame(incoming, function () {
+          outgoing.classList.remove('held');
+          if (pics[front] === incoming) dark();
+        });
+      } else {
+        dark();
+      }
+      function dark() {
+        outgoing.classList.add('hidden');
+        // Warm the next channel on the set that just went dark.
+        load(outgoing, next());
+      }
+    }
+    // The swap lands under the snow, a frame in; the next place, at once.
+    clearTimeout(swapTimer);
+    if (cut || stills) swap();
+    else swapTimer = setTimeout(swap, 60);
     if (user) {
       tv.classList.add('pressed');
       setTimeout(function () { tv.classList.remove('pressed'); }, 140);
@@ -231,32 +282,37 @@
   load(pics[0], first);
   show(first);
   // The next channel warms up only once the first is on the glass, so the
-  // page's first moments spend their bandwidth on one picture.
+  // page's first moments spend their bandwidth on one picture; the next
+  // place of the floor at once, since it cuts in when the first ends.
   function warmNext() {
-    if (front === 0 && !pics[1].dataset.clip) load(pics[1], CHANNELS[(index + 1) % CHANNELS.length]);
+    if (front === 0 && !pics[1].dataset.clip) load(pics[1], next());
   }
   pics[0].addEventListener('playing', function once() {
     pics[0].removeEventListener('playing', once);
-    setTimeout(warmNext, 1200);
+    setTimeout(warmNext, next().cut ? 0 : 1200);
   });
-  setTimeout(warmNext, 6000);
+  setTimeout(function () {
+    var v = pics[0];
+    if (v.readyState >= 3 || v.paused || v.error) warmNext();   // not while the first is still coming
+  }, 6000);
 
   function powerOn() {
     tv.classList.add('powered');
     running = true;
     tunedAt = Date.now();
     play(pics[0]);
-    if (stills || pics[0].readyState >= 1) schedule(pics[0]);
-    else pics[0].addEventListener('loadedmetadata', function once() {
-      pics[0].removeEventListener('loadedmetadata', once);
-      if (front === 0) schedule(pics[0]);
-    });
+    schedule(pics[0]);
   }
   // A beat after the page settles, the way the home screen's set waits for
   // the arrival cascade.
   setTimeout(powerOn, 350);
 
-  function change() { tune(index + 1, true); }
+  // A click changes the channel: past the floor's other places, too.
+  function change() {
+    var to = index + 1;
+    while (CHANNELS[to % CHANNELS.length].cut) to++;
+    tune(to, true);
+  }
   if (hit) hit.addEventListener('click', change);
   if (headNext) headNext.addEventListener('click', change);
 
@@ -270,11 +326,13 @@
     });
   });
 
-  // A clip that runs out early hands over at once.
+  // A clip that runs out early hands over at once; the floor's next place
+  // cuts in on the last frame.
   pics.forEach(function (video) {
     video.addEventListener('ended', function () {
-      if (video === pics[front] && running && Date.now() - tunedAt > MIN_DWELL) tune(index + 1);
-      else if (video === pics[front]) { try { video.currentTime = 0; } catch (e) {} play(video); }
+      if (video !== pics[front]) return;
+      if (running && (next().cut || Date.now() - tunedAt > MIN_DWELL)) tune(index + 1);
+      else { try { video.currentTime = 0; } catch (e) {} play(video); }
     });
   });
 

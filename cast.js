@@ -264,15 +264,32 @@
     }
   }
 
-  // Open on a legendary, picked at random — the ones that move.
+  // Open on a legendary, picked at random — the ones that move — once the
+  // spotlight is a screen away: their sheets are the page's heaviest
+  // pictures, and the hero's TV shouldn't wait behind them.
   var legends = cards.filter(function (c) { return c.classList.contains('legendary'); });
-  select((legends.length ? legends : cards)[(Math.random() * (legends.length || cards.length)) | 0], true);
+  function open() {
+    if (current) return;
+    select((legends.length ? legends : cards)[(Math.random() * (legends.length || cards.length)) | 0], true);
+    if (!shown) {      // still off screen: it holds still until it's seen
+      stopFX();
+      clearInterval(petTimer);
+      petTimer = null;
+    }
+  }
 
   if ('IntersectionObserver' in window) {
+    var near = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      near.disconnect();
+      open();
+    }, { rootMargin: '100% 0px' });
+    near.observe(spotlight);
     new IntersectionObserver(function (entries) {
       wake(entries[0].isIntersecting);
     }, { threshold: 0.1 }).observe(spotlight);
   } else {
+    open();
     wake(true);
   }
 

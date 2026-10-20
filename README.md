@@ -54,11 +54,22 @@ with a brass hairline, the picture's light round it in the show's colour, a
 CRT line when it comes on, and on every channel change a burst of snow and
 the channel number in old-set green (`ChannelFlipNode`). `tv.js` comes on to
 THE FLOOR — the site's own CH 01, friends in the conga line past West Hall's
-slots, the bar and the pit, held for its whole clip — then surfs the app's own
-lineup: the house show on CH 02, THE BIG RACE on CH 03, EYE IN THE SKY on
-CH 07, with the app's words for each. It is silent, like the app's home set.
-Phones get the 768-wide clips; posters only under reduced motion or
-Save-Data, where the set stays on the floor.
+slots, the bar and the pit — then surfs the app's own lineup: the house show
+on CH 02, THE BIG RACE on CH 03, EYE IN THE SKY on CH 07, with the app's words
+for each. It is silent, like the app's home set. Phones get the 768-wide
+clips; posters only under reduced motion (where the set stays on the floor)
+or Save-Data.
+
+The first picture is the one a visitor waits on, so it's built to arrive
+first. Safari plays a clip only once it has all of it, so the floor is three
+clips, one a place (`floor-1`, `-2`, `-3`), cut together with no snow: a phone
+on a slow line has West Hall moving after a third of the bytes, and the next
+place loads while it plays; at each cut the last frame holds until the next
+is on the glass, because Safari shows a video it has just unhidden black for
+a frame. The first still is in the page and preloaded, so the set comes on
+to the floor, not to black. A channel's time counts from when its picture
+moves, never from when it was asked for. The cast wall's spotlight loads its
+legendary only a screen away (`cast.js`), off the TV's line.
 
 The TV guide's little sets (`#tv`) play their clip on hover, focus or tap.
 
@@ -126,9 +137,9 @@ the floor's own cameras only.
 THE FLOOR isn't a TV take: `tv-encode.py` cuts it from the iPhone Duo App
 Store preview's conga take (`~/Movies/cfl-promo/raw/duo_conga.mp4`, see the
 game repo's `/promo-video` skill) with a crop of its own that leaves out the
-HUD and the tab bar. Its place names (`cams` on CH 01 in `tv.js`) are timed to
-the cuts in that window; move one and re-time the other.
-`python3 tools/tv-encode.py ~/Movies/cfl-site-tv floor` cuts it alone.
+HUD and the tab bar. Each place is one window of the take and one entry in
+`tv.js`, named there. `python3 tools/tv-encode.py ~/Movies/cfl-site-tv floor-1
+floor-2 floor-3` cuts them; `floor` is the three joined, the set's first cut.
 
 ### The game picker
 
