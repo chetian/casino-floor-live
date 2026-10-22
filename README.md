@@ -294,14 +294,14 @@ ChatGPT and Copilot search.
   tests; putting them on the site is a business decision, not a copy one.
 
 ## Live URLs (custom domain, see `CNAME`)
-- Home: https://casinofloorlive.app/
-- Games: https://casinofloorlive.app/games.html
-- Multiplayer: https://casinofloorlive.app/play-with-friends.html
-- Vision Pro: https://casinofloorlive.app/vision-pro.html
-- Privacy: https://casinofloorlive.app/privacy.html
-- Support: https://casinofloorlive.app/support.html
-- Terms: https://casinofloorlive.app/terms.html
-- Age Suitability: https://casinofloorlive.app/age-rating.html
+- Home: https://casinofloor.live/
+- Games: https://casinofloor.live/games
+- Multiplayer: https://casinofloor.live/play-with-friends
+- Vision Pro: https://casinofloor.live/vision-pro
+- Privacy: https://casinofloor.live/privacy
+- Support: https://casinofloor.live/support
+- Terms: https://casinofloor.live/terms
+- Age Suitability: https://casinofloor.live/age-rating
 
 ## Notes for App Store Connect
 - **Privacy Policy URL** → the privacy.html link above.

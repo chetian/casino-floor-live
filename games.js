@@ -82,7 +82,7 @@
     pills[0].textContent = pill[0];
     pills[1].textContent = pill[1];
     lineEl.textContent = card.getAttribute('data-line');
-    rulesEl.href = 'games.html#' + card.getAttribute('data-game');
+    rulesEl.href = '/games#' + card.getAttribute('data-game');
     video.setAttribute('aria-label', card.getAttribute('data-alt'));
     load(byHand);
   }

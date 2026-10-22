@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://casinofloorlive.app/sitemap.xml
+Sitemap: https://casinofloor.live/sitemap.xml
