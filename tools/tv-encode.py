@@ -24,6 +24,13 @@ plays it a place at a time (floor-1, -2, -3, cut together by tv.js): Safari
 plays a clip only once it has all of it, so a phone on a slow line has West
 Hall moving after a third of the bytes. `floor` is the three joined. A clip
 with no card time gets no card.
+
+What's new comes on first, as the app's home set opens on its showcase
+(ChannelLineup.showcase): since v1.3, CAM 14 on the coin pushers, from the
+2026-11-01 take `pushers` (tools/tv-take.sh pushers 50 banquet,banquet rally
+225 CFL_DEBUG_HOME_CAM=pushers — the set pinned on the one camera, so no
+channel readout). It plays a place at a time too: cam-pushers-1, -2, -3 are
+one shot in three, so their cuts don't show; `cam-pushers` is the whole.
 """
 import os
 import subprocess
@@ -38,6 +45,12 @@ CONGA_CROP = 'crop=2162:1380:345:295'
 # clip -> (take, [(start, end), ...], card time within the clip[, crop])
 # A take is a name in the takes dir, or a path of its own.
 CLIPS = {
+    # New on the floor (v1.3): CAM 14 on the coin pushers, ten seconds, the
+    # app's opening dwell. The tower coin turns, and BIG TOP's sign flares at 22.
+    'cam-pushers': ('pushers', [(14.0, 24.2)], 7.8),
+    'cam-pushers-1': ('pushers', [(14.0, 17.4)], None),
+    'cam-pushers-2': ('pushers', [(17.4, 20.8)], None),
+    'cam-pushers-3': ('pushers', [(20.8, 24.2)], None),
     # The floor before the shows: West Hall, the bar, the pit.
     'floor': (CONGA, [(21.9, 25.6), (29.0, 33.0), (37.6, 41.6)], 5.9, CONGA_CROP),
     'floor-1': (CONGA, [(21.9, 25.6)], None, CONGA_CROP),   # West Hall

@@ -1129,5 +1129,122 @@
     "tagline" : "Never walks anywhere. Rolls in when he feels like it.",
     "tier" : "earned",
     "tint" : "#F2842B"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : {
+      "frames" : 12,
+      "periodMs" : 100
+    },
+    "id" : "soda-sundae",
+    "name" : "Sundae",
+    "pet" : {
+      "frames" : 12,
+      "periodMs" : 90,
+      "scalePct" : 38
+    },
+    "pusher" : "SWEET SHOP",
+    "rarity" : "legendary",
+    "rarityLabel" : "LEGENDARY",
+    "set" : "sweetShop",
+    "setTitle" : "Sweet Shop",
+    "tagline" : "Three scoops, one cone. Hasn't dropped one yet.",
+    "tier" : "pusher",
+    "tint" : "#F2842B"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : null,
+    "id" : "gummy-gummo",
+    "name" : "Gummo",
+    "pet" : null,
+    "pusher" : "SWEET SHOP",
+    "rarity" : "rare",
+    "rarityLabel" : "RARE",
+    "set" : "sweetShop",
+    "setTitle" : "Sweet Shop",
+    "tagline" : "Squishes under pressure. Bounces right back.",
+    "tier" : "pusher",
+    "tint" : "#4B9BF5"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : {
+      "frames" : 12,
+      "periodMs" : 70
+    },
+    "id" : "ringmaster-monty",
+    "name" : "Monty",
+    "pet" : {
+      "frames" : 12,
+      "periodMs" : 90,
+      "scalePct" : 38
+    },
+    "pusher" : "BIG TOP",
+    "rarity" : "legendary",
+    "rarityLabel" : "LEGENDARY",
+    "set" : "bigTop",
+    "setTitle" : "Big Top",
+    "tagline" : "Announces every hand like it's the main event.",
+    "tier" : "pusher",
+    "tint" : "#F2842B"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : null,
+    "id" : "monkey-bingo",
+    "name" : "Bingo",
+    "pet" : null,
+    "pusher" : "BIG TOP",
+    "rarity" : "rare",
+    "rarityLabel" : "RARE",
+    "set" : "bigTop",
+    "setTitle" : "Big Top",
+    "tagline" : "Works for peanuts. Holding out for chips.",
+    "tier" : "pusher",
+    "tint" : "#4B9BF5"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : {
+      "frames" : 14,
+      "periodMs" : 80
+    },
+    "id" : "mermaid-coral",
+    "name" : "Coral",
+    "pet" : {
+      "frames" : 12,
+      "periodMs" : 100,
+      "scalePct" : 34
+    },
+    "pusher" : "TREASURE COVE",
+    "rarity" : "legendary",
+    "rarityLabel" : "LEGENDARY",
+    "set" : "treasureCove",
+    "setTitle" : "Treasure Cove",
+    "tagline" : "Swims laps round the high-limit room.",
+    "tier" : "pusher",
+    "tint" : "#F2842B"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : null,
+    "id" : "diver-fathom",
+    "name" : "Fathom",
+    "pet" : null,
+    "pusher" : "TREASURE COVE",
+    "rarity" : "rare",
+    "rarityLabel" : "RARE",
+    "set" : "treasureCove",
+    "setTitle" : "Treasure Cove",
+    "tagline" : "Went down for a dropped chip. Came up with a doubloon.",
+    "tier" : "pusher",
+    "tint" : "#4B9BF5"
   }
 ]

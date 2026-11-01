@@ -126,6 +126,7 @@ RELAY_HOUSE_OFF=banquet,boxing,drag tools/tv-take.sh rally2 22 banquet,banquet r
 RELAY_HOUSE_OFF=banquet,boxing,drag tools/tv-take.sh moto2 22 boxing,boxing moto 526
 RELAY_HOUSE_OFF=banquet,boxing,drag tools/tv-take.sh tri2 22 drag,drag tri 1194
 tools/tv-take.sh cams 52 banquet,banquet rally 225 CFL_DEBUG_HOME_CAM=all
+tools/tv-take.sh pushers 50 banquet,banquet rally 225 CFL_DEBUG_HOME_CAM=pushers   # CAM 14, pinned
 python3 tools/tv-encode.py ~/Movies/cfl-site-tv
 ```
 
@@ -133,6 +134,13 @@ The windows in `tv-encode.py` fit the 2026-10-15 takes; read a contact sheet
 of any new take before cutting it. No real-world teams or games ever go on
 this set — v1.1 ships with real games off, and the clips are house shows and
 the floor's own cameras only.
+
+The set comes on to what's new, as the app's home set does
+(`ChannelLineup.showcase`): since v1.3, CAM 14 on the coin pushers, from the
+`pushers` take (2026-11-01), in three clips the way the floor is
+(`cam-pushers-1`, `-2`, `-3`), under the app's own guide line, NEW ON THE
+FLOOR · COIN PUSHERS. The next new game takes that slot: film its camera
+pinned, cut it in three, and point the first three entries in `tv.js` at it.
 
 THE FLOOR isn't a TV take: `tv-encode.py` cuts it from the iPhone Duo App
 Store preview's conga take (`~/Movies/cfl-promo/raw/duo_conga.mp4`, see the
@@ -144,7 +152,7 @@ floor-2 floor-3` cuts them; `floor` is the three joined, the set's first cut.
 ### The game picker
 
 `#games`, the first section after the hero, is the cast wall's pattern for
-the games: a phone in the spotlight and a wall of eleven cards. Left alone,
+the games: a phone in the spotlight and a wall of twelve cards. Left alone,
 the phone deals the whole floor in turn, holding each payoff a beat; a pick
 stays on that game (`games.js`). Each game's words — its two pills, its line,
 the clip's description for screen readers — are `data-*` on its card in
@@ -162,7 +170,7 @@ writes `games/<game>.mp4` (520 wide, silent), the payoff still
 Save-Data) and the wall's square `games/<game>-card.webp`:
 
 ```sh
-python3 tools/game-clips.py                  # all eleven
+python3 tools/game-clips.py                  # all twelve
 python3 tools/game-clips.py roulette mines   # just these
 ```
 
@@ -186,6 +194,26 @@ bench never cashes out (the clip digs four gems, then finds a mine), and the
 horse racing clip ends on the OFFICIAL board with your ticket out of the
 money. The windows in `game-clips.py` fit these takes; a re-shoot moves every
 moment, so read a contact sheet of the new take first.
+
+The coin pushers (2026-11-01) can be rigged: one lit SPINS lamp and every
+CHANCE spin landing on JACKPOT, with a wallet that doesn't run dry. The
+CHANCE SPIN! that leads to the clip's jackpot comes at 16.4 s:
+
+```sh
+./shoot.sh web_pusher2 30 CFL_DEBUG_GAME=coinPusher CFL_DEBUG_PUSHER_THEME=treasureCove CFL_DEBUG_AUTOSPIN=1 CFL_DEBUG_PUSHER_BONUS=jackpot CFL_DEBUG_PUSHER_STOCK=1 CFL_DEBUG_PUSHER_SHOWCASE=1 CFL_DEBUG_CASH=25000 CFL_DEBUG_BRO=ace
+```
+
+The coin pushers are the wall's first card and the phone's first game, being
+the newest; the next new game takes that place.
+
+### Latest
+
+`#latest` is the app's own What's New (`CasinoNews` in the game repo,
+`CasinoCore/Sources/CasinoCore/Session/NewsFeed.swift`), newest first: the
+newest release open beside its set (the showcase camera's clip, playing on
+hover like the guide's), the earlier ones folded a version a row. When a
+release ships, put its entry on top, fold the one it replaces, and drop any
+line that only made sense on the day ("every drop so far is out now").
 
 ### The phones
 

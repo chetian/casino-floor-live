@@ -1544,3 +1544,50 @@ section { padding: 72px 0; }
   .crown, .crown-mark, .on-air-dot, .play-caption .dot, .play-card::after,
   .marquee-track, .marquee::before, .marquee::after, .figure .pet { animation: none !important; }
 }
+
+/* ---------- Latest: what each update brought ----------
+   The newest is a note card with its set (CAM 14, playing on hover like the
+   guide's); the earlier ones fold, a version a row, the way the app's What's
+   New keeps them a tap away. */
+.update {
+  display: grid;
+  grid-template-columns: minmax(240px, 400px) 1fr;
+  gap: 26px;
+  align-items: center;
+  padding: 22px;
+}
+.update-ver { display: flex; align-items: center; gap: 8px; margin: 0 0 10px !important; }
+.pill.new { color: var(--live-red); }
+.note-card.update h3 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0; }
+.update-tag { margin: 4px 0 0 !important; color: var(--cream) !important; font-style: italic; }
+.update ul,
+.update-past ul { margin: 12px 0 0; padding-left: 1.15em; color: var(--cream-dim); font-size: 0.95rem; line-height: 1.5; }
+.update li,
+.update-past li { margin: 5px 0; }
+.update-links { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 14px 0 0 !important; font-size: 0.9rem !important; font-weight: 800; }
+.update-past { display: grid; gap: 10px; margin-top: 14px; }
+.update-past details {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(17, 48, 32, 0.7), rgba(8, 24, 16, 0.8));
+  padding: 12px 18px;
+}
+.update-past summary {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--cream-dim);
+  font-size: 0.92rem;
+}
+.update-past summary::-webkit-details-marker { display: none; }
+.update-past summary b { color: var(--showroom); letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.96rem; margin-right: 4px; }
+.update-past summary::after { content: "+"; color: var(--gold); font-weight: 900; font-size: 1.1rem; line-height: 1; }
+.update-past details[open] summary::after { content: "\2212"; }
+.update-past ul { padding-bottom: 4px; }
+@media (max-width: 760px) {
+  .update { grid-template-columns: 1fr; gap: 18px; padding: 16px; }
+  .update-past details { padding: 11px 14px; }
+}

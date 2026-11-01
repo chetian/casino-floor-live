@@ -27,7 +27,8 @@ OUT = os.path.join(ROOT, 'sprites', 'cast')
 
 # The tabs, in the order the app's collection screen cuts the cast. The four
 # Throwback legendaries are four sets of one in the app; on the wall they're
-# one shelf, the season they come from.
+# one shelf, the season they come from. The coin pushers' cast is three sets
+# of two, a machine each; on the wall, one shelf too.
 SHELVES = [
     ('houseRegulars', 'House Regulars'),
     ('critters', 'The Critters'),
@@ -37,8 +38,10 @@ SHELVES = [
     ('fantasyTavern', 'Fantasy Tavern'),
     ('halloween', 'Halloween'),
     ('throwback', 'The Throwback Season'),
+    ('coinPushers', 'The Coin Pushers'),
 ]
 THROWBACK = {'sixties', 'seventies', 'eighties', 'nineties'}
+PUSHERS = {'sweetShop', 'bigTop', 'treasureCove'}
 
 # What each character is, for alt text and search: "Mordrin, the wizard".
 WHO = {
@@ -69,6 +72,9 @@ WHO = {
     'reaper-mort': 'the reaper',
     'hippie-daisy': 'the flower child', 'disco-boogie': 'the disco king',
     'synth-roxy': 'the synth star', 'blader-jett': 'the rollerblader',
+    'soda-sundae': 'the soda fountain server', 'gummy-gummo': 'the gummy bear',
+    'ringmaster-monty': 'the ringmaster', 'monkey-bingo': 'the monkey in a fez',
+    'mermaid-coral': 'the mermaid', 'diver-fathom': 'the deep-sea diver',
 }
 
 
@@ -85,6 +91,8 @@ def door(e):
         return f"Earned with the {e['badge']} badge: {blurb}" if blurb else f"Earned with the {e['badge']} badge."
     if tier == 'pack':
         return f"Only in the {e['pack']} pack. Never on the wheel, never for chips."
+    if tier == 'pusher':
+        return f"Only at the {e['pusher']} coin pusher: push their box over the edge. Never on the wheel, never for sale."
     return ''
 
 
@@ -107,7 +115,9 @@ def main(dump):
     shutil.copy(os.path.join(dump, 'cast.json'), os.path.join(OUT, 'cast.json'))
 
     def shelf(e):
-        return 'throwback' if e['set'] in THROWBACK else e['set']
+        if e['set'] in THROWBACK:
+            return 'throwback'
+        return 'coinPushers' if e['set'] in PUSHERS else e['set']
 
     counts = {key: sum(1 for e in cast if shelf(e) == key) for key, _ in SHELVES}
     legends = sum(1 for e in cast if e['rarity'] == 'legendary')
@@ -128,6 +138,8 @@ def main(dump):
         set_title = 'The Throwback Season' if e['set'] in THROWBACK else e['setTitle']
         if e['set'] in THROWBACK:
             set_title = f"{e['setTitle']} · Throwback"
+        if e['set'] in PUSHERS:
+            set_title = f"{e['setTitle']} · Coin Pusher"
         attrs = {
             'data-id': i,
             'data-name': e['name'],

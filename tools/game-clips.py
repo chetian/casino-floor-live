@@ -15,9 +15,11 @@ preview's own delogo, so the CSS frame's island sits on it), resampled to
   <game>-card.webp  a square of the game at its best moment, 320 px: the
                     wall's card
 
-The windows below fit the takes of 2026-10-01 (bj, uth, craps, slots, plinko)
-and 2026-10-19 (web_*). A re-shoot moves every moment, so read a contact
-sheet of the new take first.
+The windows below fit the takes of 2026-10-01 (bj, uth, craps, slots, plinko),
+2026-10-19 (web_*) and 2026-11-01 (web_pusher2: CFL_DEBUG_GAME=coinPusher
+CFL_DEBUG_PUSHER_THEME=treasureCove CFL_DEBUG_AUTOSPIN=1 CFL_DEBUG_PUSHER_BONUS=jackpot
+CFL_DEBUG_PUSHER_STOCK=1 CFL_DEBUG_PUSHER_SHOWCASE=1 CFL_DEBUG_CASH=25000). A
+re-shoot moves every moment, so read a contact sheet of the new take first.
 """
 import os
 import subprocess
@@ -43,6 +45,7 @@ GAMES = {
     'video-poker': ('web_vp', [(14.5, 15.4), (16.9, 24.4)], 22.0, 22.0, 200),  # deal, hold two (the wait cut), 2x JACKS OR BETTER
     'plinko': ('plinko', [(9.2, 16.3)], 15.3, 12.4, 200),                # ten balls, WIN $104
     'mines': ('web_mines', [(14.4, 25.0)], 23.0, 23.0, 350),            # four gems to $160, then BOOM (the bench never banks)
+    'coin-pusher': ('web_pusher2', [(14.4, 21.9)], 19.6, 19.6, 960),    # Treasure Cove: CHANCE SPIN!, three crowns, JACKPOT! +$5,000
 }
 
 
