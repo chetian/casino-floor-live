@@ -1246,5 +1246,92 @@
     "tagline" : "Went down for a dropped chip. Came up with a doubloon.",
     "tier" : "pusher",
     "tint" : "#4B9BF5"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : {
+      "frames" : 20,
+      "periodMs" : 90
+    },
+    "id" : "hustler-lefty",
+    "name" : "Lefty",
+    "pet" : {
+      "frames" : 20,
+      "periodMs" : 85,
+      "scalePct" : 36
+    },
+    "rarity" : "legendary",
+    "rarityLabel" : "LEGENDARY",
+    "set" : "hustle",
+    "setTitle" : "The Hustle",
+    "shellGame" : "LEFTY'S SPECIAL",
+    "tagline" : "Three cups, one prize. The left hand is the quick one.",
+    "tier" : "shellGame",
+    "tint" : "#F2842B"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : null,
+    "id" : "shill-winston",
+    "name" : "Winston",
+    "pet" : null,
+    "rarity" : "rare",
+    "rarityLabel" : "RARE",
+    "set" : "hustle",
+    "setTitle" : "The Hustle",
+    "shellGame" : "HIGH STAKES",
+    "tagline" : "Wins every time he plays. Funny, that.",
+    "tier" : "shellGame",
+    "tint" : "#4B9BF5"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : null,
+    "id" : "raccoon-rascal",
+    "name" : "Rascal",
+    "pet" : null,
+    "rarity" : "rare",
+    "rarityLabel" : "RARE",
+    "set" : "hustle",
+    "setTitle" : "The Hustle",
+    "shellGame" : "HIGH STAKES",
+    "tagline" : "Came for the buffet. Left with your watch.",
+    "tier" : "shellGame",
+    "tint" : "#4B9BF5"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : null,
+    "id" : "lookout-scout",
+    "name" : "Scout",
+    "pet" : null,
+    "rarity" : "uncommon",
+    "rarityLabel" : "UNCOMMON",
+    "set" : "hustle",
+    "setTitle" : "The Hustle",
+    "shellGame" : "THE REAL DEAL",
+    "tagline" : "Sees the pit boss coming from across the floor.",
+    "tier" : "shellGame",
+    "tint" : "#4BD07A"
+  },
+  {
+    "drop" : 1,
+    "dropTitle" : "Opening Night",
+    "fx" : null,
+    "id" : "watchman-tick",
+    "name" : "Tick",
+    "pet" : null,
+    "rarity" : "uncommon",
+    "rarityLabel" : "UNCOMMON",
+    "set" : "hustle",
+    "setTitle" : "The Hustle",
+    "shellGame" : "THE REAL DEAL",
+    "tagline" : "Has the time. Has several, up each sleeve.",
+    "tier" : "shellGame",
+    "tint" : "#4BD07A"
   }
 ]

@@ -2,14 +2,14 @@
  *
  * The home screen's set (`TVSetNode` around `ChannelSurferNode`), on the web.
  * Nobody works it: it comes on to what's new on the floor, the way the app's
- * set opens on its showcase (`ChannelLineup.showcase`) — since v1.3, CAM 14 on
- * the coin pushers — then to the floor itself — friends in the conga line,
- * past the slots, the bar and the tables — then surfs by itself, a channel
- * every few seconds: the house show on 2, THE BIG RACE on 3, and EYE IN THE
- * SKY, the floor's security feed, on 7. Every change is a burst of
- * analogue snow and the channel's number in old-set green, the picture's
- * light round the set in the show's own colour, and a CRT's line when it
- * comes on.
+ * set opens on its showcase (`ChannelLineup.showcase`) — since v1.4, CAM 15 on
+ * baccarat, then CAM 16 on Lefty's cart — then to the floor itself — friends
+ * in the conga line, past the slots, the bar and the tables — then surfs by
+ * itself, a channel every few seconds: the house show on 2, THE BIG RACE on
+ * 3, and EYE IN THE SKY, the floor's security feed, on 7. Every change is a
+ * burst of analogue snow and the channel's number in old-set green, the
+ * picture's light round the set in the show's own colour, and a CRT's line
+ * when it comes on.
  *
  * The pictures are the app's own: each show is the home screen's TV filmed
  * in the simulator against a local relay, cropped to the glass; the floor is
@@ -42,17 +42,23 @@
      of its own and a `cut` of the same channel — no snow, no number — so a
      phone has West Hall moving after a third of the floor's bytes (Safari
      plays a clip only once it has all of it). The showcase comes on first,
-     one camera in three clips the same way, under the app's own guide line
-     for it (`guide`: ChannelSurferNode.guide's showcase case). */
+     each camera in three clips the same way, under the app's own guide line
+     for whichever is on (`guide`: ChannelSurferNode.guide's showcase case);
+     between the two cameras, the app's own cut. */
   var HOUSE = { live: true };
   var CAM = { live: false, tint: '#8CBFA6', pale: 'rgba(255, 247, 228, 0.7)' };
   var FLOOR = { ch: 1, name: 'THE FLOOR', live: true, tint: '#4BD07A', pale: '#DDF8E6' };
   function ch(o, base) { for (var k in base) if (!(k in o)) o[k] = base[k]; return o; }
-  var SHOWCASE = ch({ ch: 7, name: 'EYE IN THE SKY', guide: 'NEW ON THE FLOOR · COIN PUSHERS' }, CAM);
+  var SHOWCASE = ch({ ch: 7, name: 'EYE IN THE SKY' }, CAM);
+  var BACCARAT = ch({ guide: 'NEW ON THE FLOOR · BACCARAT' }, SHOWCASE);
+  var LEFTY = ch({ guide: 'NEW ON THE FLOOR · SHELL GAME' }, SHOWCASE);
   var CHANNELS = [
-    ch({ clip: 'cam-pushers-1', dwell: 3400 }, SHOWCASE),
-    ch({ clip: 'cam-pushers-2', dwell: 3400, cut: true }, SHOWCASE),
-    ch({ clip: 'cam-pushers-3', dwell: 3400, cut: true }, SHOWCASE),
+    ch({ clip: 'cam-baccarat-1', dwell: 2820 }, BACCARAT),
+    ch({ clip: 'cam-baccarat-2', dwell: 2820, cut: true }, BACCARAT),
+    ch({ clip: 'cam-baccarat-3', dwell: 2830, cut: true }, BACCARAT),
+    ch({ clip: 'cam-shellgame-1', dwell: 3320, cut: true }, LEFTY),
+    ch({ clip: 'cam-shellgame-2', dwell: 3320, cut: true }, LEFTY),
+    ch({ clip: 'cam-shellgame-3', dwell: 3310, cut: true }, LEFTY),
     ch({ clip: 'floor-1', cams: [[0, 'WEST HALL']], dwell: 3700 }, FLOOR),
     ch({ clip: 'floor-2', cams: [[0, 'THE BAR']], dwell: 4000, cut: true }, FLOOR),
     ch({ clip: 'floor-3', cams: [[0, 'THE PIT']], dwell: 4000, cut: true }, FLOOR),

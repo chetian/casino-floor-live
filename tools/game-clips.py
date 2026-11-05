@@ -16,10 +16,12 @@ preview's own delogo, so the CSS frame's island sits on it), resampled to
                     wall's card
 
 The windows below fit the takes of 2026-10-01 (bj, uth, craps, slots, plinko),
-2026-10-19 (web_*) and 2026-11-01 (web_pusher2: CFL_DEBUG_GAME=coinPusher
+2026-10-19 (web_*), 2026-11-01 (web_pusher2: CFL_DEBUG_GAME=coinPusher
 CFL_DEBUG_PUSHER_THEME=treasureCove CFL_DEBUG_AUTOSPIN=1 CFL_DEBUG_PUSHER_BONUS=jackpot
-CFL_DEBUG_PUSHER_STOCK=1 CFL_DEBUG_PUSHER_SHOWCASE=1 CFL_DEBUG_CASH=25000). A
-re-shoot moves every moment, so read a contact sheet of the new take first.
+CFL_DEBUG_PUSHER_STOCK=1 CFL_DEBUG_PUSHER_SHOWCASE=1 CFL_DEBUG_CASH=25000) and
+2026-11-05 (v4_bacc and v4_shell1, the iPhone preview v4's own: see
+cuts/iphone-v4.py in the game repo). A re-shoot moves every moment, so read a
+contact sheet of the new take first.
 """
 import os
 import subprocess
@@ -46,6 +48,8 @@ GAMES = {
     'plinko': ('plinko', [(9.2, 16.3)], 15.3, 12.4, 200),                # ten balls, WIN $104
     'mines': ('web_mines', [(14.4, 25.0)], 23.0, 23.0, 350),            # four gems to $160, then BOOM (the bench never banks)
     'coin-pusher': ('web_pusher2', [(14.4, 21.9)], 19.6, 19.6, 960),    # Treasure Cove: CHANCE SPIN!, three crowns, JACKPOT! +$5,000
+    'baccarat': ('v4_bacc', [(28.4, 36.0)], 35.0, 35.0, 260),           # bets down, the deal: PLAYER 7, BANKER NATURAL 9, $48 on $25
+    'shell-game': ('v4_shell1', [(3.4, 6.4), (9.2, 10.6), (13.7, 18.4)], 17.6, 17.6, 300),  # $2,000 under the cup, Tick's watch, the pick: YOU FOUND IT!
 }
 
 

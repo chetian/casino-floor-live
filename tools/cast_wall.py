@@ -28,7 +28,8 @@ OUT = os.path.join(ROOT, 'sprites', 'cast')
 # The tabs, in the order the app's collection screen cuts the cast. The four
 # Throwback legendaries are four sets of one in the app; on the wall they're
 # one shelf, the season they come from. The coin pushers' cast is three sets
-# of two, a machine each; on the wall, one shelf too.
+# of two, a machine each; on the wall, one shelf too. The Hustle is Lefty's
+# five, won at his shell game.
 SHELVES = [
     ('houseRegulars', 'House Regulars'),
     ('critters', 'The Critters'),
@@ -39,6 +40,7 @@ SHELVES = [
     ('halloween', 'Halloween'),
     ('throwback', 'The Throwback Season'),
     ('coinPushers', 'The Coin Pushers'),
+    ('hustle', 'The Hustle'),
 ]
 THROWBACK = {'sixties', 'seventies', 'eighties', 'nineties'}
 PUSHERS = {'sweetShop', 'bigTop', 'treasureCove'}
@@ -75,6 +77,9 @@ WHO = {
     'soda-sundae': 'the soda fountain server', 'gummy-gummo': 'the gummy bear',
     'ringmaster-monty': 'the ringmaster', 'monkey-bingo': 'the monkey in a fez',
     'mermaid-coral': 'the mermaid', 'diver-fathom': 'the deep-sea diver',
+    'hustler-lefty': 'the hustler in a pinstripe suit', 'shill-winston': 'the shill in an aloha shirt',
+    'raccoon-rascal': 'the raccoon', 'lookout-scout': 'the lookout with binoculars',
+    'watchman-tick': 'the watch seller in a trench coat',
 }
 
 
@@ -93,6 +98,8 @@ def door(e):
         return f"Only in the {e['pack']} pack. Never on the wheel, never for chips."
     if tier == 'pusher':
         return f"Only at the {e['pusher']} coin pusher: push their box over the edge. Never on the wheel, never for sale."
+    if tier == 'shellGame':
+        return f"Only at Lefty's shell game, under the cup in {e['shellGame']}. Never on the wheel, never for sale."
     return ''
 
 
@@ -140,6 +147,8 @@ def main(dump):
             set_title = f"{e['setTitle']} · Throwback"
         if e['set'] in PUSHERS:
             set_title = f"{e['setTitle']} · Coin Pusher"
+        if e['set'] == 'hustle':
+            set_title = f"{e['setTitle']} · Lefty's Shell Game"
         attrs = {
             'data-id': i,
             'data-name': e['name'],

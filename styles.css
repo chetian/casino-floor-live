@@ -1546,8 +1546,8 @@ section { padding: 72px 0; }
 }
 
 /* ---------- Latest: what each update brought ----------
-   The newest is a note card with its set (CAM 14, playing on hover like the
-   guide's); the earlier ones fold, a version a row, the way the app's What's
+   The newest is a note card with its sets (CAM 15 and CAM 16, playing on
+   hover like the guide's); the earlier ones fold, a version a row, the way the app's What's
    New keeps them a tap away. */
 .update {
   display: grid;
@@ -1556,6 +1556,9 @@ section { padding: 72px 0; }
   align-items: center;
   padding: 22px;
 }
+/* Two new things, two sets: stacked beside the notes, side by side above
+   them on a phone. */
+.update-sets { display: grid; gap: 14px; }
 .update-ver { display: flex; align-items: center; gap: 8px; margin: 0 0 10px !important; }
 .pill.new { color: var(--live-red); }
 .note-card.update h3 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0; }
@@ -1589,5 +1592,6 @@ section { padding: 72px 0; }
 .update-past ul { padding-bottom: 4px; }
 @media (max-width: 760px) {
   .update { grid-template-columns: 1fr; gap: 18px; padding: 16px; }
+  .update-sets { grid-template-columns: 1fr 1fr; gap: 10px; }
   .update-past details { padding: 11px 14px; }
 }

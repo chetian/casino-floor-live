@@ -26,11 +26,14 @@ Hall moving after a third of the bytes. `floor` is the three joined. A clip
 with no card time gets no card.
 
 What's new comes on first, as the app's home set opens on its showcase
-(ChannelLineup.showcase): since v1.3, CAM 14 on the coin pushers, from the
-2026-11-01 take `pushers` (tools/tv-take.sh pushers 50 banquet,banquet rally
-225 CFL_DEBUG_HOME_CAM=pushers — the set pinned on the one camera, so no
-channel readout). It plays a place at a time too: cam-pushers-1, -2, -3 are
-one shot in three, so their cuts don't show; `cam-pushers` is the whole.
+(ChannelLineup.showcase): since v1.4, CAM 15 on baccarat and then CAM 16 on
+Lefty's cart, from the 2026-11-05 take `open3` — the app's own opening,
+unpinned (a pinned CAM 16 frames the wrong stretch of floor; see CLIPS). It
+plays a place at a time too: cam-baccarat-1, -2, -3 and cam-shellgame-1, -2,
+-3 are each one shot in three, so their cuts don't show, and the cut between
+the cameras is the app's own flash. `cam-baccarat` and `cam-shellgame` are
+the wholes, for the Latest section's sets. v1.3's CAM 14 clips
+(`cam-pushers*`) are off the set but stay in tv/.
 """
 import os
 import subprocess
@@ -45,8 +48,24 @@ CONGA_CROP = 'crop=2162:1380:345:295'
 # clip -> (take, [(start, end), ...], card time within the clip[, crop])
 # A take is a name in the takes dir, or a path of its own.
 CLIPS = {
+    # New on the floor (v1.4), as the app's home set opens on it: CAM 15 on
+    # baccarat, then CAM 16 following Lefty's cart, a dwell each. One take of
+    # that opening, `open3` (2026-11-05, unpinned: tools/tv-take.sh open3 38
+    # banquet,banquet rally 225). Pinned, CAM 16 holds 600 s, so it plans
+    # Lefty's path ten minutes ahead and frames an empty floor. The set comes
+    # on at 5.2 s, a coup is dealt and paid, the cut to CAM 16 is the app's own
+    # white flash at 13.85 (it heads cam-shellgame-1), and snow at 23.82.
+    'cam-baccarat': ('open3', [(5.25, 13.72)], 5.0),
+    'cam-baccarat-1': ('open3', [(5.25, 8.07)], None),
+    'cam-baccarat-2': ('open3', [(8.07, 10.89)], None),
+    'cam-baccarat-3': ('open3', [(10.89, 13.72)], None),
+    'cam-shellgame': ('open3', [(14.05, 23.75)], 6.6),
+    'cam-shellgame-1': ('open3', [(13.80, 17.12)], None),
+    'cam-shellgame-2': ('open3', [(17.12, 20.44)], None),
+    'cam-shellgame-3': ('open3', [(20.44, 23.75)], None),
     # New on the floor (v1.3): CAM 14 on the coin pushers, ten seconds, the
     # app's opening dwell. The tower coin turns, and BIG TOP's sign flares at 22.
+    # Off the set since v1.4; the files stay (chetianholdings.com links tv/).
     'cam-pushers': ('pushers', [(14.0, 24.2)], 7.8),
     'cam-pushers-1': ('pushers', [(14.0, 17.4)], None),
     'cam-pushers-2': ('pushers', [(17.4, 20.8)], None),
@@ -68,6 +87,10 @@ CLIPS = {
     'cam-blackjack': ('cams', [(42.60, 46.10), (10.97, 14.50)], 2.2),  # CAM 12 BLACKJACK TABLE, CAM 03 ROULETTE
     'cam-bar': ('cams', [(46.10, 49.63), (32.07, 35.57)], 2.0),        # CAM 13 BAR TOP, CAM 09 POKER ROOM
 }
+
+# A clip whose first frame isn't its picture takes its poster this far in:
+# CAM 16's first place opens on the cut's flash.
+POSTER_AT = {'cam-shellgame-1': 0.3}
 
 
 def run(args):
@@ -93,8 +116,8 @@ def encode(takes, name):
     run(['ffmpeg', '-v', 'error', '-y', '-i', src, '-filter_complex', graph,
          '-map', '[big]', *x264, '-crf', '27', f'{OUT}/{name}.mp4',
          '-map', '[small]', *x264, '-crf', '28', f'{OUT}/{name}-sm.mp4'])
-    run(['ffmpeg', '-v', 'error', '-y', '-i', f'{OUT}/{name}.mp4', '-frames:v', '1',
-         '-c:v', 'libwebp', '-quality', '72', f'{OUT}/{name}.webp'])
+    run(['ffmpeg', '-v', 'error', '-y', '-ss', str(POSTER_AT.get(name, 0)), '-i', f'{OUT}/{name}.mp4',
+         '-frames:v', '1', '-c:v', 'libwebp', '-quality', '72', f'{OUT}/{name}.webp'])
     if card is not None:
         run(['ffmpeg', '-v', 'error', '-y', '-ss', str(card), '-i', f'{OUT}/{name}.mp4', '-frames:v', '1',
              '-vf', 'scale=480:-2:flags=lanczos', '-c:v', 'libwebp', '-quality', '76', f'{OUT}/{name}-card.webp'])
