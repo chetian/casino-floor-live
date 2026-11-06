@@ -28,6 +28,7 @@ Served via GitHub Pages as a plain static site.
 - `sprites/` — art baked out of the game (see below)
 - `tv/` — the hero set's channels, filmed from the app (see below)
 - `games/` — the game picker's clips, stills and cards, cut from the app (see below)
+- `crossplay/` — one blackjack round on three screens, for the home page's crossplay graphic (see below)
 - `clips/` — the App Store preview, and stills for the other pages' phones
 - `tools/` — the scripts that rebuild the cast wall, the TV and the game clips
 
@@ -237,6 +238,20 @@ chetianholdings.com links them. The other pages' phone stills
 (`clips/blackjack.webp`, `clips/floor.webp`) are cut from v3's raw takes the
 same way. `clips/blackjack.mp4`, the home page's old table loop, is
 no longer on any page.
+
+
+## Crossplay
+
+The graphic in the home page's `#multiplayer` (`crossplay.js`): one blackjack
+round, filmed live on three devices at once and played back in step. The clips
+are chetianholdings.com's, take xp1 in the game repo, cut by
+`relay/deploy/chetian-clips.sh` there and copied into `crossplay/` as
+`iphone`, `ipad` and `vision` (`.mp4` + the first frame as `.webp`). The
+`-payoff.webp` stills, for reduced motion and Save-Data, are the frame at 8.4 s:
+
+```sh
+ffmpeg -ss 8.4 -i crossplay/ipad.mp4 -frames:v 1 -c:v libwebp -quality 80 crossplay/ipad-payoff.webp
+```
 
 ## Parked until it ships
 

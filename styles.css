@@ -1595,3 +1595,118 @@ section { padding: 72px 0; }
   .update-sets { grid-template-columns: 1fr 1fr; gap: 10px; }
   .update-past details { padding: 11px 14px; }
 }
+
+/* ---------- Crossplay: one table on three screens ----------
+   One blackjack round, filmed live on three devices and played in step. The
+   columns are in proportion to the screens, so the three stand at one height;
+   the hub sits under the headset, brass wires running to it with chips riding
+   them both ways (crossplay.js draws those from where the screens landed). */
+.xp {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 0.45918fr) minmax(0, 1.77778fr) minmax(0, 0.75fr);
+  grid-template-areas: "phone vision pad" ". hub .";
+  column-gap: clamp(18px, 2.4vw, 30px);
+  row-gap: clamp(46px, 5vw, 62px);
+  align-items: end;
+  margin-bottom: 48px;
+}
+/* The felt lit behind them. Vertical bleed only, like the visor's. */
+.xp::before {
+  content: "";
+  position: absolute;
+  inset: -7% 0;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(35, 144, 90, 0.42), transparent 74%);
+  pointer-events: none;
+}
+.xp-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.xp-wires path { fill: none; stroke: rgba(227, 175, 37, 0.42); stroke-width: 1.5; }
+/* The dashed ring of the game's chips. */
+.xp-wires circle { stroke: rgba(255, 255, 255, 0.8); stroke-width: 1.3; stroke-dasharray: 2.2 2.2; }
+.xp-dev { position: relative; margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 15px; }
+.xp-phone { grid-area: phone; }
+.xp-vision { grid-area: vision; }
+.xp-pad { grid-area: pad; }
+.xp-dev figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  overflow: hidden;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--cream-dim);
+}
+.xp-dev figcaption i { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--live-red); animation: blink 1.6s ease-in-out infinite; }
+.xp-dev figcaption b { font-weight: 800; color: var(--showroom); }
+.xp-glass { position: relative; overflow: hidden; background: #000; }
+.xp-glass video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+/* The bezels are rings, so they follow each screen's own corners: satin black
+   with the TV's brass hairline. */
+.xp-phone .xp-glass {
+  aspect-ratio: 360 / 784;
+  border-radius: 13% / 6%;
+  box-shadow: 0 0 0 5px #0d1210, 0 0 0 6px rgba(227, 175, 37, 0.45), var(--shadow);
+}
+.xp-pad .xp-glass {
+  aspect-ratio: 588 / 784;
+  border-radius: 4.6% / 3.45%;
+  box-shadow: 0 0 0 7px #0d1210, 0 0 0 8px rgba(227, 175, 37, 0.45), var(--shadow);
+}
+.xp-vision .xp-glass {
+  aspect-ratio: 16 / 9;
+  border-radius: 3.4% / 6%;
+  box-shadow: 0 0 0 1.5px rgba(227, 175, 37, 0.45), var(--shadow-lift);
+}
+/* The headset's view: the room through the glass, its edges falling dark. */
+.xp-vision .xp-glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 70px 6px rgba(5, 16, 10, 0.55); pointer-events: none; }
+.xp-hub {
+  grid-area: hub;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+/* A sign, not a button: lit felt in a gold rail, the set's live dot. */
+.xp-sign {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--gold-500);
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--mode-green), var(--felt-700));
+  box-shadow: 0 0 34px -6px rgba(247, 201, 72, 0.5);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--showroom);
+  text-shadow: 0 0 0.6em rgba(255, 209, 77, 0.4);
+}
+.xp-sign i { width: 8px; height: 8px; border-radius: 50%; background: var(--live-red); animation: blink 1.6s ease-in-out infinite; }
+.xp-cap { font-size: 0.86rem; color: var(--cream-faint); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .xp-dev figcaption i, .xp-sign i { animation: none; }
+}
+@media (max-width: 760px) {
+  /* The headset over the hub, the phone and the tablet under it. */
+  .xp {
+    grid-template-columns: minmax(0, 0.45918fr) minmax(0, 0.75fr);
+    grid-template-areas: "vision vision" "hub hub" "phone pad";
+    column-gap: 28px;
+    row-gap: 46px;
+    align-items: start;
+    margin-bottom: 40px;
+  }
+  .xp-cap { display: none; }
+  .xp-dev figcaption { font-size: 0.78rem; }
+}
