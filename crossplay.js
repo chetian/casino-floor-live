@@ -26,7 +26,11 @@
     }, { threshold: threshold || 0, rootMargin: margin || '0px' }).observe(xp);
   }
 
-  /* ---------- the screens ---------- */
+  /* ---------- the screens ----------
+     Each screen is a still, with its video running underneath. iOS won't
+     buffer a video until it's told to play, so playing is what loads them;
+     once all three can run, they go back to the top as one and the stills
+     fade off. If autoplay is refused (Low Power Mode) the stills just stand. */
   (function screens() {
     var vids = Array.prototype.slice.call(xp.querySelectorAll('video'));
     var lead = xp.querySelector('.xp-vision video');
@@ -39,55 +43,68 @@
       wired = true;
       vids.forEach(function (v) {
         var clip = v.getAttribute('data-clip');
-        v.poster = clip + (stills ? '-payoff.webp' : '.webp');
+        var still = document.createElement('img');
+        still.className = 'xp-still';
+        still.alt = '';
+        still.src = clip + (stills ? '-payoff.webp' : '.webp');
+        v.parentNode.appendChild(still);
         if (stills) return;
         v.preload = 'auto';
         v.src = clip + '.mp4';
       });
     }
-    function ready() {
-      return vids.every(function (v) { return v.readyState >= 3; });
-    }
     function play(v) {
       var p = v.play();
-      if (p && p.catch) p.catch(function () { /* autoplay refused: the posters stand */ });
+      if (p && p.catch) p.catch(function () { /* autoplay refused: the stills stand */ });
     }
     function fromTop() {
-      if (!on || !ready()) return;
-      started = true;
+      if (!on) return;
       vids.forEach(function (v) {
         try { v.currentTime = 0; } catch (e) {}
         play(v);
       });
     }
-    function resume() {
+    // Before the first round: every screen has to be able to run. (Not at a
+    // loop, where a clip that has finished has no "next frame" to report.)
+    function tryStart() {
+      if (started || !on) return;
+      if (!vids.every(function (v) { return v.readyState >= 3; })) return;
+      started = true;
+      fromTop();
+    }
+    function update() {
       if (!on) { vids.forEach(function (v) { v.pause(); }); return; }
-      if (!started || lead.ended) fromTop();
-      else vids.forEach(play);
+      wire();
+      if (started && lead.ended) fromTop();
+      else { vids.forEach(play); tryStart(); }
     }
 
     watch(function (near) { if (near) wire(); }, 0, '800px 0px');
     if (stills) return;
     vids.forEach(function (v) {
-      v.addEventListener('canplay', function () { if (!started || lead.ended) fromTop(); });
+      v.addEventListener('canplay', tryStart);
+      v.addEventListener('playing', tryStart);
     });
     lead.addEventListener('ended', fromTop);
-    // Keep in step: a follower that has drifted a few frames off is put back.
     lead.addEventListener('timeupdate', function () {
+      // The first round is on the glass: the stills can go.
+      if (started && lead.currentTime > 0 && lead.currentTime < 1) xp.classList.add('xp-live');
+      // Keep in step: a follower that has drifted a few frames off is put back.
+      if (!started) return;
       vids.forEach(function (v) {
-        if (v === lead || v.ended || v.readyState < 2) return;
+        if (v === lead || v.ended || v.seeking || v.readyState < 2) return;
         if (Math.abs(v.currentTime - lead.currentTime) > 0.12) {
           try { v.currentTime = lead.currentTime; } catch (e) {}
         }
       });
     });
     var inView = false;
-    function update() {
+    function changed() {
       on = inView && !document.hidden;
-      resume();
+      update();
     }
-    watch(function (v) { inView = v; update(); }, 0.2);
-    document.addEventListener('visibilitychange', update);
+    watch(function (v) { inView = v; changed(); }, 0.2);
+    document.addEventListener('visibilitychange', changed);
   })();
 
   /* ---------- the wires ---------- */
