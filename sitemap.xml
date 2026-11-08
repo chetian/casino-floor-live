@@ -32,19 +32,25 @@
   </url>
   <url>
     <loc>https://casinofloor.live/support</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://casinofloor.live/privacy</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-11-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://casinofloor.live/terms</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://casinofloor.live/delete</loc>
+    <lastmod>2026-11-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
