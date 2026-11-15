@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Casino Floor Live! | Crossplay Multiplayer Casino Game for iPhone &amp; Vision Pro</title>
-  <meta name="description" content="Crossplay multiplayer casino for iPhone, iPad and Vision Pro: friends on one live floor playing blackjack, poker, slots and more. Virtual chips only. Free, 18+." />
+  <title>Casino Floor Live! | Crossplay Multiplayer Casino Game for iPhone, Android &amp; Vision Pro</title>
+  <meta name="description" content="Crossplay multiplayer casino for iPhone, iPad, Android and Vision Pro: friends at one live table, playing blackjack, poker, slots and more. Virtual chips only. Free, 18+." />
   <link rel="canonical" href="https://casinofloor.live/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#05100a" />
@@ -12,20 +12,20 @@
   <meta name="apple-itunes-app" content="app-id=6794734494" />
   <meta property="og:site_name" content="Casino Floor Live!" />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:title" content="Casino Floor Live! | Crossplay Multiplayer Casino Game for iPhone &amp; Vision Pro" />
-  <meta property="og:description" content="Free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 78 to collect. Virtual chips only." />
+  <meta property="og:title" content="Casino Floor Live! | Crossplay Multiplayer Casino Game for iPhone, Android &amp; Vision Pro" />
+  <meta property="og:description" content="Free on the App Store and Google Play. A social casino party game for iPhone, iPad, Android and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 78 to collect. Virtual chips only." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://casinofloor.live/" />
-  <meta property="og:image" content="https://casinofloor.live/og-image.jpg" />
+  <meta property="og:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Casino Floor Live! | Crossplay Multiplayer Casino Game for iPhone &amp; Vision Pro" />
-  <meta name="twitter:description" content="Free on the App Store. A social casino party game for iPhone, iPad and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 78 to collect." />
-  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg" />
-  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta name="twitter:title" content="Casino Floor Live! | Crossplay Multiplayer Casino Game for iPhone, Android &amp; Vision Pro" />
+  <meta name="twitter:description" content="Free on the App Store and Google Play. A social casino party game for iPhone, iPad, Android and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 78 to collect." />
+  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
+  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
   <link rel="icon" href="favicon-96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192" />
@@ -37,10 +37,24 @@
        stands in elsewhere. Pirata One is the Battle Banquet's own blackletter
        (the app bundles the same font). -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;family=Pirata+One&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261106b" />
+  <link rel="stylesheet" href="styles.css?v=20261115" />
   <link rel="preload" as="image" href="sprites/emblem-crown.png" />
-  <!-- The set's first picture, before tv.js has asked for it. -->
-  <link rel="preload" as="image" href="tv/cam-baccarat-1.webp" fetchpriority="high" />
+  <!-- The phone's store comes first: Android gets Google Play, an iPhone or an
+       iPad the App Store, before the first paint. The "Get it free" links
+       follow it. -->
+  <script>
+    (function () {
+      var ua = navigator.userAgent || '', html = document.documentElement;
+      if (/Android/i.test(ua)) {
+        html.classList.add('os-android');
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('a[data-get]').forEach(function (a) { a.href = 'https://play.google.com/store/apps/details?id=chetian.casinofloorlive'; });
+        });
+      } else if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) {
+        html.classList.add('os-ios');
+      }
+    })();
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -75,20 +89,38 @@
         "description": "A social casino party game. Up to 10 friends share one live casino floor and play Blackjack, Baccarat, Poker, Roulette, Slots, Craps, Coin Pushers and more with virtual chips only — no real-money gambling. The house runs its own shows on TV, and there is a cast of 78 characters to collect.",
         "applicationCategory": "GameApplication",
         "genre": ["Casino", "Party", "Multiplayer"],
-        "operatingSystem": "iOS, iPadOS, visionOS",
-        "gamePlatform": ["iPhone", "iPad", "Apple Vision Pro"],
+        "operatingSystem": "iOS, iPadOS, visionOS, Android",
+        "gamePlatform": ["iPhone", "iPad", "Android", "Apple Vision Pro"],
         "playMode": ["SinglePlayer", "MultiPlayer"],
         "contentRating": "18+",
-        "downloadUrl": "https://apps.apple.com/app/id6794734494",
-        "installUrl": "https://apps.apple.com/app/id6794734494",
-        "sameAs": ["https://apps.apple.com/app/id6794734494"],
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://apps.apple.com/app/id6794734494"
-        },
+        "downloadUrl": [
+          "https://apps.apple.com/app/id6794734494",
+          "https://play.google.com/store/apps/details?id=chetian.casinofloorlive"
+        ],
+        "installUrl": [
+          "https://apps.apple.com/app/id6794734494",
+          "https://play.google.com/store/apps/details?id=chetian.casinofloorlive"
+        ],
+        "sameAs": [
+          "https://apps.apple.com/app/id6794734494",
+          "https://play.google.com/store/apps/details?id=chetian.casinofloorlive"
+        ],
+        "offers": [
+          {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://apps.apple.com/app/id6794734494"
+          },
+          {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://play.google.com/store/apps/details?id=chetian.casinofloorlive"
+          }
+        ],
         "publisher": { "@id": "https://chetianholdings.com/#org" },
         "author": { "@id": "https://chetianholdings.com/#org" }
       },
@@ -96,12 +128,12 @@
         "@type": "VideoObject",
         "@id": "https://casinofloor.live/#trailer",
         "name": "Casino Floor Live! — App Store preview",
-        "description": "Twenty-nine seconds of the app: friends in a conga line on the casino floor, a blackjack natural, a banker natural at baccarat, a coin pusher's jackpot, Lefty's shell game, Plinko, the free Prize Wheel, and the house's drag race on the Lounge's big screen.",
+        "description": "Twenty-nine seconds of the app: one blackjack round on Maya's iPhone, then the same table on Jules's iPad, Theo's iPhone Duo and Alex's Apple Vision Pro; an Ultimate Hold'em royal flush paying $13,481; six slot bonus games in a row, then TRACTOR BEAM counting to $5,000; a Treasure Cove coin pusher jackpot; Lefty's shell game; the Prize Wheel's $5,000; and the friends watching the drag race in the Lounge.",
         "thumbnailUrl": [
           "https://casinofloor.live/clips/trailer.webp",
           "https://casinofloor.live/og-image.jpg"
         ],
-        "uploadDate": "2026-11-05T14:25:00-06:00",
+        "uploadDate": "2026-11-14T22:30:00-06:00",
         "duration": "PT29S",
         "contentUrl": "https://casinofloor.live/clips/trailer.mp4",
         "publisher": { "@id": "https://chetianholdings.com/#org" }
@@ -126,26 +158,83 @@
         <a class="nav-jump nav-more" href="/vision-pro">Vision Pro</a>
         <a href="/support">Support</a>
         <a class="nav-age" href="/age-rating">18+</a>
-        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free</a>
+        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener" data-get>Get it free</a>
       </div>
     </nav>
   </header>
 
   <main>
-    <!-- THE HERO is the app's home screen standing on the live floor.
-         Behind it, `floor.js` runs the game's own floor: carpet, tables, and
-         the whole released cast walking it (sprites baked out of the app by
-         CasinoCoreTests' WebSpriteDumpTests). Over it: the crown, the name,
-         and the television surfing the house's channels — `tv.js`, playing
-         clips of the app's own home-screen TV (tv/, see README). -->
-    <section class="hero" id="floor">
-      <canvas id="floor-canvas" aria-hidden="true"></canvas>
-      <div class="floor-veil" aria-hidden="true"></div>
-      <div class="hero-stage">
+    <!-- THE HERO is crossplay: one blackjack table, filmed live at once on an
+         iPhone, an iPad, an Android phone and Apple Vision Pro, played back in
+         step and wired to the one table (crossplay.js; take xpa1, cut by
+         tools/crossplay-cut.sh). It stands on the floor's grid, where a few
+         squares at a time come on as little screens on the floor
+         (crossplay/tiles.mp4, tools/tiles-cut.sh) and players walk in from
+         every kind of device. -->
+    <section class="hero xp-hero" id="crossplay">
+      <div class="xp-grid" aria-hidden="true"></div>
+      <div class="xp-stage">
         <div class="mark">
           <span class="crown-mark" aria-hidden="true"></span>
           <h1 class="wordmark">Casino Floor Live!</h1>
-          <p class="tagline">Blackjack, poker, craps and slots on one live casino floor with up to&nbsp;10 friends, on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro.</p>
+          <p class="xp-line"><span>One table.</span> <em>Every phone.</em></p>
+          <p class="tagline">Blackjack, poker, slots and more with up to&nbsp;10 friends on one live casino floor, crossplay on iPhone, iPad, Android and Apple&nbsp;Vision&nbsp;Pro.</p>
+        </div>
+        <div class="stores">
+          <a class="chunky store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><small>Free on the</small><b>App Store</b></a>
+          <a class="chunky store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><small>Free on</small><b>Google Play</b></a>
+        </div>
+        <div class="xp">
+          <p class="visually-hidden">Crossplay in action: one round of blackjack, filmed live on four devices at once. The same cards land on Maya's iPhone, Jules's iPad, Sam's Android phone and Alex's Apple Vision Pro. Sam hits his 8 to 18, the dealer busts, and every screen pays.</p>
+          <svg class="xp-wires" aria-hidden="true"></svg>
+          <figure class="xp-dev xp-phone" aria-hidden="true">
+            <figcaption><i></i><b>iPhone</b>Maya</figcaption>
+            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/iphone" disableremoteplayback></video><picture><source srcset="crossplay/iphone-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/iphone.webp" alt="" width="442" height="960" /></picture></div>
+          </figure>
+          <figure class="xp-dev xp-pad" aria-hidden="true">
+            <figcaption><i></i><b>iPad</b>Jules</figcaption>
+            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/ipad" disableremoteplayback></video><picture><source srcset="crossplay/ipad-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/ipad.webp" alt="" width="720" height="960" /></picture></div>
+          </figure>
+          <figure class="xp-dev xp-droid" aria-hidden="true">
+            <figcaption><i></i><b>Android</b>Sam</figcaption>
+            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/android" disableremoteplayback></video><picture><source srcset="crossplay/android-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/android.webp" alt="" width="428" height="960" /></picture></div>
+          </figure>
+          <div class="xp-hub">
+            <span class="xp-sign"><i aria-hidden="true"></i>One live table</span>
+            <span class="xp-cap">Same cards, same second</span>
+          </div>
+          <figure class="xp-dev xp-vision" aria-hidden="true">
+            <figcaption><i></i><span class="xp-plus">Plus</span><b>Apple Vision Pro</b>Alex</figcaption>
+            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/vision" disableremoteplayback></video><picture><source srcset="crossplay/vision-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/vision.webp" alt="" width="1280" height="720" loading="lazy" /></picture></div>
+          </figure>
+        </div>
+        <p class="xp-note">On Apple Vision Pro, the same table stands in your room. <a href="/vision-pro">More on Vision&nbsp;Pro&nbsp;→</a></p>
+      </div>
+    </section>
+
+    <!-- The running board: what's on, all night. Decorative — every game and
+         show on it is listed properly below. -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Fourteen games, one floor</span><span>Now on Android</span><span>Baccarat</span><span>Lefty&#x27;s Shell Game</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Coin Pushers</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>iPhone, iPad, Android, Vision Pro</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>78 characters</span>
+        <span>Fourteen games, one floor</span><span>Now on Android</span><span>Baccarat</span><span>Lefty&#x27;s Shell Game</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Coin Pushers</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>iPhone, iPad, Android, Vision Pro</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>78 characters</span>
+      </div>
+    </div>
+
+    <!-- THE FLOOR: the app's home screen standing on the live floor. Behind
+         it, `floor.js` runs the game's own floor: carpet, tables, and the
+         whole released cast walking it (sprites baked out of the app by
+         CasinoCoreTests' WebSpriteDumpTests). Over it, the television surfing
+         the house's channels — `tv.js`, playing clips of the app's own
+         home-screen TV (tv/, see README) — and the ways in. -->
+    <section class="hero floor-hero" id="floor">
+      <canvas id="floor-canvas" aria-hidden="true"></canvas>
+      <div class="floor-veil" aria-hidden="true"></div>
+      <div class="hero-stage">
+        <div class="floor-head">
+          <span class="eyebrow">The home screen</span>
+          <h2 class="section-title sign">Live from the floor</h2>
+          <p class="tagline">The TV surfs the floor's cameras and the house's own shows. Tap it to change the channel.</p>
         </div>
 
         <div class="set">
@@ -159,7 +248,7 @@
           <div class="tv">
             <div class="tv-slab">
               <div class="tv-glass">
-                <video class="tv-pic" muted playsinline preload="auto" poster="tv/cam-baccarat-1.webp" aria-hidden="true" disableremoteplayback></video>
+                <video class="tv-pic" muted playsinline preload="auto" poster="tv/cam-slots-1.webp" aria-hidden="true" disableremoteplayback></video>
                 <video class="tv-pic hidden" muted playsinline preload="auto" aria-hidden="true" disableremoteplayback></video>
                 <canvas class="tv-snow" aria-hidden="true"></canvas>
                 <div class="tv-osd" aria-hidden="true"></div>
@@ -171,7 +260,7 @@
         </div>
 
         <div class="play-stack">
-          <a class="chunky play-card" href="https://apps.apple.com/app/id6794734494" rel="noopener">
+          <a class="chunky play-card" href="https://apps.apple.com/app/id6794734494" rel="noopener" data-get>
             <span class="words">
               <span class="play-title">GET IT FREE</span>
               <span class="play-caption"><i class="dot" aria-hidden="true"></i>THE FLOOR IS OPEN</span>
@@ -190,21 +279,14 @@
       </div>
     </section>
 
-    <!-- The running board: what's on, all night. Decorative — every game and
-         show on it is listed properly below. -->
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track">
-        <span>Fourteen games, one floor</span><span>Baccarat</span><span>Lefty&#x27;s Shell Game</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Coin Pushers</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>78 characters</span>
-        <span>Fourteen games, one floor</span><span>Baccarat</span><span>Lefty&#x27;s Shell Game</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Coin Pushers</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>78 characters</span>
-      </div>
-    </div>
-
     <!-- LATEST: what each update brought, newest first, in the app's own
          words (CasinoNews in the game repo: the What's New panel on iOS and
          Apple Vision Pro), less the lines that only made sense on the day.
-         The newest is open, its sets CAM 15 and CAM 16 (tv/, playing on
+         The newest is open, its sets CAM 17 to CAM 20 (tv/, playing on
          hover, focus or a tap, as the guide's sets do); the earlier ones
-         fold, the way the app keeps them a tap away. -->
+         fold, the way the app keeps them a tap away. 1.5 is also the first
+         on Android, which the app's notes don't say: that line is the
+         site's own. -->
     <section id="latest">
       <div class="wrap">
         <div class="section-head">
@@ -213,18 +295,38 @@
           <p class="section-sub">The floor keeps changing. Here's what each update brought, newest first.</p>
         </div>
         <article class="note-card update">
-          <div class="update-sets">
-            <div class="mini-tv" data-clip="cam-baccarat" style="--tint: #8CBFA6">
-              <div class="glass"><img src="tv/cam-baccarat-card.webp" alt="Eye in the sky, camera 15: a security camera looks down on the baccarat table as the dealer turns both hands and the players at the rail react to the result." width="480" height="306" loading="lazy" /></div>
+          <div class="update-sets four">
+            <div class="mini-tv" data-clip="cam-slots" style="--tint: #8CBFA6">
+              <div class="glass"><img src="tv/cam-slots-card.webp" alt="Eye in the sky, camera 17: a security camera looks down on three LUCKY 7s slot machines as players in a chef's hat and a cowboy hat watch the middle one land a BIG WIN." width="480" height="306" loading="lazy" /></div>
             </div>
-            <div class="mini-tv" data-clip="cam-shellgame" style="--tint: #8CBFA6">
-              <div class="glass"><img src="tv/cam-shellgame-card.webp" alt="Eye in the sky, camera 16: a security camera follows Lefty, in his feathered fedora, as he pushes his cart of cups across the casino floor past the other players." width="480" height="306" loading="lazy" /></div>
+            <div class="mini-tv" data-clip="cam-plinko" style="--tint: #8CBFA6">
+              <div class="glass"><img src="tv/cam-plinko-card.webp" alt="Eye in the sky, camera 18: a security camera looks down on the Plinko machine, a neon pyramid of pegs, as a ball lands in the ×25 bucket for a player in a purple hat." width="480" height="306" loading="lazy" /></div>
+            </div>
+            <div class="mini-tv" data-clip="cam-mines" style="--tint: #8CBFA6">
+              <div class="glass"><img src="tv/cam-mines-card.webp" alt="Eye in the sky, camera 19: a security camera looks down on the Diamond Mine machine as its grid of gems lights up MAX WIN." width="480" height="306" loading="lazy" /></div>
+            </div>
+            <div class="mini-tv" data-clip="cam-videopoker" style="--tint: #8CBFA6">
+              <div class="glass"><img src="tv/cam-videopoker-card.webp" alt="Eye in the sky, camera 20: a security camera looks down on a video poker machine as a grey-haired player's five hands light up a royal flush." width="480" height="306" loading="lazy" /></div>
             </div>
           </div>
           <div class="update-body">
-            <p class="update-ver"><span class="ch-num">v1.4</span><span class="pill new">New</span></p>
-            <h3>Baccarat, and a hustler with a cart.</h3>
-            <p class="update-tag">Two new games just opened on the floor.</p>
+            <p class="update-ver"><span class="ch-num">v1.5</span><span class="pill new">New</span><span class="pill set">Now on Android</span></p>
+            <h3>The slots got bigger.</h3>
+            <p class="update-tag">Plus five games of video poker, and new Plinko and Mines machines.</p>
+            <ul>
+              <li>All eight slot machines are rebuilt, five reels by five rows, from LUCKY 7s to COSMIC CASH.</li>
+              <li>New bonus games let you dive for pearls, spin the royal wheel, swing in a home run derby or race for pink slips.</li>
+              <li>Video poker deals up to five hands at once, with five games from JACKS OR BETTER to DEUCES WILD.</li>
+              <li>Plinko comes in four machines and Mines in four worlds, each with its own look and sound.</li>
+              <li>On Apple Vision Pro, every slot stands in a tall curved cabinet, and Plinko stands life size beside you.</li>
+            </ul>
+            <p class="update-android">And the floor is open on Android: the same tables as iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro, free on Google&nbsp;Play.</p>
+            <p class="update-links"><a href="/games#slots">How the slots pay →</a><a href="/games#video-poker">The five poker games →</a><a href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener">Google Play →</a></p>
+          </div>
+        </article>
+        <div class="update-past">
+          <details>
+            <summary><span class="ch-num">v1.4</span><span><b>Baccarat, and a hustler with a cart.</b> Two new games just opened on the floor.</span></summary>
             <ul>
               <li>Baccarat stands in front of the coin pushers, with a high-limit table up in VIP: bet PLAYER, BANKER or TIE.</li>
               <li>Lefty pushes his cart around the whole casino. Catch him, pick a game and follow the prize through his shuffle.</li>
@@ -232,10 +334,7 @@
               <li>On iPhone and iPad, the casino floor is rebuilt from the carpet up: new walls, new light and three new-look bars.</li>
               <li>On Apple Vision Pro, baccarat gets a table of its own, and Lefty's stand opens life size beside you.</li>
             </ul>
-            <p class="update-links"><a href="/games#baccarat">How baccarat works →</a><a href="/games#shell-game">Lefty's four games →</a><a href="#cast">Meet his crew →</a></p>
-          </div>
-        </article>
-        <div class="update-past">
+          </details>
           <details>
             <summary><span class="ch-num">v1.3</span><span><b>Push your luck.</b> Three coin pushers just opened by the bar.</span></summary>
             <ul>
@@ -296,17 +395,21 @@
         <div class="game-shelf">
           <div class="game-spot">
             <div class="phone">
-              <video class="game-video" muted playsinline preload="none" poster="games/baccarat.webp" width="520" height="1130" disableremoteplayback aria-label="Baccarat: the bets go down, the dealer deals, the player shows 7, the banker turns over a natural 9, and a $25 banker bet pays $48."></video>
+              <video class="game-video" muted playsinline preload="none" poster="games/slots.webp" width="520" height="1130" disableremoteplayback aria-label="Cosmic Cash slots: a $25 spin lands three BEAM symbols, TRACTOR BEAM starts, the saucer passes on CASH OUT $2.5k and beams up to the top rung (×200, $5k), and the bonus counts to WIN $5,000."></video>
             </div>
             <div class="game-info" aria-live="polite">
-              <h3 class="spot-name">Baccarat</h3>
-              <div class="spot-meta"><span class="pill">6 seats</span><span class="pill set">Player, Banker or Tie</span></div>
-              <p class="game-line">Punto banco from an eight-deck shoe, drawn by the book. Banker pays 19 to 20, a tie 8 to 1.</p>
-              <a class="game-rules" href="/games#baccarat">Rules and payouts →</a>
+              <h3 class="spot-name">Slots</h3>
+              <div class="spot-meta"><span class="pill">8 themes</span><span class="pill set">25 paylines</span></div>
+              <p class="game-line">Eight themes, five reels by five rows, and a bonus game for each. Five wilds on a line pays 1,000× the line bet.</p>
+              <a class="game-rules" href="/games#slots">Rules and payouts →</a>
             </div>
           </div>
           <ul class="game-wall">
-            <li><button class="game-card" type="button" aria-pressed="true" data-game="baccarat" data-name="Baccarat" data-pills="6 seats|Player, Banker or Tie" data-line="Punto banco from an eight-deck shoe, drawn by the book. Banker pays 19 to 20, a tie 8 to 1." data-alt="Baccarat: the bets go down, the dealer deals, the player shows 7, the banker turns over a natural 9, and a $25 banker bet pays $48."><img src="games/baccarat-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/heartSuit.webp" alt="" width="128" height="128" /></i>Baccarat</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="true" data-game="slots" data-name="Slots" data-pills="8 themes|25 paylines" data-line="Eight themes, five reels by five rows, and a bonus game for each. Five wilds on a line pays 1,000× the line bet." data-alt="Cosmic Cash slots: a $25 spin lands three BEAM symbols, TRACTOR BEAM starts, the saucer passes on CASH OUT $2.5k and beams up to the top rung (×200, $5k), and the bonus counts to WIN $5,000."><img src="games/slots-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/slotMachine.webp" alt="" width="128" height="128" /></i>Slots</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="plinko" data-name="Plinko" data-pills="4 machines|Ten balls at once" data-line="Four machines, each with its own look and sound. Every peg is a coin flip, and on Wild the edge buckets pay ×130." data-alt="Disco Drop plinko: ten balls drop for $50, one lands in the ×25 edge bucket for $125, and the mirror ball comes down as the drop pays $179."><img src="games/plinko-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/chipBurst.webp" alt="" width="128" height="128" /></i>Plinko</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="mines" data-name="Mines" data-pills="4 worlds|10 or 15 mines" data-line="Four worlds, one game: every find raises the payout. Cash out after any of them, or dig on to MAX WIN at 2,500×." data-alt="Midnight Heist mines: on a $10 bet the player cracks seven safes (cash, silver, gold and a ruby necklace) up to ×68.0 and banks $679, then BIG WIN becomes a MEGA WIN of $679."><img src="games/mines-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/vaultDoor.webp" alt="" width="128" height="128" /></i>Mines</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="video-poker" data-name="Video Poker" data-pills="5 games|Up to 5 hands" data-line="Jacks or Better to Deuces Wild, up to five hands off one hold. A royal pays 800 for 1 with the max bet riding." data-alt="Video poker, Jacks or Better on five hands for $25: the deal is 10-J-Q-K of spades and the 4 of diamonds, the player holds the four spades, the ace of spades lands on all five hands for five royal flushes at $1,250 each, and the ROYAL FLUSH JACKPOT pays $6,250."><img src="games/video-poker-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/joker.webp" alt="" width="128" height="128" /></i>Video Poker</span></button></li>
+            <li><button class="game-card" type="button" aria-pressed="false" data-game="baccarat" data-name="Baccarat" data-pills="6 seats|Player, Banker or Tie" data-line="Punto banco from an eight-deck shoe, drawn by the book. Banker pays 19 to 20, a tie 8 to 1." data-alt="Baccarat: the bets go down, the dealer deals, the player shows 7, the banker turns over a natural 9, and a $25 banker bet pays $48."><img src="games/baccarat-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/heartSuit.webp" alt="" width="128" height="128" /></i>Baccarat</span></button></li>
             <li><button class="game-card" type="button" aria-pressed="false" data-game="shell-game" data-name="Lefty&#x27;s Shell Game" data-pills="4 games|$200 to $10,000 a play" data-line="Watch the prize go under the cup and follow it through his shuffle. Find it and it&#x27;s yours: chips, a keychain or a character only Lefty has." data-alt="Lefty&#x27;s shell game: $2,000 goes under his cup, he shuffles while Tick pops up to sell a watch, and the player picks the right cup: YOU FOUND IT!"><img src="games/shell-game-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/goldenCup.webp" alt="" width="128" height="128" /></i>Shell Game</span></button></li>
             <li><button class="game-card" type="button" aria-pressed="false" data-game="coin-pusher" data-name="Coin Pushers" data-pills="3 machines|$5 to $25 a coin" data-line="Drop coins on the shelf, and whatever the pusher shoves over the edge is yours. A JACKPOT on the CHANCE reels pays 200 coins in cash." data-alt="The Treasure Cove coin pusher: doubloons drop onto the shelf, a coin through the SPIN gate sets the CHANCE reels spinning, three crowns land, and the JACKPOT pays $5,000 in cash and a shower of doubloons."><img src="games/coin-pusher-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/treasureChest.webp" alt="" width="128" height="128" /></i>Coin Pushers</span></button></li>
             <li><button class="game-card" type="button" aria-pressed="false" data-game="blackjack" data-name="Blackjack" data-pills="6 seats|Against the dealer" data-line="A six-deck shoe, 3 to 2 on a natural, and the dealer stands on every 17." data-alt="Blackjack: the player is dealt ace-king for blackjack, the dealer draws to 23 and busts, and the table pays $125 on a $50 bet."><img src="games/blackjack-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/aceCard.webp" alt="" width="128" height="128" /></i>Blackjack</span></button></li>
@@ -316,10 +419,6 @@
             <li><button class="game-card" type="button" aria-pressed="false" data-game="roulette" data-name="Roulette" data-pills="Double zero|38 pockets" data-line="An American wheel in the real pocket order. Straight up pays 35 to 1, red or black even money." data-alt="Roulette: $25 on red, the wheel spins, the ball drops into 19 red, and the table pays $50."><img src="games/roulette-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/rouletteWheel.webp" alt="" width="128" height="128" /></i>Roulette</span></button></li>
             <li><button class="game-card" type="button" aria-pressed="false" data-game="dice" data-name="Dice" data-pills="Over/Under 7|One throw for the table" data-line="Two dice, and one throw settles the whole table. Under or over 7 pays even money, a Lucky 7 pays 4 to 1." data-alt="Dice: the shooter throws a five, under seven, and the bet pays $50 on $25."><img src="games/dice-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/jackpotBurst.webp" alt="" width="128" height="128" /></i>Dice</span></button></li>
             <li><button class="game-card" type="button" aria-pressed="false" data-game="horses" data-name="Horse Racing" data-pills="Six horses|Win, place or show" data-line="A six-horse field and the same six prices on every card, from 2 to 1 up to 12 to 1." data-alt="Horse racing: the field breaks, Comet sets the pace, and after a photo finish the official result is Comet, Lucky Star, Sir Gallop."><img src="games/horses-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/racehorse.webp" alt="" width="128" height="128" /></i>Horse Racing</span></button></li>
-            <li><button class="game-card" type="button" aria-pressed="false" data-game="slots" data-name="Slots" data-pills="8 themes|9 paylines" data-line="Eight themes on the floor, each with its own bonus round. Five wilds on a line pays 1,000× the line bet." data-alt="The King&#x27;s Ransom slot machine: a $45 win, then five of a kind on a line pays $165."><img src="games/slots-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/slotMachine.webp" alt="" width="128" height="128" /></i>Slots</span></button></li>
-            <li><button class="game-card" type="button" aria-pressed="false" data-game="video-poker" data-name="Video Poker" data-pills="9/6 Jacks or Better|Triple Play" data-line="Full-pay 9/6 Jacks or Better, up to three hands off one hold. A royal pays 800 for 1 with max bet riding." data-alt="Video poker: the player holds two cards and draws three hands, and two of them pay jacks or better for $200."><img src="games/video-poker-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/joker.webp" alt="" width="128" height="128" /></i>Video Poker</span></button></li>
-            <li><button class="game-card" type="button" aria-pressed="false" data-game="plinko" data-name="Plinko" data-pills="Ten balls at once|12 rows of pegs" data-line="Drop up to ten balls at once. Every peg is a coin flip, and on Wild the edge buckets pay ×130." data-alt="Plinko: ten balls drop through the pegs at once and pay $104 on a $50 bet."><img src="games/plinko-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/chipBurst.webp" alt="" width="128" height="128" /></i>Plinko</span></button></li>
-            <li><button class="game-card" type="button" aria-pressed="false" data-game="mines" data-name="Mines" data-pills="5×5 grid|10 or 15 mines" data-line="Every gem you dig raises the payout. Cash out after any of them, or dig on and risk the lot." data-alt="Mines: the player digs up four gems, the next one would pay $160, and the fifth tile is a mine."><img src="games/mines-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/vaultDoor.webp" alt="" width="128" height="128" /></i>Mines</span></button></li>
           </ul>
         </div>
         <p class="game-foot">Every game plays its real odds, win or lose, and nothing anywhere sells you chips. The Prize Wheel is on the house: a free spin every 20&nbsp;minutes. <a href="/games">Every rule and payout →</a></p>
@@ -333,7 +432,7 @@
         <div class="showcase">
           <div class="showcase-art">
             <div class="phone">
-              <video class="phone-video" muted playsinline loop preload="none" poster="clips/trailer.webp" data-src="clips/trailer.mp4" width="444" height="962" aria-label="The Casino Floor Live! App Store preview: friends in a conga line on the casino floor, blackjack, baccarat, the coin pushers, Lefty's shell game, Plinko, the Prize Wheel, and the Lounge."></video>
+              <video class="phone-video" muted playsinline loop preload="none" poster="clips/trailer.webp" data-src="clips/trailer.mp4" width="444" height="962" aria-label="The Casino Floor Live! App Store preview: one blackjack round on an iPhone, then the same table on an iPad, an iPhone Duo and Apple Vision Pro, a royal flush at Ultimate Hold&#x27;em, six slot bonus games and a seventh to $5,000, a coin pusher&#x27;s jackpot, Lefty&#x27;s shell game, the Prize Wheel, and the drag race in the Lounge."></video>
               <button class="sound" type="button" aria-pressed="false">Sound on</button>
             </div>
           </div>
@@ -359,29 +458,7 @@
         <div class="section-head">
           <span class="eyebrow">Crossplay</span>
           <h2 class="section-title">One floor, ten friends</h2>
-          <p class="section-sub">Rooms hold up to 10 players, across iPhone, iPad and Apple Vision Pro. Jump onto the live floor, or open a private one and bring your crew.</p>
-        </div>
-        <!-- One blackjack round, filmed live on three devices at once and played
-             back in step, each screen wired to the one table (crossplay.js). -->
-        <div class="xp">
-          <p class="visually-hidden">Crossplay in action: one round of blackjack, filmed live on three devices at once. The same cards land on Maya's iPhone, Alex's Apple Vision Pro and Jules's iPad, and the dealer busts on all three.</p>
-          <svg class="xp-wires" aria-hidden="true"></svg>
-          <figure class="xp-dev xp-phone" aria-hidden="true">
-            <figcaption><i></i><b>iPhone</b>Maya</figcaption>
-            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/iphone" disableremoteplayback></video></div>
-          </figure>
-          <figure class="xp-dev xp-vision" aria-hidden="true">
-            <figcaption><i></i><b>Apple Vision Pro</b>Alex</figcaption>
-            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/vision" disableremoteplayback></video></div>
-          </figure>
-          <figure class="xp-dev xp-pad" aria-hidden="true">
-            <figcaption><i></i><b>iPad</b>Jules</figcaption>
-            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/ipad" disableremoteplayback></video></div>
-          </figure>
-          <div class="xp-hub">
-            <span class="xp-sign"><i aria-hidden="true"></i>One live table</span>
-            <span class="xp-cap">Same cards, same second</span>
-          </div>
+          <p class="section-sub">Rooms hold up to 10 players, across iPhone, iPad, Android and Apple Vision Pro. Jump onto the live floor, or open a private one and bring your crew.</p>
         </div>
         <div class="grid">
           <div class="card">
@@ -392,7 +469,7 @@
           <div class="card">
             <div class="ico"><img src="sprites/emblems/padlock.webp" alt="" width="128" height="128" /></div>
             <h3>Private tables</h3>
-            <p>Open a private room and send the code or a link. Game Center is the only sign-in, and we never store your name on our servers.</p>
+            <p>Open a private room and send the code or a link. Game Center, or Google Play Games on Android, is the only sign-in, and we never store your name on our servers.</p>
           </div>
           <div class="card">
             <div class="ico"><img src="sprites/emblems/megaphone.webp" alt="" width="128" height="128" /></div>
@@ -682,7 +759,7 @@
           <div class="card">
             <div class="ico"><img src="sprites/emblems/ensemble.webp" alt="" width="128" height="128" /></div>
             <h3>Same floor as your friends</h3>
-            <p>Vision Pro joins the exact same live rooms as iPhone and iPad. Your friends on their phones see you walking the floor, and you see them.</p>
+            <p>Vision Pro joins the exact same live rooms as iPhone, iPad and Android. Your friends on their phones see you walking the floor, and you see them.</p>
           </div>
         </div>
         <p class="section-sub" style="margin-top: 34px; margin-bottom: 0;">
@@ -724,8 +801,11 @@
         <div class="get-band">
           <img class="get-icon" src="app-icon.jpg?v=20261015" alt="" width="104" height="104" loading="lazy" />
           <h2>Pull up a seat</h2>
-          <p>Casino Floor Live! is out now. Free on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro — bring your crew.</p>
-          <a class="cta" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free on the App&nbsp;Store</a>
+          <p>Casino Floor Live! is out now. Free on iPhone, iPad, Android and Apple&nbsp;Vision&nbsp;Pro — bring your crew.</p>
+          <div class="stores">
+            <a class="chunky store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><small>Free on the</small><b>App Store</b></a>
+            <a class="chunky store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><small>Free on</small><b>Google Play</b></a>
+          </div>
         </div>
       </div>
     </section>
@@ -747,6 +827,7 @@
           <a href="/support">Support</a>
           <a href="/age-rating">Is it real gambling?</a>
           <a href="https://apps.apple.com/app/id6794734494" rel="noopener">App Store ↗</a>
+          <a href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener">Google Play ↗</a>
           <a href="https://chetianholdings.com/" rel="noopener">The studio ↗</a>
         </div>
       </div>
@@ -759,10 +840,10 @@
     </div>
   </footer>
 
+  <script src="crossplay.js?v=20261115" defer></script>
   <script src="floor.js?v=20261015" defer></script>
-  <script src="tv.js?v=20261105" defer></script>
+  <script src="tv.js?v=20261115" defer></script>
   <script src="cast.js?v=20261020b" defer></script>
   <script src="games.js?v=20261020" defer></script>
-  <script src="crossplay.js?v=20261106b" defer></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "name": "Casino Floor Live!",
   "short_name": "Casino Floor Live!",
-  "description": "Play a live casino with your friends on iPhone, iPad and Apple Vision Pro.",
+  "description": "Play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro.",
   "start_url": "/",
   "display": "browser",
   "background_color": "#05100a",
@@ -9,5 +9,16 @@
   "icons": [
     { "src": "favicon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=chetian.casinofloorlive",
+      "id": "chetian.casinofloorlive"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/id6794734494"
+    }
   ]
 }

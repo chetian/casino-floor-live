@@ -15,16 +15,16 @@
   <meta property="og:description" content="Up to 10 friends on one live casino floor. Everyone brings their own bankroll, all virtual chips, zero real money." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://casinofloor.live/play-with-friends" />
-  <meta property="og:image" content="https://casinofloor.live/og-image.jpg" />
+  <meta property="og:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Play casino games with friends | Casino Floor Live!" />
   <meta name="twitter:description" content="Up to 10 friends on one live casino floor. Everyone brings their own bankroll, all virtual chips, zero real money." />
-  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg" />
-  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
+  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
   <link rel="icon" href="favicon-96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192" />
@@ -33,7 +33,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261020b" />
+  <link rel="stylesheet" href="styles.css?v=20261115" />
+  <!-- The phone's store comes first: Android gets Google Play, an iPhone or an
+       iPad the App Store, before the first paint. The "Get it free" links
+       follow it. -->
+  <script>
+    (function () {
+      var ua = navigator.userAgent || '', html = document.documentElement;
+      if (/Android/i.test(ua)) {
+        html.classList.add('os-android');
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('a[data-get]').forEach(function (a) { a.href = 'https://play.google.com/store/apps/details?id=chetian.casinofloorlive'; });
+        });
+      } else if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) {
+        html.classList.add('os-ios');
+      }
+    })();
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -52,9 +68,9 @@
         "url": "https://casinofloor.live/",
         "playMode": ["SinglePlayer", "MultiPlayer"],
         "numberOfPlayers": { "@type": "QuantitativeValue", "minValue": 1, "maxValue": 10 },
-        "gamePlatform": ["iPhone", "iPad", "Apple Vision Pro"],
+        "gamePlatform": ["iPhone", "iPad", "Android", "Apple Vision Pro"],
         "contentRating": "18+",
-        "downloadUrl": "https://apps.apple.com/app/id6794734494"
+        "downloadUrl": ["https://apps.apple.com/app/id6794734494", "https://play.google.com/store/apps/details?id=chetian.casinofloorlive"]
       }
     ]
   }
@@ -75,7 +91,7 @@
         <a class="nav-jump nav-more" href="/vision-pro">Vision Pro</a>
         <a href="/support">Support</a>
         <a class="nav-age" href="/age-rating">18+</a>
-        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free</a>
+        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener" data-get>Get it free</a>
       </div>
     </nav>
   </header>
@@ -86,8 +102,9 @@
         <span class="eyebrow center">Multiplayer</span>
         <h1>Play casino games with friends</h1>
         <p class="lede">Not ten people taking turns on the same slot machine. Ten people inside one casino at the same time — wandering off, crowding a table, and shouting about it in chat.</p>
-        <div class="hero-cta">
-          <a class="cta" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free on the App&nbsp;Store</a>
+        <div class="hero-cta stores">
+          <a class="chunky store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><small>Free on the</small><b>App Store</b></a>
+          <a class="chunky store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><small>Free on</small><b>Google Play</b></a>
         </div>
         <div class="badges">
           <span class="badge"><strong>Up to 10</strong> per room</span>
@@ -102,8 +119,8 @@
         <h2 class="section-title">How a night on the floor works</h2>
         <p class="section-sub">There's no lobby screen to stare at and no round timer pushing you along. You walk in and the floor is already running.</p>
         <div class="prose">
-          <h3>1. Invite through Game Center</h3>
-          <p>Sign in to Game Center, pick the friends you want, and send one invite. They land on your floor. There's no account to make, no password, no email address, and no friend code to read out — your player name comes from Game Center and we never store it on our servers.</p>
+          <h3>1. Open a room and send the code</h3>
+          <p>Open a private room and send your friends its code or a link. They land on your floor, whether they're on iPhone, iPad, Android or Apple Vision Pro, and on Apple devices you can invite straight from Game Center too. There's no account to make, no password and no email address — your player name comes from Game Center, or Google Play Games on Android, and we never store it on our servers.</p>
 
           <h3>2. Walk in and split up</h3>
           <p>Everybody arrives at the same door and then does whatever they like. Someone heads straight for the craps table, someone else circles the slot banks looking for a machine that's hot, someone stands at the bar. You'll pass each other on the carpet.</p>
@@ -180,7 +197,7 @@
     <section>
       <div class="wrap">
         <h2 class="section-title">Mixed devices, one floor</h2>
-        <p class="section-sub">iPhone, iPad and Apple Vision Pro all join the same live rooms. Nobody is stuck in a separate lobby, and nobody has to own a headset.</p>
+        <p class="section-sub">iPhone, iPad, Android and Apple Vision Pro all join the same live rooms. Nobody is stuck in a separate lobby, and nobody has to own a headset.</p>
         <div class="prose">
           <p>The player wearing a Vision Pro sees the floor as a miniature sitting on their coffee table and can lift a slot cabinet out of it to full size. The players on phones see the same floor from inside it. Both are walking the same carpet, sitting at the same tables, and reading the same chat.</p>
           <p><a href="/vision-pro">How it works on Apple Vision Pro →</a></p>
@@ -195,8 +212,11 @@
         <div class="get-band">
           <img class="get-icon" src="apple-touch-icon.png" alt="" width="96" height="96" loading="lazy" />
           <h2>Get everyone on the floor</h2>
-          <p>Free on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro. Virtual chips only — no real money anywhere in it.</p>
-          <a class="cta" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free on the App&nbsp;Store</a>
+          <p>Free on iPhone, iPad, Android and Apple&nbsp;Vision&nbsp;Pro. Virtual chips only — no real money anywhere in it.</p>
+          <div class="stores">
+            <a class="chunky store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><small>Free on the</small><b>App Store</b></a>
+            <a class="chunky store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><small>Free on</small><b>Google Play</b></a>
+          </div>
         </div>
         <div class="more-links" style="margin-top: 44px;">
           <a href="/games">All 14 games →</a>
@@ -223,6 +243,7 @@
           <a href="/support">Support</a>
           <a href="/age-rating">Is it real gambling?</a>
           <a href="https://apps.apple.com/app/id6794734494" rel="noopener">App Store ↗</a>
+          <a href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener">Google Play ↗</a>
           <a href="https://chetianholdings.com/" rel="noopener">The studio ↗</a>
         </div>
       </div>

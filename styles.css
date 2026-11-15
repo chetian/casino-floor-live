@@ -1323,6 +1323,7 @@ section { padding: 72px 0; }
 }
 .get-band h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 0 0 10px; }
 .get-band p { color: var(--cream-dim); margin: 0 auto 26px; max-width: 520px; }
+.get-band .stores { margin-top: 0; }
 
 /* ---------- The 18+ block ---------- */
 .rating {
@@ -1559,6 +1560,9 @@ section { padding: 72px 0; }
 /* Two new things, two sets: stacked beside the notes, side by side above
    them on a phone. */
 .update-sets { display: grid; gap: 14px; }
+/* Four new things: four sets, two by two. */
+.update-sets.four { grid-template-columns: 1fr 1fr; gap: 10px; }
+.update-android { margin: 12px 0 0 !important; color: var(--cream) !important; font-weight: 700; }
 .update-ver { display: flex; align-items: center; gap: 8px; margin: 0 0 10px !important; }
 .pill.new { color: var(--live-red); }
 .note-card.update h3 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0; }
@@ -1596,27 +1600,124 @@ section { padding: 72px 0; }
   .update-past details { padding: 11px 14px; }
 }
 
-/* ---------- Crossplay: one table on three screens ----------
-   One blackjack round, filmed live on three devices and played in step. The
-   columns are in proportion to the screens, so the three stand at one height;
-   the hub sits under the headset, brass wires running to it with chips riding
-   them both ways (crossplay.js draws those from where the screens landed). */
+/* ============================================================
+   THE HERO — crossplay. One blackjack round, filmed live on an iPhone,
+   an iPad and an Android phone (and Apple Vision Pro, under them),
+   played in step. The three stand at one height as big as the
+   screen's height allows with the name and the stores above the
+   fold, wired to the sign under the tablet; the headset hangs under
+   the sign, the addition. Behind them, the floor's grid: squares that
+   come on as little screens, and players walking in (crossplay.js).
+   ============================================================ */
+.xp-hero {
+  --grid: rgba(247, 201, 72, 0.085);
+  --gap: clamp(14px, 2.6vw, 34px);
+  --dev-h: clamp(200px, calc(100svh - 468px), 540px);
+  padding: 16px 0 clamp(40px, 6vw, 72px);
+}
+/* The grid the hero stands on, fading as it falls away from the top. */
+.xp-grid { position: absolute; inset: 0; z-index: -2; pointer-events: none; }
+.xp-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center -1px;
+  -webkit-mask-image: radial-gradient(140% 95% at 50% 0%, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 85%);
+  mask-image: radial-gradient(140% 95% at 50% 0%, #000 0%, rgba(0, 0, 0, 0.55) 45%, transparent 85%);
+}
+/* Its squares that come on (crossplay.js lights them, on the grid's lines). */
+.xp-grid canvas { position: absolute; display: none; }
+/* the one video the screens all play: a pixel, held in view */
+.xp-grid video { position: fixed; right: 0; bottom: 0; width: 1px; height: 1px; opacity: 0; }
+.xp-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 18px;
+}
+.xp-hero .mark { margin-bottom: 0; }
+.xp-hero .crown-mark { width: clamp(52px, 5.4vw, 72px); }
+.xp-line {
+  margin: 6px 0 0;
+  font-weight: 900;
+  font-size: clamp(2.05rem, 5.2vw, 3.35rem);
+  line-height: 1.04;
+  letter-spacing: -0.012em;
+  color: var(--cream);
+  text-shadow: 0 3px 24px rgba(5, 16, 10, 0.95);
+}
+.xp-line span, .xp-line em { white-space: nowrap; }
+.xp-line em { font-style: normal; color: var(--showroom); text-shadow: 0 0 0.5em rgba(255, 209, 77, 0.35), 0 3px 24px rgba(5, 16, 10, 0.95); }
+.xp-hero .tagline { max-width: 760px; margin-top: 10px; }
+
+/* ---------- The stores ----------
+   Two chunky buttons, gold, side by side. A phone's own store goes first
+   and stays gold; the other steps back to the mode cards' green. */
+.stores { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+.store {
+  --face: var(--gold-400);
+  --under: #8f6f17;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  min-width: 190px;
+  min-height: 58px;
+  padding: 8px 22px 9px;
+  color: var(--ink-on-gold);
+  line-height: 1.1;
+}
+.store:hover { color: var(--ink-on-gold); }
+.store small { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.72; }
+.store b { font-size: 1.3rem; font-weight: 900; letter-spacing: 0.01em; white-space: nowrap; }
+.os-android .store-apple,
+.os-ios .store-play { --face: var(--mode-green); --under: #0b2116; color: var(--cream); }
+.os-android .store-apple:hover,
+.os-ios .store-play:hover { color: var(--cream); }
+.os-android .store-play { order: -1; }
+/* The first store gets the play card's shine. */
+.store-apple::after,
+.os-android .store-play::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  width: 34%;
+  left: -40%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  transform: rotate(20deg);
+  animation: shine 4.5s ease-in-out 1.6s infinite;
+  pointer-events: none;
+}
+.os-android .store-apple::after { content: none; }
+
+/* ---------- The table on every screen ----------
+   The columns are in proportion to the screens, so the three stand at one
+   height; crossplay.js draws the wires from where the screens landed. */
 .xp {
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 0.45918fr) minmax(0, 1.77778fr) minmax(0, 0.75fr);
-  grid-template-areas: "phone vision pad" ". hub .";
-  column-gap: clamp(18px, 2.4vw, 30px);
-  row-gap: clamp(46px, 5vw, 62px);
+  grid-template-columns: minmax(0, 0.4604fr) minmax(0, 0.75fr) minmax(0, 0.4458fr);
+  grid-template-areas: "phone pad droid" "hub hub hub" "vision vision vision";
+  column-gap: var(--gap);
+  row-gap: clamp(36px, 4.4vw, 54px);
   align-items: end;
-  margin-bottom: 48px;
+  width: min(100%, calc(var(--dev-h) * 1.6562 + 2 * var(--gap)));
+  margin: clamp(22px, 3vw, 30px) auto 0;
 }
-/* The felt lit behind them. Vertical bleed only, like the visor's. */
+/* The felt lit behind them. */
 .xp::before {
   content: "";
   position: absolute;
-  inset: -7% 0;
+  inset: -6% -12% 30%;
   z-index: -1;
   background: radial-gradient(closest-side, rgba(35, 144, 90, 0.42), transparent 74%);
   pointer-events: none;
@@ -1625,10 +1726,11 @@ section { padding: 72px 0; }
 .xp-wires path { fill: none; stroke: rgba(227, 175, 37, 0.42); stroke-width: 1.5; }
 /* The dashed ring of the game's chips. */
 .xp-wires circle { stroke: rgba(255, 255, 255, 0.8); stroke-width: 1.3; stroke-dasharray: 2.2 2.2; }
-.xp-dev { position: relative; margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 15px; }
+.xp-dev { position: relative; margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
 .xp-phone { grid-area: phone; }
-.xp-vision { grid-area: vision; }
 .xp-pad { grid-area: pad; }
+.xp-droid { grid-area: droid; }
+.xp-vision { grid-area: vision; justify-self: center; width: min(100%, max(300px, 64%)); }
 .xp-dev figcaption {
   display: flex;
   align-items: center;
@@ -1643,21 +1745,36 @@ section { padding: 72px 0; }
 }
 .xp-dev figcaption i { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--live-red); animation: blink 1.6s ease-in-out infinite; }
 .xp-dev figcaption b { font-weight: 800; color: var(--showroom); }
+.xp-plus {
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-on-gold);
+  background: var(--gold-400);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
 .xp-glass { position: relative; overflow: hidden; background: #000; }
 .xp-glass video,
 .xp-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-/* The still stands over the video until all three screens are running. */
+/* The still stands over the video until its screen is running in step. */
 .xp-still { transition: opacity 0.3s ease; }
-.xp-live .xp-still { opacity: 0; }
+.xp-dev.is-live .xp-still { opacity: 0; }
 /* The bezels are rings, so they follow each screen's own corners: satin black
    with the TV's brass hairline. */
 .xp-phone .xp-glass {
-  aspect-ratio: 360 / 784;
+  aspect-ratio: 442 / 960;
   border-radius: 13% / 6%;
   box-shadow: 0 0 0 5px #0d1210, 0 0 0 6px rgba(227, 175, 37, 0.45), var(--shadow);
 }
+.xp-droid .xp-glass {
+  aspect-ratio: 428 / 960;
+  border-radius: 9% / 4%;
+  box-shadow: 0 0 0 5px #0d1210, 0 0 0 6px rgba(227, 175, 37, 0.45), var(--shadow);
+}
 .xp-pad .xp-glass {
-  aspect-ratio: 588 / 784;
+  aspect-ratio: 720 / 960;
   border-radius: 4.6% / 3.45%;
   box-shadow: 0 0 0 7px #0d1210, 0 0 0 8px rgba(227, 175, 37, 0.45), var(--shadow);
 }
@@ -1698,19 +1815,43 @@ section { padding: 72px 0; }
 }
 .xp-sign i { width: 8px; height: 8px; border-radius: 50%; background: var(--live-red); animation: blink 1.6s ease-in-out infinite; }
 .xp-cap { font-size: 0.86rem; color: var(--cream-faint); white-space: nowrap; }
+.xp-note { margin: 16px 0 0; text-align: center; font-size: 0.92rem; color: var(--cream-dim); }
+.xp-note a { font-weight: 800; white-space: nowrap; }
+
+/* ---------- The floor, second ----------
+   The home screen's TV on the live floor, under its own head. */
+.floor-hero { padding: 38px 0 30px; }
+.floor-head { text-align: center; margin-bottom: 14px; }
+.floor-head .section-title { margin: 6px 0 0; font-size: clamp(1.6rem, 3.6vw, 2.4rem); }
+.floor-head .tagline { margin-top: 6px; }
+
 @media (prefers-reduced-motion: reduce) {
-  .xp-dev figcaption i, .xp-sign i { animation: none; }
+  .xp-dev figcaption i, .xp-sign i, .store::after { animation: none; }
 }
 @media (max-width: 760px) {
-  /* The headset over the hub, the phone and the tablet under it. */
-  .xp {
-    grid-template-columns: minmax(0, 0.45918fr) minmax(0, 0.75fr);
-    grid-template-areas: "vision vision" "hub hub" "phone pad";
-    column-gap: 28px;
-    row-gap: 46px;
-    align-items: start;
-    margin-bottom: 40px;
-  }
-  .xp-cap { display: none; }
+  .xp { row-gap: 34px; }
+  .xp-cap { font-size: 0.8rem; }
   .xp-dev figcaption { font-size: 0.78rem; }
+}
+@media (max-width: 560px) {
+  .xp-hero { --gap: 12px; padding-top: 14px; }
+  .stores { width: 100%; max-width: 380px; gap: 10px; margin-left: auto; margin-right: auto; }
+  .store { flex: 1 1 0; min-width: 0; padding: 8px 14px 9px; min-height: 54px; }
+  .store b { font-size: 1.08rem; }
+  .store small { font-size: 0.6rem; letter-spacing: 0.08em; }
+  .get-band { padding-left: 18px; padding-right: 18px; }
+  /* Three screens a phone wide: the device over the player, no dot. */
+  .xp-dev { gap: 9px; }
+  .xp-dev figcaption { flex-direction: column; gap: 0; font-size: 0.74rem; line-height: 1.15; }
+  .xp-dev figcaption i { display: none; }
+  .xp-vision figcaption { flex-direction: row; gap: 6px; }
+  .xp-vision figcaption i { display: block; }
+  .xp-vision { width: 100%; }
+  .xp-sign { height: 40px; padding: 0 16px; font-size: 0.76rem; }
+  .floor-hero { padding-top: 30px; }
+}
+/* The narrowest phones: the band's two buttons stand one over the other. */
+@media (max-width: 380px) {
+  .get-band .stores { flex-direction: column; max-width: 250px; }
+  .get-band .store { flex: none; align-items: center; }
 }

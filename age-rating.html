@@ -14,16 +14,16 @@
   <meta property="og:description" content="Casino Floor Live! is rated 18+. It is a casino game played with pretend chips — no real money, no cash-out, no real prizes." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://casinofloor.live/age-rating" />
-  <meta property="og:image" content="https://casinofloor.live/og-image.jpg" />
+  <meta property="og:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Casino Floor Live! Age Guide | 18+, No Real Money" />
   <meta name="twitter:description" content="Casino Floor Live! is rated 18+. It is a casino game played with pretend chips — no real money, no cash-out, no real prizes." />
-  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg" />
-  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
+  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
   <link rel="icon" href="favicon-96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192" />
@@ -32,7 +32,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261020b" />
+  <link rel="stylesheet" href="styles.css?v=20261115" />
+  <!-- The phone's store comes first: Android gets Google Play, an iPhone or an
+       iPad the App Store, before the first paint. The "Get it free" links
+       follow it. -->
+  <script>
+    (function () {
+      var ua = navigator.userAgent || '', html = document.documentElement;
+      if (/Android/i.test(ua)) {
+        html.classList.add('os-android');
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('a[data-get]').forEach(function (a) { a.href = 'https://play.google.com/store/apps/details?id=chetian.casinofloorlive'; });
+        });
+      } else if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) {
+        html.classList.add('os-ios');
+      }
+    })();
+  </script>
   <style>
     /* Scoped to this page — the content table. */
     .ratings { width: 100%; border-collapse: collapse; margin: 18px 0 10px; font-size: 0.96rem; }
@@ -62,13 +78,22 @@
         "typicalAgeRange": "18-",
         "description": "A social casino game played with virtual chips only. Chips cannot be bought, cashed out, traded or redeemed, there is no real-money betting anywhere in the game, and there are no real-world prizes, sweepstakes or loot boxes.",
         "isFamilyFriendly": false,
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://apps.apple.com/app/id6794734494"
-        }
+        "offers": [
+          {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://apps.apple.com/app/id6794734494"
+          },
+          {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://play.google.com/store/apps/details?id=chetian.casinofloorlive"
+          }
+        ]
       }
     ]
   }
@@ -88,7 +113,7 @@
         <a class="nav-jump nav-more" href="/play-with-friends">Multiplayer</a>
         <a class="nav-jump nav-more" href="/vision-pro">Vision Pro</a>
         <a href="/support">Support</a>
-        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free</a>
+        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener" data-get>Get it free</a>
       </div>
     </nav>
   </header>
@@ -160,7 +185,7 @@
         <li>Offensive words are filtered on the sender's phone and again on yours, so a modified app cannot get around it.</li>
         <li>You can mute or block anyone with one tap. After that you see and hear nothing from them.</li>
         <li>You can report any message. Reports come to us, we read them, and repeat offenders are removed.</li>
-        <li>Names come from Apple's Game Center. There are no accounts, no profile text, and no way to send a picture.</li>
+        <li>Names come from Apple's Game Center, or Google Play Games on Android. There are no accounts, no profile text, and no way to send a picture.</li>
         <li>Messages pass between players in real time. We do not store them.</li>
       </ul>
 

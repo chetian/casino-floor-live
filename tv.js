@@ -1,9 +1,11 @@
-/* Casino Floor Live! — the television in the hero.
+/* Casino Floor Live! — the television on the floor.
  *
- * The home screen's set (`TVSetNode` around `ChannelSurferNode`), on the web.
+ * The home screen's set (`TVSetNode` around `ChannelSurferNode`), on the web,
+ * standing on the live floor under the crossplay hero.
  * Nobody works it: it comes on to what's new on the floor, the way the app's
- * set opens on its showcase (`ChannelLineup.showcase`) — since v1.4, CAM 15 on
- * baccarat, then CAM 16 on Lefty's cart — then to the floor itself — friends
+ * set opens on its showcase (`ChannelLineup.showcase`) — since v1.5, the new
+ * cabinets: CAM 17 on the slots, CAM 18 on Plinko, CAM 19 on mines and CAM 20
+ * on video poker — then to the floor itself — friends
  * in the conga line, past the slots, the bar and the tables — then surfs by
  * itself, a channel every few seconds: the house show on 2, THE BIG RACE on
  * 3, and EYE IN THE SKY, the floor's security feed, on 7. Every change is a
@@ -44,21 +46,29 @@
      plays a clip only once it has all of it). The showcase comes on first,
      each camera in three clips the same way, under the app's own guide line
      for whichever is on (`guide`: ChannelSurferNode.guide's showcase case);
-     between the two cameras, the app's own cut. */
+     between the cameras, the app's own cut. */
   var HOUSE = { live: true };
   var CAM = { live: false, tint: '#8CBFA6', pale: 'rgba(255, 247, 228, 0.7)' };
   var FLOOR = { ch: 1, name: 'THE FLOOR', live: true, tint: '#4BD07A', pale: '#DDF8E6' };
   function ch(o, base) { for (var k in base) if (!(k in o)) o[k] = base[k]; return o; }
   var SHOWCASE = ch({ ch: 7, name: 'EYE IN THE SKY' }, CAM);
-  var BACCARAT = ch({ guide: 'NEW ON THE FLOOR · BACCARAT' }, SHOWCASE);
-  var LEFTY = ch({ guide: 'NEW ON THE FLOOR · SHELL GAME' }, SHOWCASE);
+  var SLOTS = ch({ guide: 'NEW ON THE FLOOR · SLOT MACHINES' }, SHOWCASE);
+  var PLINKO = ch({ guide: 'NEW ON THE FLOOR · PLINKO' }, SHOWCASE);
+  var MINES = ch({ guide: 'NEW ON THE FLOOR · MINES' }, SHOWCASE);
+  var POKER = ch({ guide: 'NEW ON THE FLOOR · VIDEO POKER' }, SHOWCASE);
   var CHANNELS = [
-    ch({ clip: 'cam-baccarat-1', dwell: 2820 }, BACCARAT),
-    ch({ clip: 'cam-baccarat-2', dwell: 2820, cut: true }, BACCARAT),
-    ch({ clip: 'cam-baccarat-3', dwell: 2830, cut: true }, BACCARAT),
-    ch({ clip: 'cam-shellgame-1', dwell: 3320, cut: true }, LEFTY),
-    ch({ clip: 'cam-shellgame-2', dwell: 3320, cut: true }, LEFTY),
-    ch({ clip: 'cam-shellgame-3', dwell: 3310, cut: true }, LEFTY),
+    ch({ clip: 'cam-slots-1', dwell: 2820 }, SLOTS),
+    ch({ clip: 'cam-slots-2', dwell: 2810, cut: true }, SLOTS),
+    ch({ clip: 'cam-slots-3', dwell: 2820, cut: true }, SLOTS),
+    ch({ clip: 'cam-plinko-1', dwell: 3300, cut: true }, PLINKO),
+    ch({ clip: 'cam-plinko-2', dwell: 3300, cut: true }, PLINKO),
+    ch({ clip: 'cam-plinko-3', dwell: 3300, cut: true }, PLINKO),
+    ch({ clip: 'cam-mines-1', dwell: 3320, cut: true }, MINES),
+    ch({ clip: 'cam-mines-2', dwell: 3310, cut: true }, MINES),
+    ch({ clip: 'cam-mines-3', dwell: 3320, cut: true }, MINES),
+    ch({ clip: 'cam-videopoker-1', dwell: 3340, cut: true }, POKER),
+    ch({ clip: 'cam-videopoker-2', dwell: 3330, cut: true }, POKER),
+    ch({ clip: 'cam-videopoker-3', dwell: 3340, cut: true }, POKER),
     ch({ clip: 'floor-1', cams: [[0, 'WEST HALL']], dwell: 3700 }, FLOOR),
     ch({ clip: 'floor-2', cams: [[0, 'THE BAR']], dwell: 4000, cut: true }, FLOOR),
     ch({ clip: 'floor-3', cams: [[0, 'THE PIT']], dwell: 4000, cut: true }, FLOOR),
@@ -290,38 +300,60 @@
      The set comes on dark and switches on: the line across the glass,
      opening to the picture. The first channel is what's new on the floor,
      then the floor itself — the room is already running when you walk in —
-     and the shows follow it. */
+     and the shows follow it. The set stands under the crossplay hero, so it
+     tunes in as it comes near (the hero's screens get the page's first
+     moments), and switches on once it's in view, so the line is seen. */
   index = 0;
   var first = CHANNELS[index];
   pics[0].classList.remove('hidden');
   pics[1].classList.add('hidden');
-  load(pics[0], first);
   show(first);
   // The next channel warms up only once the first is on the glass, so the
-  // page's first moments spend their bandwidth on one picture; the next
+  // set's first moments spend their bandwidth on one picture; the next
   // place of the floor at once, since it cuts in when the first ends.
   function warmNext() {
     if (front === 0 && !pics[1].dataset.clip) load(pics[1], next());
   }
-  pics[0].addEventListener('playing', function once() {
-    pics[0].removeEventListener('playing', once);
-    setTimeout(warmNext, next().cut ? 0 : 1200);
-  });
-  setTimeout(function () {
-    var v = pics[0];
-    if (v.readyState >= 3 || v.paused || v.error) warmNext();   // not while the first is still coming
-  }, 6000);
+  var tuned = false;
+  function tuneIn() {
+    if (tuned) return;
+    tuned = true;
+    load(pics[0], first);
+    pics[0].addEventListener('playing', function once() {
+      pics[0].removeEventListener('playing', once);
+      setTimeout(warmNext, next().cut ? 0 : 1200);
+    });
+    setTimeout(function () {
+      var v = pics[0];
+      if (v.readyState >= 3 || v.paused || v.error) warmNext();   // not while the first is still coming
+    }, 6000);
+  }
 
+  var powered = false;
   function powerOn() {
+    if (powered) return;
+    powered = true;
+    tuneIn();
     tv.classList.add('powered');
     running = true;
     tunedAt = Date.now();
     play(pics[0]);
     schedule(pics[0]);
   }
-  // A beat after the page settles, the way the home screen's set waits for
-  // the arrival cascade.
-  setTimeout(powerOn, 350);
+  // A beat after it's in view, the way the home screen's set waits for the
+  // arrival cascade.
+  if ('IntersectionObserver' in window) {
+    var near = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { near.disconnect(); tuneIn(); }
+    }, { rootMargin: '250px 0px' });
+    near.observe(glass);
+    var seen = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { seen.disconnect(); setTimeout(powerOn, 250); }
+    }, { threshold: 0.35 });
+    seen.observe(glass);
+  } else {
+    setTimeout(powerOn, 350);
+  }
 
   // A click changes the channel: past the floor's other places, too.
   function change() {
@@ -353,10 +385,13 @@
   });
 
   /* Nothing runs while the set is off-screen or the tab is hidden — the
-     same reason the app's home set powers down when the floor takes over. */
-  var visible = true;
+     same reason the app's home set powers down when the floor takes over.
+     The set is below the fold, so it counts as out of sight until the
+     observer says otherwise: a page opened in a background tab gets no
+     observer callback before it's shown, and the set mustn't surf unseen. */
+  var visible = !('IntersectionObserver' in window);
   document.addEventListener('visibilitychange', function () {
-    setRunning(!document.hidden && visible);
+    if (powered) setRunning(!document.hidden && visible);
   });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (entries) {

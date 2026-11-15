@@ -13,16 +13,16 @@
   <meta property="og:description" content="Support and FAQ for Casino Floor Live! Get help, report a problem, or ask a question." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://casinofloor.live/support" />
-  <meta property="og:image" content="https://casinofloor.live/og-image.jpg" />
+  <meta property="og:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Support | Casino Floor Live!" />
   <meta name="twitter:description" content="Support and FAQ for Casino Floor Live! Get help, report a problem, or ask a question." />
-  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg" />
-  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
+  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
   <link rel="icon" href="favicon-96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192" />
@@ -31,7 +31,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261020b" />
+  <link rel="stylesheet" href="styles.css?v=20261115" />
+  <!-- The phone's store comes first: Android gets Google Play, an iPhone or an
+       iPad the App Store, before the first paint. The "Get it free" links
+       follow it. -->
+  <script>
+    (function () {
+      var ua = navigator.userAgent || '', html = document.documentElement;
+      if (/Android/i.test(ua)) {
+        html.classList.add('os-android');
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('a[data-get]').forEach(function (a) { a.href = 'https://play.google.com/store/apps/details?id=chetian.casinofloorlive'; });
+        });
+      } else if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) {
+        html.classList.add('os-ios');
+      }
+    })();
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -55,7 +71,7 @@
           {
             "@type": "Question",
             "name": "How many people can play together?",
-            "acceptedAnswer": { "@type": "Answer", "text": "A room holds up to 10 players. Invite friends through Game Center and hit the same live floor together — everyone plays their own bankroll." }
+            "acceptedAnswer": { "@type": "Answer", "text": "A room holds up to 10 players, on any mix of iPhone, iPad, Android and Apple Vision Pro. Open a private room and send the code, or invite friends through Game Center, and hit the same live floor together — everyone plays their own bankroll." }
           },
           {
             "@type": "Question",
@@ -133,7 +149,7 @@
         <a class="nav-jump nav-more" href="/vision-pro">Vision Pro</a>
         <a href="/support">Support</a>
         <a class="nav-age" href="/age-rating">18+</a>
-        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free</a>
+        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener" data-get>Get it free</a>
       </div>
     </nav>
   </header>
@@ -162,7 +178,7 @@
       <p>No. Casino Floor Live! is a game. All chips are virtual, they have no real-world value, and there is no way to wager or win real money. It's simulated casino fun with friends.</p>
 
       <h3>How many people can play together?</h3>
-      <p>A room holds up to 10 players. Invite friends through Game Center and hit the same live floor together — everyone plays their own bankroll.</p>
+      <p>A room holds up to 10 players, on any mix of iPhone, iPad, Android and Apple Vision Pro. Open a private room and send the code, or invite friends through Game Center, and hit the same live floor together — everyone plays their own bankroll.</p>
 
       <h3>Do I need to create an account?</h3>
       <p>No accounts and no passwords. Online play uses Apple's Game Center for your player name and invites — that name comes from Game Center, and we never store it on our servers. You can also play solo without signing in.</p>

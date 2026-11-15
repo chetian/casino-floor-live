@@ -26,13 +26,15 @@ Hall moving after a third of the bytes. `floor` is the three joined. A clip
 with no card time gets no card.
 
 What's new comes on first, as the app's home set opens on its showcase
-(ChannelLineup.showcase): since v1.4, CAM 15 on baccarat and then CAM 16 on
-Lefty's cart, from the 2026-11-05 take `open3` — the app's own opening,
-unpinned (a pinned CAM 16 frames the wrong stretch of floor; see CLIPS). It
-plays a place at a time too: cam-baccarat-1, -2, -3 and cam-shellgame-1, -2,
+(ChannelLineup.showcase): since v1.5, v1.5's machines in their new cabinets —
+CAM 17 on the slots, CAM 18 on Plinko, CAM 19 on mines and CAM 20 on video
+poker — from the 2026-11-13 take `open-v15`, the app's own opening, unpinned.
+It plays a place at a time too: cam-slots-1, -2, -3 … cam-videopoker-1, -2,
 -3 are each one shot in three, so their cuts don't show, and the cut between
-the cameras is the app's own flash. `cam-baccarat` and `cam-shellgame` are
-the wholes, for the Latest section's sets. v1.3's CAM 14 clips
+the cameras is the app's own flash. `cam-slots`, `cam-plinko`, `cam-mines`
+and `cam-videopoker` are the wholes, for a Latest section's sets. v1.4's
+CAM 15/16 clips (`cam-baccarat*`, `cam-shellgame*`, from `open3`, unpinned:
+a pinned CAM 16 frames the wrong stretch of floor) and v1.3's CAM 14 clips
 (`cam-pushers*`) are off the set but stay in tv/.
 """
 import os
@@ -48,13 +50,40 @@ CONGA_CROP = 'crop=2162:1380:345:295'
 # clip -> (take, [(start, end), ...], card time within the clip[, crop])
 # A take is a name in the takes dir, or a path of its own.
 CLIPS = {
-    # New on the floor (v1.4), as the app's home set opens on it: CAM 15 on
+    # New on the floor (v1.5), as the app's home set opens on it: v1.5's
+    # machines in their new cabinets, a dwell each, in Dan's order — CAM 17 on
+    # the pit's LUCKY 7s bank, CAM 18 on PLINKO, CAM 19 on DIAMOND MINE, CAM 20
+    # on JACKS OR BETTER. One take of that opening, `open-v15` (2026-11-13,
+    # unpinned: CFL_SIM="CFL Showcase iPad 13" tools/tv-take.sh open-v15 56
+    # banquet,banquet rally 225 CFL_DEBUG_DAILY_PRESS=claimdone). The set comes
+    # on at 5.2 s; each cut is the app's own white flash, at 13.83, 23.83 and
+    # 33.87 (each heads the next camera's -1), and snow at 43.93. Each camera
+    # lands its payoff inside its dwell: BIG WIN from ~10.5, the ×25 from
+    # ~18.5, MAX WIN from ~28.5, ROYAL FLUSH from ~38.0.
+    'cam-slots': ('open-v15', [(5.25, 13.70)], 6.55),
+    'cam-slots-1': ('open-v15', [(5.25, 8.07)], None),
+    'cam-slots-2': ('open-v15', [(8.07, 10.88)], None),
+    'cam-slots-3': ('open-v15', [(10.88, 13.70)], None),
+    'cam-plinko': ('open-v15', [(14.05, 23.70)], 6.55),
+    'cam-plinko-1': ('open-v15', [(13.80, 17.10)], None),
+    'cam-plinko-2': ('open-v15', [(17.10, 20.40)], None),
+    'cam-plinko-3': ('open-v15', [(20.40, 23.70)], None),
+    'cam-mines': ('open-v15', [(24.05, 33.75)], 5.95),
+    'cam-mines-1': ('open-v15', [(23.80, 27.12)], None),
+    'cam-mines-2': ('open-v15', [(27.12, 30.43)], None),
+    'cam-mines-3': ('open-v15', [(30.43, 33.75)], None),
+    'cam-videopoker': ('open-v15', [(34.10, 43.85)], 6.4),
+    'cam-videopoker-1': ('open-v15', [(33.84, 37.18)], None),
+    'cam-videopoker-2': ('open-v15', [(37.18, 40.51)], None),
+    'cam-videopoker-3': ('open-v15', [(40.51, 43.85)], None),
+    # New on the floor (v1.4), as the app's home set opened on it: CAM 15 on
     # baccarat, then CAM 16 following Lefty's cart, a dwell each. One take of
     # that opening, `open3` (2026-11-05, unpinned: tools/tv-take.sh open3 38
     # banquet,banquet rally 225). Pinned, CAM 16 holds 600 s, so it plans
     # Lefty's path ten minutes ahead and frames an empty floor. The set comes
     # on at 5.2 s, a coup is dealt and paid, the cut to CAM 16 is the app's own
     # white flash at 13.85 (it heads cam-shellgame-1), and snow at 23.82.
+    # Off the set since v1.5; the files stay.
     'cam-baccarat': ('open3', [(5.25, 13.72)], 5.0),
     'cam-baccarat-1': ('open3', [(5.25, 8.07)], None),
     'cam-baccarat-2': ('open3', [(8.07, 10.89)], None),
@@ -89,8 +118,10 @@ CLIPS = {
 }
 
 # A clip whose first frame isn't its picture takes its poster this far in:
-# CAM 16's first place opens on the cut's flash.
-POSTER_AT = {'cam-shellgame-1': 0.3}
+# CAM 17's opens on the set's power-on bloom, and each camera's first place
+# after it on the cut's flash.
+POSTER_AT = {'cam-shellgame-1': 0.3, 'cam-slots': 0.15, 'cam-slots-1': 0.15, 'cam-plinko-1': 0.3,
+             'cam-mines-1': 0.3, 'cam-videopoker-1': 0.3}
 
 
 def run(args):

@@ -15,16 +15,16 @@
   <meta property="og:description" content="Blackjack, craps, roulette, poker, slots and more — the actual rules and paytables used in Casino Floor Live! Nothing is tilted for the player." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://casinofloor.live/games" />
-  <meta property="og:image" content="https://casinofloor.live/og-image.jpg" />
+  <meta property="og:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Every game, with the real rules and payouts" />
   <meta name="twitter:description" content="Blackjack, craps, roulette, poker, slots and more — the actual rules and paytables used in Casino Floor Live! Nothing is tilted for the player." />
-  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg" />
-  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad and Apple Vision Pro." />
+  <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
+  <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
   <link rel="icon" href="favicon-96.png" type="image/png" sizes="96x96" />
   <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192" />
@@ -33,7 +33,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261020b" />
+  <link rel="stylesheet" href="styles.css?v=20261115" />
+  <!-- The phone's store comes first: Android gets Google Play, an iPhone or an
+       iPad the App Store, before the first paint. The "Get it free" links
+       follow it. -->
+  <script>
+    (function () {
+      var ua = navigator.userAgent || '', html = document.documentElement;
+      if (/Android/i.test(ua)) {
+        html.classList.add('os-android');
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('a[data-get]').forEach(function (a) { a.href = 'https://play.google.com/store/apps/details?id=chetian.casinofloorlive'; });
+        });
+      } else if (/iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) {
+        html.classList.add('os-ios');
+      }
+    })();
+  </script>
   <!-- Every rule and payout on this page is lifted from the shipped game's own
        constants. If the math changes in CasinoCore, this page changes with it. -->
   <script type="application/ld+json">
@@ -53,9 +69,9 @@
         "name": "Casino Floor Live!",
         "url": "https://casinofloor.live/",
         "genre": ["Casino", "Party", "Multiplayer"],
-        "gamePlatform": ["iPhone", "iPad", "Apple Vision Pro"],
+        "gamePlatform": ["iPhone", "iPad", "Android", "Apple Vision Pro"],
         "contentRating": "18+",
-        "downloadUrl": "https://apps.apple.com/app/id6794734494"
+        "downloadUrl": ["https://apps.apple.com/app/id6794734494", "https://play.google.com/store/apps/details?id=chetian.casinofloorlive"]
       }
     ]
   }
@@ -76,7 +92,7 @@
         <a class="nav-jump nav-more" href="/vision-pro">Vision Pro</a>
         <a href="/support">Support</a>
         <a class="nav-age" href="/age-rating">18+</a>
-        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free</a>
+        <a class="nav-get" href="https://apps.apple.com/app/id6794734494" rel="noopener" data-get>Get it free</a>
       </div>
     </nav>
   </header>
@@ -202,31 +218,43 @@
         <div class="prose">
 
           <h3 id="slots">Slots</h3>
-          <p>Eight themes on the floor — <strong>Lucky 7s</strong>, <strong>Dragon's Hoard</strong> and <strong>Neptune's Gold</strong> in the pit, and <strong>King's Ransom</strong>, <strong>Gold Rush</strong>, <strong>Grand Slam</strong>, <strong>Nitro Nights</strong> and <strong>Cosmic Cash</strong> in the West Hall's slot alley — all spinning one set of real weighted reels. Five reels, three rows, <strong>nine paylines</strong>, and 32 physical stops per reel rather than a random number dressed up as a spin.</p>
+          <p>Eight themes on the floor — <strong>Lucky 7s</strong>, <strong>Dragon's Hoard</strong> and <strong>Neptune's Gold</strong> in the pit, and <strong>King's Ransom</strong>, <strong>Gold Rush</strong>, <strong>Grand Slam</strong>, <strong>Nitro Nights</strong> and <strong>Cosmic Cash</strong> in the West Hall's slot alley — all spinning one set of real weighted reels. Five reels, <strong>five rows</strong>, <strong>25 paylines</strong>, and 32 physical stops per reel rather than a random number dressed up as a spin.</p>
           <ul>
-            <li><strong>Top line win: five wilds pays 1,000× the line bet.</strong> At the main floor's top chip that's $100,000.</li>
-            <li>Five of a kind also pays 300× on diamonds, 150× on sevens, 100× on stars, 80× on bells.</li>
-            <li><strong>Scatters pay anywhere</strong>, multiplying your total bet: 1× for two, 2× for three, 10× for four, 50× for five.</li>
-            <li><strong>Free spins</strong>: three, four or five scatters award 8, 12 or 20 spins, and <strong>every win doubles</strong> during them.</li>
-            <li><strong>Bonus round</strong>, each theme its own: land the gift symbol on reels one, three and five. Four themes have you pick three of nine hidden multipliers of your total bet; the other four let you keep collecting them until a bust turns up or none are left, and what you've collected is yours.</li>
-            <li>Bet $5 to $100 a line on the main floor.</li>
+            <li><strong>Top line win: five wilds pays 1,000× the line bet.</strong> At the main floor's top chip that's $40,000.</li>
+            <li>The machine's four jackpots are the top line wins at your line bet: <strong>MINI</strong> is five stars at 100×, <strong>MINOR</strong> five sevens at 150×, <strong>MAJOR</strong> five diamonds at 300× and <strong>GRAND</strong> five wilds at 1,000×. They're fixed pays, not a progressive jackpot.</li>
+            <li><strong>Scatters pay anywhere</strong>, multiplying your total bet: 1× for three, 10× for four, 50× for five.</li>
+            <li><strong>Free spins</strong>: three, four or five scatters also award 5, 8 or 12 spins at the bet that won them. Free spins don't win more free spins or open the bonus.</li>
+            <li><strong>Bonus games</strong>, each theme its own: land the bonus symbol on reels one, three and five on a paid spin. Every bonus pays in multiples of your total bet.</li>
+            <li><strong>Lucky 7s</strong>, the Vault Bonus: pick three of nine safe doors, each hiding 1× to 10×.</li>
+            <li><strong>Dragon's Hoard</strong>: crack eggs and keep every treasure, 1× to 10×, until a dragon hatches. Two of the eleven eggs hold one.</li>
+            <li><strong>Neptune's Gold</strong>, the Pearl Dive: pick an oyster on each of five ledges, one deeper than the last. A pearl banks and takes you down; an eel ends the dive on what you've banked. Clear the fifth ledge and Neptune's chest adds 26×.</li>
+            <li><strong>King's Ransom</strong>, the Royal Wheel: spin the silver rim for 3× to 10×. A crown moves you in to the gold ring, 10× to 35×, and another to the jewelled heart, 30× to 100×.</li>
+            <li><strong>Gold Rush</strong>, the Mother Lode: a hold and spin. Every nugget that strikes, from 1× up to a 10× gold bar, sticks and relights the three lanterns; each blank respin snuffs one, and the last one out ends it.</li>
+            <li><strong>Grand Slam</strong>, the Home Run Derby: swing until the third out. Every home run pays 1× to 10×, by how far it flies.</li>
+            <li><strong>Nitro Nights</strong>, Pink Slips: pick one of four cars and race it. First pays 24×, second 12×, third 8× and fourth 4×.</li>
+            <li><strong>Cosmic Cash</strong>, the Tractor Beam: start on 12×, then cash out or ride the beam up a rung at a time, through 15×, 20×, 30×, 50× and 100× to the 200× mothership. If it gives out on the way up, the round pays nothing.</li>
+            <li>Bet $1 to $40 a line on the main floor, on up to 25 lines: $25 to $1,000 a spin.</li>
           </ul>
 
           <h3 id="video-poker">Video Poker</h3>
-          <p><strong>9/6 Jacks or Better</strong> — the full-pay paytable, with a full house at 9 and a flush at 6. Triple Play: run up to three hands off one hold.</p>
+          <p>Five games on every machine — <strong>Jacks or Better</strong>, <strong>Bonus Poker</strong>, <strong>Double Bonus</strong>, <strong>Double Double Bonus</strong> and <strong>Deuces Wild</strong> — each on a paytable real casinos run. Play up to <strong>five hands at once</strong>: one hand is dealt, the cards you hold carry into every hand, and each hand draws from its own deck.</p>
           <ul>
-            <li>Royal flush <strong>250 for 1</strong>, rising to <strong>800 for 1 with max bet riding</strong>.</li>
-            <li>Straight flush 50 · four of a kind 25 · full house 9 · flush 6 · straight 4 · trips 3 · two pair 2.</li>
-            <li>A pair of jacks or better returns your stake — it keeps you alive, it isn't a win.</li>
-            <li>Main-floor limits: <strong>$25 to $500</strong> total across your hands.</li>
+            <li>Every pay is for 1, so it includes your stake. Royal flush <strong>250 for 1</strong>, rising to <strong>800 for 1 with max bet riding</strong>: the top chip, $100 a hand on the main floor, however many hands you play.</li>
+            <li><strong>Jacks or Better</strong>, the 9/6 table: straight flush 50 · four of a kind 25 · full house 9 · flush 6 · straight 4 · trips 3 · two pair 2 · jacks or better 1.</li>
+            <li><strong>Bonus Poker</strong>: four aces 80 · four 2s, 3s or 4s 40 · four 5s through kings 25 · full house 8 · flush 5. The rest pays as Jacks or Better.</li>
+            <li><strong>Double Bonus</strong>: four aces 160 · four 2s, 3s or 4s 80 · four 5s through kings 50 · full house 9 · flush 7 · straight 5 · two pair 1. The rest pays as Jacks or Better.</li>
+            <li><strong>Double Double Bonus</strong>: four aces with a 2, 3 or 4 beside them 400 · four 2s, 3s or 4s with an ace, 2, 3 or 4 beside them 160 · four aces 160 · four 2s, 3s or 4s 80 · four 5s through kings 50 · two pair 1. The rest pays as Jacks or Better.</li>
+            <li><strong>Deuces Wild</strong>: every 2 is wild, and the table starts at trips. Natural royal 250, or 800 with max bet riding · four deuces 200 · wild royal 25 · five of a kind 16 · straight flush 10 · four of a kind 4 · full house 4 · flush 3 · straight 2 · trips 1.</li>
+            <li>A hand that pays 1 for 1 returns your stake — jacks or better, two pair on Double Bonus and Double Double Bonus, trips on Deuces Wild. It keeps you alive; it isn't a win.</li>
+            <li>Main-floor limits: <strong>$5 to $100</strong> a hand, up to <strong>$500</strong> a deal across five hands.</li>
           </ul>
 
           <h3 id="plinko">Plinko</h3>
-          <p>Drop up to <strong>ten balls at once</strong> down <strong>12 rows of pegs</strong> into 13 buckets. Every peg is a genuine coin flip, so the middle buckets are where most balls land — and they're the ones that pay least.</p>
+          <p>Four machines, each with its own look and sound: <strong>Plinko</strong> in the pit, <strong>Candy Drop</strong> in the West Hall, <strong>Starfall</strong> in the high-limit salon and <strong>Disco Drop</strong> on the VIP mezzanine. All four pay the same. Drop up to <strong>ten balls at once</strong> down <strong>12 rows of pegs</strong> into 13 buckets. Every peg is a genuine coin flip, so the middle buckets are where most balls land — and they're the ones that pay least.</p>
           <ul>
-            <li><strong>Safe</strong>: ×10 at the edges, ×0.5 in the middle.</li>
-            <li><strong>Classic</strong>: ×25 at the edges, ×0.4 in the middle.</li>
-            <li><strong>Wild</strong>: <strong>×130 at the edges</strong>, and the centre bucket pays nothing at all.</li>
+            <li><strong>Safe</strong>: ×10 at the edges, then ×4, ×2, ×1.3, ×1 and ×0.8, down to ×0.5 in the middle.</li>
+            <li><strong>Classic</strong>: ×25 at the edges, then ×10, ×4, ×1.8, ×0.9 and ×0.5, down to ×0.4 in the middle.</li>
+            <li><strong>Wild</strong>: <strong>×130 at the edges</strong>, then ×30, ×7, ×2.2, ×0.5 and ×0.2, and the centre bucket pays nothing at all.</li>
             <li>Bet $5 to $200 a ball on the main floor.</li>
           </ul>
 
@@ -250,12 +278,12 @@
           </ul>
 
           <h3 id="mines">Mines</h3>
-          <p>A <strong>5×5 grid</strong> with <strong>10 or 15 mines</strong> hidden in it. Every gem you turn over raises your multiplier by exactly the odds of having survived that pick — and you can <strong>cash out the moment you've found one</strong>.</p>
+          <p>Four machines, each a world of its own: <strong>Diamond Mine</strong> in the pit, <strong>Dino Dig</strong> in the West Hall, <strong>Midnight Heist</strong> in the high-limit salon and <strong>Tomb of Gold</strong> on the VIP mezzanine. All four play one game, a <strong>5×5 grid</strong> with <strong>10 or 15 mines</strong> hidden in it, dressed as bombs, T-rexes, alarms or cobras. Every find you turn over raises your multiplier, and you can <strong>cash out the moment you've found one</strong>.</p>
           <ul>
+            <li>Every find raises the payout. On 10 mines the first pays 1.52× your bet and the fifth 16.1×; on 15, the first pays 2.27× and the fifth 192×.</li>
             <li>More mines means a steeper climb and a shorter life.</li>
             <li>Hit a mine and the whole bet is gone. There is no safety net.</li>
-            <li>Clear every gem and it settles automatically at full depth.</li>
-            <li>Payouts cap at <strong>2,500× your bet</strong>.</li>
+            <li>Payouts cap at <strong>2,500× your bet</strong>. The find that reaches it, the 11th on 10 mines or the 7th on 15, banks the board itself: <strong>MAX WIN</strong>.</li>
             <li>Bet $10 to $200 on the main floor.</li>
           </ul>
 
@@ -290,7 +318,7 @@
           <p>The main floor is where everyone starts, on a <strong>$1,000</strong> bankroll. Two rooms upstairs raise the ceiling:</p>
           <ul>
             <li><strong>The high-limit salon</strong> wants <strong>$5,000 in cash</strong> at the door and runs every game at <strong>ten times</strong> the main floor's minimums and maximums.</li>
-            <li><strong>The VIP mezzanine</strong> has no cash gate. Minimums stay where they are and the ceilings go up <strong>fifty times</strong>, so you can bet small or enormous in the same room. VIP also starts you on <strong>$10,000</strong> instead of $1,000.</li>
+            <li><strong>The VIP mezzanine</strong> has no cash gate. At its tables, minimums stay where they are and the ceilings go up <strong>fifty times</strong>, so you can bet small or enormous in the same room. On its machines, every chip is fifty times the main floor's. VIP also starts you on <strong>$10,000</strong> instead of $1,000.</li>
           </ul>
           <p>Neither room sells chips, and neither improves your odds. <a href="/age-rating">There is no way to buy chips anywhere in the game →</a></p>
         </div>
@@ -304,8 +332,11 @@
         <div class="get-band">
           <img class="get-icon" src="apple-touch-icon.png" alt="" width="96" height="96" loading="lazy" />
           <h2>Pull up a seat</h2>
-          <p>Free on iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro. Virtual chips only — no real money anywhere in it.</p>
-          <a class="cta" href="https://apps.apple.com/app/id6794734494" rel="noopener">Get it free on the App&nbsp;Store</a>
+          <p>Free on iPhone, iPad, Android and Apple&nbsp;Vision&nbsp;Pro. Virtual chips only — no real money anywhere in it.</p>
+          <div class="stores">
+            <a class="chunky store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><small>Free on the</small><b>App Store</b></a>
+            <a class="chunky store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><small>Free on</small><b>Google Play</b></a>
+          </div>
         </div>
         <div class="more-links" style="margin-top: 44px;">
           <a href="/play-with-friends">Playing with friends →</a>
@@ -332,6 +363,7 @@
           <a href="/support">Support</a>
           <a href="/age-rating">Is it real gambling?</a>
           <a href="https://apps.apple.com/app/id6794734494" rel="noopener">App Store ↗</a>
+          <a href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener">Google Play ↗</a>
           <a href="https://chetianholdings.com/" rel="noopener">The studio ↗</a>
         </div>
       </div>

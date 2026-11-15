@@ -15,13 +15,19 @@ preview's own delogo, so the CSS frame's island sits on it), resampled to
   <game>-card.webp  a square of the game at its best moment, 320 px: the
                     wall's card
 
-The windows below fit the takes of 2026-10-01 (bj, uth, craps, slots, plinko),
+The windows below fit the takes of 2026-10-01 (bj, uth, craps),
 2026-10-19 (web_*), 2026-11-01 (web_pusher2: CFL_DEBUG_GAME=coinPusher
 CFL_DEBUG_PUSHER_THEME=treasureCove CFL_DEBUG_AUTOSPIN=1 CFL_DEBUG_PUSHER_BONUS=jackpot
-CFL_DEBUG_PUSHER_STOCK=1 CFL_DEBUG_PUSHER_SHOWCASE=1 CFL_DEBUG_CASH=25000) and
+CFL_DEBUG_PUSHER_STOCK=1 CFL_DEBUG_PUSHER_SHOWCASE=1 CFL_DEBUG_CASH=25000),
 2026-11-05 (v4_bacc and v4_shell1, the iPhone preview v4's own: see
-cuts/iphone-v4.py in the game repo). A re-shoot moves every moment, so read a
-contact sheet of the new take first.
+cuts/iphone-v4.py in the game repo) and 2026-11-12 (s5_cosmic_beam, s5_vp,
+s5_plinko_disco, s5_mines: 1.5's machines, the iPhone preview v5's takes; see
+cuts/iphone-v5.py). A re-shoot moves every moment, so read a contact sheet of
+the new take first.
+
+Every clip is CRF 27 except the 1.5 machines in CRF: their light shows,
+sunbursts and coin showers cost three to seven times a 1.4 clip at 27, so each
+carries the CRF that keeps it within 1.5x the size of the clip it replaced.
 """
 import os
 import subprocess
@@ -43,14 +49,19 @@ GAMES = {
     'roulette': ('web_roulette', [(47.2, 58.6)], 57.0, 57.0, 600),      # $25 on red: 19 RED, WIN $50
     'dice': ('web_dice', [(11.0, 17.3)], 15.8, 15.8, 240),              # 5, UNDER 7, WIN $50
     'horses': ('web_horse', [(3.6, 14.6)], 13.8, 13.8, 160),            # and they're off, PHOTO FINISH, OFFICIAL
-    'slots': ('slots', [(29.4, 37.6)], 36.6, 36.6, 80),                 # King's Ransom: WIN $45, then 5 OF A KIND $165
-    'video-poker': ('web_vp', [(14.5, 15.4), (16.9, 24.4)], 22.0, 22.0, 200),  # deal, hold two (the wait cut), 2x JACKS OR BETTER
-    'plinko': ('plinko', [(9.2, 16.3)], 15.3, 12.4, 200),                # ten balls, WIN $104
-    'mines': ('web_mines', [(14.4, 25.0)], 23.0, 23.0, 350),            # four gems to $160, then BOOM (the bench never banks)
+    # Cosmic Cash, $25: three BEAMs (the last reel's tease cut short), TRACTOR BEAM, the saucer
+    # beams up from x100 to x200, the bonus counts to $5,000, WIN $5,000
+    'slots': ('s5_cosmic_beam', [(7.05, 9.7), (10.45, 13.45), (41.95, 43.95), (45.45, 48.3)], 48.0, 48.0, 200),
+    # five hands at $25: 10-J-Q-K of spades held, the ace on all five, ROYAL FLUSH JACKPOT $6,250
+    'video-poker': ('s5_vp', [(4.0, 5.3), (6.35, 7.3), (8.5, 13.65)], 13.5, 13.5, 595),
+    'plinko': ('s5_plinko_disco', [(8.55, 15.6)], 15.6, 15.6, 600),    # Disco Drop: ten balls for $50, a x25 edge, $179
+    # Midnight Heist, $10: seven safes to x68.0, banked, BIG WIN, then MEGA WIN $679
+    'mines': ('s5_mines', [(4.25, 12.3), (13.35, 13.95), (16.15, 16.9)], 16.6, 16.6, 585),
     'coin-pusher': ('web_pusher2', [(14.4, 21.9)], 19.6, 19.6, 960),    # Treasure Cove: CHANCE SPIN!, three crowns, JACKPOT! +$5,000
     'baccarat': ('v4_bacc', [(28.4, 36.0)], 35.0, 35.0, 260),           # bets down, the deal: PLAYER 7, BANKER NATURAL 9, $48 on $25
     'shell-game': ('v4_shell1', [(3.4, 6.4), (9.2, 10.6), (13.7, 18.4)], 17.6, 17.6, 300),  # $2,000 under the cup, Tick's watch, the pick: YOU FOUND IT!
 }
+CRF = {'slots': 35, 'video-poker': 36, 'plinko': 42, 'mines': 40}   # the rest: 27
 
 
 def run(args):
@@ -71,7 +82,8 @@ def encode(takes, name):
     graph = ';'.join(parts) + f';{tail}fps=30,scale=520:-2:flags=lanczos[v]'
     run(['ffmpeg', '-v', 'error', '-y', '-i', src, '-filter_complex', graph, '-map', '[v]',
          '-c:v', 'libx264', '-preset', 'slow', '-tune', 'animation', '-profile:v', 'high',
-         '-crf', '27', '-pix_fmt', 'yuv420p', '-an', '-movflags', '+faststart', f'{OUT}/{name}.mp4'])
+         '-crf', str(CRF.get(name, 27)), '-pix_fmt', 'yuv420p', '-an', '-movflags', '+faststart',
+         f'{OUT}/{name}.mp4'])
     run(['ffmpeg', '-v', 'error', '-y', '-ss', str(poster), '-i', src, '-frames:v', '1',
          '-vf', f'{ISLAND},scale=520:-2:flags=lanczos', '-c:v', 'libwebp', '-quality', '78',
          f'{OUT}/{name}.webp'])
