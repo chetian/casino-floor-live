@@ -61,18 +61,22 @@ step, each wired to the ONE LIVE TABLE sign, with Apple Vision Pro hanging
 under the sign as the addition and a line to `/vision-pro`. The name, the
 line ("One table. Every phone.") and the two stores stand above them.
 
-**The screens** are take `xpa1` (2026-11-14,
-`~/Movies/cfl-promo/raw/xpa1_{iphone,ipad,android,vision}.mp4`): Maya on an
+**The screens** are take `xpa5` (2026-11-15, re-shot for Android 1.5.1,
+whose table sits right under the header;
+`~/Movies/cfl-promo/raw/xpa5_{iphone,ipad,android,vision}.mp4`): Maya on an
 iPhone simulator, Jules on an iPad, Sam on the Android emulator and Alex on
-Vision Pro at one table on a local relay (the game repo's `/promo-video`
-skill; the emulator's side is `scripts/promo-video/xplay-android.sh`).
-`tools/crossplay-cut.sh` cuts one round, 8.3 s from cleared table to cleared
-table, from each device on one clock: each has its own start (the iPhone at
-12.40 s, the iPad 12.35, Android 12.60, the headset 12.55, so the deal lands
-on the same frame), resampled at 30 fps from a second early so every clip
-shares frame 0. It writes `crossplay/<device>.mp4`, the first frame as
-`.webp`, and the payoff at 7.0 s as `-payoff.webp`, which is all reduced
-motion and Save-Data see. The iPad leads: the phones follow its clock and are
+Vision Pro at one table on a local relay, with Vinny, a house regular (the
+game repo's `/promo-video` skill; the emulator's side is
+`scripts/promo-video/xplay-android.sh`). `tools/crossplay-cut.sh` cuts one
+round, 15.3 s from sweep to sweep, from each device on one clock: each has its
+own start (the iPhone at 57.25 s, the iPad 57.26, Android 57.35, the headset
+57.45, so the deal lands on the same frame), resampled at 30 fps from a
+second early so every clip shares frame 0. The house deals the next round
+while this one's sweep is still in the air, so no end frame matches the
+first: the last 0.3 s dissolve into the 0.3 s before frame 0, a sweep into a
+sweep. It writes `crossplay/<device>.mp4`, the first frame as `.webp`, and
+the payoff at 14.0 s (DEALER BUSTS $50 on every phone) as `-payoff.webp`,
+which is all reduced motion and Save-Data see. The iPad leads: the phones follow its clock and are
 nudged back when they drift, and the headset, which loads only as it comes
 near, joins the round where it is. iOS Safari fetches a video only once it's
 asked to play, so each screen is a still over its playing video; the stills

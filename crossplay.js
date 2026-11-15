@@ -1,6 +1,6 @@
 /* Casino Floor Live! — the hero: one table on every screen.
  *
- * Four takes of one moment, played as one (crossplay/, take xpa1): an iPhone,
+ * Four takes of one moment, played as one (crossplay/, take xpa5): an iPhone,
  * an iPad and an Android phone, with the headset under them. The iPad leads,
  * the others follow it, and all go back to the top together when it ends. The
  * three are the first screen, so they load at once; the headset loads as it
