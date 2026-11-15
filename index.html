@@ -37,7 +37,7 @@
        stands in elsewhere. Pirata One is the Battle Banquet's own blackletter
        (the app bundles the same font). -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;family=Pirata+One&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261115" />
+  <link rel="stylesheet" href="styles.css?v=20261115d" />
   <link rel="preload" as="image" href="sprites/emblem-crown.png" />
   <!-- The phone's store comes first: Android gets Google Play, an iPhone or an
        iPad the App Store, before the first paint. The "Get it free" links
@@ -177,34 +177,60 @@
         <div class="mark">
           <span class="crown-mark" aria-hidden="true"></span>
           <h1 class="wordmark">Casino Floor Live!</h1>
-          <p class="xp-line"><span>One table.</span> <em>Every phone.</em></p>
-          <p class="tagline">Blackjack, poker, slots and more with up to&nbsp;10 friends on one live casino floor, crossplay on iPhone, iPad, Android and Apple&nbsp;Vision&nbsp;Pro.</p>
+          <p class="xp-line"><span>One table.</span> <em>All your friends.</em></p>
+          <p class="tagline">Blackjack, poker, slots and more, with friends on iPhone, iPad, Android and Apple&nbsp;Vision&nbsp;Pro.</p>
         </div>
         <div class="stores">
-          <a class="chunky store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><small>Free on the</small><b>App Store</b></a>
-          <a class="chunky store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><small>Free on</small><b>Google Play</b></a>
+          <a class="store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><img src="badges/app-store.svg" alt="Download on the App Store" width="120" height="40" /></a>
+          <a class="store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><img src="badges/google-play.png" alt="Get it on Google Play" width="564" height="168" /></a>
         </div>
+        <!-- Each screen wears its player's plate: their device, drawn, with the
+             platform's mark on its glass and their character's head on its
+             corner, tucked onto the top of the picture. The hub is the
+             table they all sit at, in the app's seat order (take xpa5: Sam on
+             Android, Maya on iPhone, Jules on iPad, Vinny the house's regular,
+             Alex on Vision Pro), each seat wearing the same head and marks. No
+             names: the heads and the devices tell them apart. crossplay.js reads the
+             round's turns off the lead's clock and lights whoever is up (their
+             seat, wire, plate and screen) and dims the other screens, the
+             moment the app lights them on every screen. -->
         <div class="xp">
-          <p class="visually-hidden">Crossplay in action: one round of blackjack, filmed live on four devices at once. The same cards land on Maya's iPhone, Jules's iPad, Sam's Android phone and Alex's Apple Vision Pro. Maya hits to 21 and Alex goes bust, then the dealer busts and Maya, Jules and Sam are paid.</p>
+          <p class="visually-hidden">Crossplay in action: one round of blackjack, filmed live on four devices at once. Four friends play at one table, one on an iPhone, one on an iPad, one on an Android phone and one on Apple Vision Pro, with a house regular in the fifth seat. The same cards land on every screen in the same second: the iPhone player hits to 21 and the Vision Pro player goes bust, then the dealer busts and the others are paid.</p>
+          <svg class="xp-icons" aria-hidden="true" focusable="false"><symbol id="xp-i-apple" viewBox="9.97 8.72 17.72 21.78"><path fill="currentColor" d="M24.76888,20.30068a4.94881,4.94881,0,0,1,2.35656-4.15206,5.06566,5.06566,0,0,0-3.99116-2.15768c-1.67924-.17626-3.30719,1.00483-4.1629,1.00483-.87227,0-2.18977-.98733-3.6085-.95814a5.31529,5.31529,0,0,0-4.47292,2.72787c-1.934,3.34842-.49141,8.26947,1.3612,10.97608.9269,1.32535,2.01018,2.8058,3.42763,2.7533,1.38706-.05753,1.9051-.88448,3.5794-.88448,1.65876,0,2.14479.88448,3.591.8511,1.48838-.02416,2.42613-1.33124,3.32051-2.66914a10.962,10.962,0,0,0,1.51842-3.09251A4.78205,4.78205,0,0,1,24.76888,20.30068Z" /><path fill="currentColor" d="M22.03725,12.21089a4.87248,4.87248,0,0,0,1.11452-3.49062,4.95746,4.95746,0,0,0-3.20758,1.65961,4.63634,4.63634,0,0,0-1.14371,3.36139A4.09905,4.09905,0,0,0,22.03725,12.21089Z" /></symbol><symbol id="xp-i-android" viewBox="2.5 4.6 19 12"><path fill="#3ddc84" fill-rule="evenodd" d="M3 16a9 9 0 0 1 18 0Zm6.55-3.4a1.15 1.15 0 1 0-2.3 0 1.15 1.15 0 1 0 2.3 0Zm7.2 0a1.15 1.15 0 1 0-2.3 0 1.15 1.15 0 1 0 2.3 0Z" /><path fill="none" stroke="#3ddc84" stroke-width="1.5" stroke-linecap="round" d="M7.3 9.4 5.3 5.9M16.7 9.4l2-3.5" /></symbol><symbol id="xp-i-iphone" viewBox="0 0 24 24"><rect x="6.25" y="1.75" width="11.5" height="20.5" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.8" /><rect x="9.9" y="4.1" width="4.2" height="1.6" rx=".8" fill="currentColor" /></symbol><symbol id="xp-i-droid" viewBox="0 0 24 24"><rect x="6.25" y="1.75" width="11.5" height="20.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="4.9" r="1" fill="currentColor" /></symbol><symbol id="xp-i-ipad" viewBox="0 0 24 24"><rect x="3.4" y="1.75" width="17.2" height="20.5" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="4.2" r=".75" fill="currentColor" /></symbol><symbol id="xp-i-vision" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M2.8 10.2c0-2.5 1.9-4 4.6-4h9.2c2.7 0 4.6 1.5 4.6 4v2.6c0 2.8-1.6 4.4-4.1 4.4h-1.7c-1.2 0-1.8-1.4-3.4-1.4s-2.2 1.4-3.4 1.4H6.9c-2.5 0-4.1-1.6-4.1-4.4z" /></symbol><linearGradient id="xp-g-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17422b" /><stop offset="1" stop-color="#08180f" /></linearGradient><symbol id="xp-b-iphone" viewBox="0 0 46 84"><rect x="1" y="1" width="44" height="82" rx="9.5" fill="url(#xp-g-body) #0f2c1e" /><rect x="16.5" y="5.6" width="13" height="4.4" rx="2.2" fill="currentColor" stroke="none" /></symbol><symbol id="xp-b-droid" viewBox="0 0 46 84"><rect x="1" y="1" width="44" height="82" rx="6" fill="url(#xp-g-body) #0f2c1e" /><circle cx="23" cy="7.4" r="2.3" fill="currentColor" stroke="none" /></symbol><symbol id="xp-b-ipad" viewBox="0 0 64 84"><rect x="1" y="1" width="62" height="82" rx="5.5" fill="url(#xp-g-body) #0f2c1e" /><circle cx="32" cy="5.4" r="1.5" fill="currentColor" stroke="none" /></symbol><symbol id="xp-b-vision" viewBox="0 0 92 54"><path d="M1 19.9c0-11.82 9.29-18.91 22.49-18.91h44.99c13.2 0 22.49 7.09 22.49 18.91v12.29c0 13.24-7.82 20.8-20.05 20.8h-8.31c-5.87 0-8.8-6.62-16.63-6.62s-10.76 6.62-16.63 6.62H21.05c-12.23 0-20.05-7.56-20.05-20.8z" fill="url(#xp-g-body) #0f2c1e" /></symbol></svg>
           <svg class="xp-wires" aria-hidden="true"></svg>
-          <figure class="xp-dev xp-phone" aria-hidden="true">
-            <figcaption><i></i><b>iPhone</b>Maya</figcaption>
+          <figure class="xp-dev xp-phone" data-who="maya" aria-hidden="true">
+            <figcaption><span class="xp-plate"><svg class="xp-body"><use href="#xp-b-iphone" /></svg><svg class="xp-os"><use href="#xp-i-apple" /></svg><span class="xp-face" style="background-image: url(sprites/cast/ballet-mira.webp)"></span></span></figcaption>
             <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/iphone" disableremoteplayback></video><picture><source srcset="crossplay/iphone-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/iphone.webp" alt="" width="442" height="960" /></picture></div>
           </figure>
-          <figure class="xp-dev xp-pad" aria-hidden="true">
-            <figcaption><i></i><b>iPad</b>Jules</figcaption>
+          <figure class="xp-dev xp-pad" data-who="jules" aria-hidden="true">
+            <figcaption><span class="xp-plate"><svg class="xp-body"><use href="#xp-b-ipad" /></svg><svg class="xp-os"><use href="#xp-i-apple" /></svg><span class="xp-face" style="background-image: url(sprites/cast/skater-jinx.webp)"></span></span></figcaption>
             <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/ipad" disableremoteplayback></video><picture><source srcset="crossplay/ipad-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/ipad.webp" alt="" width="720" height="960" /></picture></div>
           </figure>
-          <figure class="xp-dev xp-droid" aria-hidden="true">
-            <figcaption><i></i><b>Android</b>Sam</figcaption>
+          <figure class="xp-dev xp-droid" data-who="sam" aria-hidden="true">
+            <figcaption><span class="xp-plate"><svg class="xp-body"><use href="#xp-b-droid" /></svg><svg class="xp-os"><use href="#xp-i-android" /></svg><span class="xp-face" style="background-image: url(sprites/cast/rock-axel.webp)"></span></span></figcaption>
             <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/android" disableremoteplayback></video><picture><source srcset="crossplay/android-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/android.webp" alt="" width="428" height="960" /></picture></div>
           </figure>
-          <div class="xp-hub">
-            <span class="xp-sign"><i aria-hidden="true"></i>One live table</span>
-            <span class="xp-cap">Same cards, same second</span>
+          <div class="xp-hub" aria-hidden="true">
+            <div class="xp-table">
+              <div class="xp-band"><span class="xp-rack"></span><span class="xp-sign"><i></i>One live table</span><span class="xp-game">Blackjack</span></div>
+              <div class="xp-rail">
+                <div class="xp-felt">
+                  <span class="xp-dealer">Dealer<em class="xp-bust">Bust</em></span>
+                  <svg class="xp-print" viewBox="0 0 400 150"><path id="xp-arc" d="M 96 50 Q 200 98 304 50" /><text><textPath href="#xp-arc" startOffset="50%" text-anchor="middle">BLACKJACK PAYS 3 TO 2</textPath></text></svg>
+                  <ol class="xp-seats">
+                    <li class="xp-seat" data-who="sam" style="left: 15.5%; top: 37%"><span class="xp-face" style="background-image: url(sprites/cast/rock-axel.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-android" /></svg><svg class="xp-kit"><use href="#xp-i-droid" /></svg></span><em>+$25</em></li>
+                    <li class="xp-seat" data-who="maya" style="left: 30%; top: 64%"><span class="xp-face" style="background-image: url(sprites/cast/ballet-mira.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-iphone" /></svg></span><em>+$25</em></li>
+                    <li class="xp-seat" data-who="jules" style="left: 50%; top: 76%"><span class="xp-face" style="background-image: url(sprites/cast/skater-jinx.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-ipad" /></svg></span><em>+$25</em></li>
+                    <li class="xp-seat" data-who="vinny" style="left: 70%; top: 64%"><span class="xp-face" style="background-image: url(sprites/cast/vinnie.webp)"></span><svg class="xp-bot" viewBox="0 0 12 12"><path d="M6 .8v1.8" /><rect x="1.4" y="3" width="9.2" height="7.6" rx="2.2" /><circle cx="4.3" cy="6.7" r="1.15" /><circle cx="7.7" cy="6.7" r="1.15" /></svg><em>+$25</em></li>
+                    <li class="xp-seat" data-who="alex" style="left: 84.5%; top: 37%"><span class="xp-face" style="background-image: url(sprites/cast/card-shark.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-vision" /></svg></span><em class="xp-bust">Bust</em></li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <p class="xp-turn"><b>Same cards,</b> same second</p>
           </div>
-          <figure class="xp-dev xp-vision" aria-hidden="true">
-            <figcaption><i></i><span class="xp-plus">Plus</span><b>Apple Vision Pro</b>Alex</figcaption>
+          <figure class="xp-dev xp-vision" data-who="alex" aria-hidden="true">
+            <figcaption><span class="xp-plus">Plus</span><span class="xp-plate"><svg class="xp-body"><use href="#xp-b-vision" /></svg><svg class="xp-os"><use href="#xp-i-apple" /></svg><span class="xp-face" style="background-image: url(sprites/cast/card-shark.webp)"></span></span></figcaption>
             <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/vision" disableremoteplayback></video><picture><source srcset="crossplay/vision-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/vision.webp" alt="" width="1280" height="720" loading="lazy" /></picture></div>
           </figure>
         </div>
@@ -803,8 +829,8 @@
           <h2>Pull up a seat</h2>
           <p>Casino Floor Live! is out now. Free on iPhone, iPad, Android and Apple&nbsp;Vision&nbsp;Pro — bring your crew.</p>
           <div class="stores">
-            <a class="chunky store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><small>Free on the</small><b>App Store</b></a>
-            <a class="chunky store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><small>Free on</small><b>Google Play</b></a>
+            <a class="store store-apple" href="https://apps.apple.com/app/id6794734494" rel="noopener"><img src="badges/app-store.svg" alt="Download on the App Store" width="120" height="40" /></a>
+            <a class="store store-play" href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener"><img src="badges/google-play.png" alt="Get it on Google Play" width="564" height="168" /></a>
           </div>
         </div>
       </div>
@@ -837,10 +863,13 @@
       <p class="footer-note">
         © 2026 <a href="https://chetianholdings.com/" rel="noopener">Chetian Holdings LLC</a>. Casino Floor Live! is an entertainment game featuring simulated casino play with virtual currency. It does not offer real-money gambling or an opportunity to win real money or prizes. Practice or success at social casino gaming does not imply future success at real-money gambling. Intended for adults (18+).
       </p>
+      <p class="footer-note">
+        Apple, the Apple logo, iPhone, iPad and Apple Vision Pro are trademarks of Apple Inc., registered in the U.S. and other countries and regions. App Store is a service mark of Apple Inc. Google Play, the Google Play logo and Android are trademarks of Google LLC. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the <a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener">Creative Commons 3.0 Attribution License</a>.
+      </p>
     </div>
   </footer>
 
-  <script src="crossplay.js?v=20261115" defer></script>
+  <script src="crossplay.js?v=20261115d" defer></script>
   <script src="floor.js?v=20261015" defer></script>
   <script src="tv.js?v=20261115" defer></script>
   <script src="cast.js?v=20261020b" defer></script>

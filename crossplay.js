@@ -8,8 +8,13 @@
  * Under reduced motion or Save-Data each screen holds its payoff as a still,
  * and nothing moves on its own.
  *
- * Brass wires run from each screen to the sign, drawn from where the screens
- * actually landed, with two chips riding every wire, one each way.
+ * Each screen wears its player's plate, and between them stands the table
+ * they all sit at. Brass wires run from its band to each screen, drawn from
+ * where the screens actually landed, with two chips riding every wire, one
+ * each way. The round's turns are read off the lead's clock: whoever is up
+ * lights on the table, and so do their plate, their screen and their wire,
+ * with a gold chip running down it to them, the moment the app lights them
+ * on every screen. When the dealer busts, the results land on the seats.
  *
  * Behind it all stands the floor's grid (the studio's, chetianholdings.com).
  * A few of its squares at a time come on as little screens on the floor
@@ -37,6 +42,9 @@
       fn(entries[0].isIntersecting);
     }, { threshold: threshold || 0, rootMargin: margin || '0px' }).observe(el);
   }
+
+  // The iPad leads: the other screens, and the turns, keep its clock.
+  var lead = xp.querySelector('.xp-pad video');
 
   // The grid waits for the round to be on the glass: the first moments'
   // bandwidth goes to the screens.
@@ -66,7 +74,6 @@
       };
     });
     var main = all.filter(function (s) { return !s.extra; });
-    var lead = xp.querySelector('.xp-pad video');
     var on = false, started = false;
 
     // Save-Data with motion allowed: the payoff, not the first frame.
@@ -144,58 +151,143 @@
     document.addEventListener('visibilitychange', changed);
   })();
 
-  /* ---------- the wires ---------- */
+  /* ---------- the wires, and whose turn it is ----------
+     The wires run from the table's band to each screen (the headset's from
+     under the table), drawn from where everything landed. The turns are the
+     app's, read off the lead's clock (take xpa5, as the iPad lights each
+     player's plate): Sam during the deal, then Maya, Jules, Vinny (the
+     house's, no screen of his own), Alex, the dealer, and the bust. */
   (function wires() {
     var svg = xp.querySelector('.xp-wires');
-    var sign = xp.querySelector('.xp-sign');
+    var band = xp.querySelector('.xp-band');
+    var rail = xp.querySelector('.xp-rail');
     var NS = 'http://www.w3.org/2000/svg';
     var SPEED = 0.14;          // px a millisecond
+    var SEND = 700;            // ms for the turn's chip to run to its screen
     var CHIPS = ['#21803f', '#c93327', '#6b4fc0', '#1f1f1f'];
+    var TURNS = [[0, 'sam'], [1.95, 'maya'], [3.7, 'jules'], [6.75, 'vinny'], [9.45, 'alex'],
+                 [10.85, 'dealer'], [12.4, 'paid'], [15.0, 'sam']];
+    // What the line under the table says: who's up, by what they're on. The
+    // keys are the take's players; the page names nobody (they're your friends).
+    var WORDS = {
+      sam: ['Your friend on Android', 'is up'],
+      maya: ['Your friend on iPhone', 'is up'],
+      jules: ['Your friend on iPad', 'is up'],
+      vinny: ['A house regular', 'is up'],
+      alex: ['Your friend on Apple Vision Pro', 'is up'],
+      dealer: ['Dealer’s turn', 'same cards, same second'],
+      paid: ['Dealer busts', 'on every screen at once']
+    };
     var lines = [], chips = [];
 
-    $$('.xp-dev', xp).forEach(function (dev, i) {
-      var path = document.createElementNS(NS, 'path');
-      svg.appendChild(path);
-      var line = { dev: dev, glass: dev.querySelector('.xp-glass'), path: path, len: 0 };
-      lines.push(line);
+    function make(name, cls) {
+      var el = document.createElementNS(NS, name);
+      if (cls) el.setAttribute('class', cls);
+      svg.appendChild(el);
+      return el;
+    }
+    // The glows under the wires, the wires, then everything riding them.
+    $$('.xp-dev', xp).forEach(function (dev) {
+      lines.push({ dev: dev, who: dev.getAttribute('data-who'), glass: dev.querySelector('.xp-glass'), glow: make('path', 'glow'), len: 0, sent: -1e9 });
+    });
+    lines.forEach(function (w) { w.path = make('path'); });
+    lines.forEach(function (w, i) {
       for (var back = 0; back < 2; back++) {
-        var dot = document.createElementNS(NS, 'circle');
+        var dot = make('circle');
         dot.setAttribute('r', '4.5');
         dot.setAttribute('fill', CHIPS[(i * 2 + back) % CHIPS.length]);
         dot.setAttribute('opacity', '0');
-        svg.appendChild(dot);
-        chips.push({ line: line, el: dot, back: !!back, phase: (i * 0.37 + back * 0.5) % 1 });
+        chips.push({ line: w, el: dot, back: !!back, phase: (i * 0.37 + back * 0.5) % 1 });
       }
+    });
+    lines.forEach(function (w) {
+      w.chip = make('circle', 'turn');
+      w.chip.setAttribute('r', '6');
+      w.chip.setAttribute('opacity', '0');
     });
 
     function draw() {
       var b = xp.getBoundingClientRect();
       if (!b.width) return;
       svg.setAttribute('viewBox', '0 0 ' + b.width.toFixed(1) + ' ' + b.height.toFixed(1));
-      var n = sign.getBoundingClientRect();
+      var n = band.getBoundingClientRect();
+      var r = rail.getBoundingClientRect();
       var nx = n.left + n.width / 2 - b.left;
       var ny = n.top + n.height / 2 - b.top;
       lines.forEach(function (w) {
         var s = w.glass.getBoundingClientRect();
         var f = w.dev.getBoundingClientRect();
         var x = s.left + s.width / 2 - b.left;
-        var above = s.top + s.height / 2 - b.top < ny;
-        // a gap off the bezel above the sign; over the name below it
-        var y = above ? s.bottom - b.top + 16 : f.top - b.top - 10;
         var d;
-        if (x > n.left - b.left + 10 && x < n.right - b.left - 10) {
-          // square over the sign: straight in at its edge
-          d = 'M' + x.toFixed(1) + ' ' + y.toFixed(1) + 'V' + (above ? n.top - b.top : n.bottom - b.top).toFixed(1);
+        if (s.top + s.height / 2 - b.top < ny) {
+          // a gap off the bezel, then down into the band: square over it,
+          // straight in at its top; beside it, in at its end
+          var y = s.bottom - b.top + 16;
+          if (x > n.left - b.left + 14 && x < n.right - b.left - 14) d = 'M' + x.toFixed(1) + ' ' + y.toFixed(1) + 'V' + (n.top - b.top).toFixed(1);
+          else d = 'M' + x.toFixed(1) + ' ' + y.toFixed(1) + 'V' + ny.toFixed(1) + 'H' + (x < nx ? n.left - b.left : n.right - b.left).toFixed(1);
         } else {
-          d = 'M' + x.toFixed(1) + ' ' + y.toFixed(1) + 'V' + ny.toFixed(1) + 'H' + (x < nx ? n.left - b.left : n.right - b.left).toFixed(1);
+          // the headset, under the table: out of the visor's side (above the
+          // picture, and over the head on its corner), across, and up into
+          // the rail by Alex's seat, clear of the line under the table
+          var p = w.dev.querySelector('.xp-plate').getBoundingClientRect();
+          var a = r.width / 2;
+          var cx = r.left + a - b.left;
+          var px = p.right - b.left + 6;
+          var rx = Math.max(cx + 0.8 * a, px + 14);
+          var k = Math.min(1, (rx - cx) / a);
+          var ry = r.top - b.top + r.height * Math.sqrt(1 - k * k);
+          d = 'M' + px.toFixed(1) + ' ' + (p.top + p.height * 0.3 - b.top).toFixed(1) + 'H' + rx.toFixed(1) + 'V' + ry.toFixed(1);
         }
         w.path.setAttribute('d', d);
+        w.glow.setAttribute('d', d);
         w.len = w.path.getTotalLength();
       });
     }
 
+    /* ---- the turns ---- */
+    var seats = $$('.xp-seat', xp).map(function (el) { return { el: el, who: el.getAttribute('data-who') }; });
+    var dealer = xp.querySelector('.xp-dealer');
+    var words = xp.querySelector('.xp-turn');
+    var turn = '';
+    function turnAt(t) {
+      var at = TURNS[0][1];
+      for (var i = 0; i < TURNS.length && t >= TURNS[i][0]; i++) at = TURNS[i][1];
+      return at;
+    }
+    // The results stand on the seats from the bust: Alex's from his own, the
+    // rest (and the dealer's) from the dealer's.
+    function results(t) {
+      seats.forEach(function (s) {
+        s.el.classList.toggle('is-paid', s.who === 'alex' ? t === 'dealer' || t === 'paid' : t === 'paid');
+      });
+      dealer.classList.toggle('is-paid', t === 'paid');
+    }
+    function setTurn(t, now) {
+      if (t === turn) return;
+      turn = t;
+      lines.forEach(function (w) {
+        var lit = t === 'paid' || w.who === t;
+        w.dev.classList.toggle('is-turn', w.who === t);
+        w.path.classList.toggle('on', lit);
+        w.glow.classList.toggle('on', lit);
+        if (lit) w.sent = now;
+      });
+      seats.forEach(function (s) { s.el.classList.toggle('is-turn', s.who === t); });
+      dealer.classList.toggle('is-turn', t === 'dealer');
+      // a screen's turn sinks the other screens
+      xp.classList.toggle('has-focus', lines.some(function (w) { return w.who === t; }));
+      results(t);
+      words.innerHTML = '<b>' + WORDS[t][0] + '</b> ' + WORDS[t][1];
+      words.classList.remove('is-new');
+      void words.offsetWidth;
+      words.classList.add('is-new');
+    }
+    // The screens hold the payoff: so does the table.
+    if (stills) results('paid');
+
     var running = false, raf = 0;
     function tick(now) {
+      if (roundOn && !lead.paused && lead.readyState >= 2) setTurn(turnAt(lead.currentTime), now);
       chips.forEach(function (p) {
         var w = p.line;
         if (!w.len) return;
@@ -206,6 +298,15 @@
         p.el.setAttribute('cy', pt.y.toFixed(1));
         // in off one end, out into the other
         p.el.setAttribute('opacity', Math.min(1, k * 8, (1 - k) * 8).toFixed(2));
+      });
+      // the turn's chip: off the table, down the wire, into the screen
+      lines.forEach(function (w) {
+        var k = (now - w.sent) / SEND;
+        if (!w.len || k < 0 || k > 1) { w.chip.setAttribute('opacity', '0'); return; }
+        var pt = w.path.getPointAtLength(Math.pow(1 - k, 2) * w.len);
+        w.chip.setAttribute('cx', pt.x.toFixed(1));
+        w.chip.setAttribute('cy', pt.y.toFixed(1));
+        w.chip.setAttribute('opacity', Math.min(1, k * 10, (1 - k) * 6).toFixed(2));
       });
       if (running) raf = window.requestAnimationFrame(tick);
     }

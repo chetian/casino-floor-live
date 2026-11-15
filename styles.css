@@ -1612,7 +1612,7 @@ section { padding: 72px 0; }
 .xp-hero {
   --grid: rgba(247, 201, 72, 0.085);
   --gap: clamp(14px, 2.6vw, 34px);
-  --dev-h: clamp(200px, calc(100svh - 468px), 540px);
+  --dev-h: clamp(200px, calc(100svh - 496px), 540px);
   padding: 16px 0 clamp(40px, 6vw, 72px);
 }
 /* The grid the hero stands on, fading as it falls away from the top. */
@@ -1658,45 +1658,32 @@ section { padding: 72px 0; }
 .xp-hero .tagline { max-width: 760px; margin-top: 10px; }
 
 /* ---------- The stores ----------
-   Two chunky buttons, gold, side by side. A phone's own store goes first
-   and stays gold; the other steps back to the mode cards' green. */
-.stores { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
-.store {
-  --face: var(--gold-400);
-  --under: #8f6f17;
-  flex-direction: column;
-  align-items: flex-start;
+   The stores' own badges (badges/: Apple's SVG as supplied, Google's PNG
+   with its built-in margin cut off), side by side at one height. Both
+   stores' rules: the art untouched, nothing on it, clear space of a quarter
+   of its height around it. A phone's own store goes first. */
+.stores {
+  --badge: 54px;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 0;
-  min-width: 190px;
-  min-height: 58px;
-  padding: 8px 22px 9px;
-  color: var(--ink-on-gold);
-  line-height: 1.1;
+  align-items: center;
+  gap: 14px 16px;
+  margin-top: 20px;
 }
-.store:hover { color: var(--ink-on-gold); }
-.store small { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.72; }
-.store b { font-size: 1.3rem; font-weight: 900; letter-spacing: 0.01em; white-space: nowrap; }
-.os-android .store-apple,
-.os-ios .store-play { --face: var(--mode-green); --under: #0b2116; color: var(--cream); }
-.os-android .store-apple:hover,
-.os-ios .store-play:hover { color: var(--cream); }
+.store {
+  display: block;
+  flex: none;
+  line-height: 0;
+  border-radius: 10px;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+.store img { display: block; width: auto; height: var(--badge); }
+.store:hover { text-decoration: none; transform: translateY(-2px); filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.55)); }
+.store:active { transform: none; }
+.store:focus-visible { outline: 2px solid var(--showroom); outline-offset: 4px; }
 .os-android .store-play { order: -1; }
-/* The first store gets the play card's shine. */
-.store-apple::after,
-.os-android .store-play::after {
-  content: "";
-  position: absolute;
-  top: -40%;
-  bottom: -40%;
-  width: 34%;
-  left: -40%;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-  transform: rotate(20deg);
-  animation: shine 4.5s ease-in-out 1.6s infinite;
-  pointer-events: none;
-}
-.os-android .store-apple::after { content: none; }
 
 /* ---------- The table on every screen ----------
    The columns are in proportion to the screens, so the three stand at one
@@ -1723,28 +1710,99 @@ section { padding: 72px 0; }
   pointer-events: none;
 }
 .xp-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.xp-wires path { fill: none; stroke: rgba(227, 175, 37, 0.42); stroke-width: 1.5; }
-/* The dashed ring of the game's chips. */
+.xp-wires path { fill: none; stroke: rgba(227, 175, 37, 0.42); stroke-width: 1.5; transition: stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease; }
+/* A player's wire, on their turn: gold, with a glow under it. */
+.xp-wires path.glow { stroke: rgba(255, 209, 77, 0.28); stroke-width: 8; stroke-linecap: round; opacity: 0; }
+.xp-wires path.glow.on { opacity: 1; }
+.xp-wires path.on:not(.glow) { stroke: var(--showroom); stroke-width: 2.4; }
+/* The dashed ring of the game's chips; the gold one is the turn, on its way. */
 .xp-wires circle { stroke: rgba(255, 255, 255, 0.8); stroke-width: 1.3; stroke-dasharray: 2.2 2.2; }
-.xp-dev { position: relative; margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.xp-wires circle.turn { fill: var(--gold-400); stroke: #fff; stroke-width: 1.6; stroke-dasharray: 3 2.4; }
+.xp-dev { --plate-w: 46px; --plate-h: 84px; --tuck: 26px; position: relative; margin: 0; min-width: 0; display: flex; flex-direction: column; }
 .xp-phone { grid-area: phone; }
-.xp-pad { grid-area: pad; }
+.xp-pad { --plate-w: 64px; grid-area: pad; }
 .xp-droid { grid-area: droid; }
-.xp-vision { grid-area: vision; justify-self: center; width: min(100%, max(300px, 64%)); }
-.xp-dev figcaption {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  overflow: hidden;
-  font-size: 0.86rem;
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-  color: var(--cream-dim);
+.xp-vision { --plate-w: 92px; --plate-h: 54px; grid-area: vision; justify-self: center; width: min(100%, max(300px, 64%)); }
+/* The plate stands over the screen, its foot on the picture. */
+.xp-dev figcaption { position: relative; z-index: 2; display: flex; justify-content: center; min-width: 0; margin-bottom: calc(-1 * var(--tuck)); transition: filter 0.35s ease; }
+
+/* A player's plate is their device, drawn (#xp-b-* in the page): the
+   platform's mark on its glass, their character's head on its corner. No
+   names; the heads and the devices tell them apart. Whoever is up wears it
+   gold, the moment the app lights them on every screen, and the other
+   screens step back. */
+.xp-plate {
+  position: relative;
+  flex: none;
+  width: var(--plate-w);
+  height: var(--plate-h);
 }
-.xp-dev figcaption i { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--live-red); animation: blink 1.6s ease-in-out infinite; }
-.xp-dev figcaption b { font-weight: 800; color: var(--showroom); }
+.xp-body {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  stroke: rgba(227, 175, 37, 0.55);
+  stroke-width: 2;
+  color: rgba(227, 175, 37, 0.55);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+  transition: stroke 0.25s ease, color 0.25s ease, filter 0.25s ease;
+}
+.xp-plate .xp-os { position: absolute; left: 50%; top: 40%; width: 22px; height: 22px; transform: translate(-50%, -50%); }
+.xp-droid .xp-plate .xp-os { width: 27px; }
+.xp-vision .xp-plate .xp-os { top: 42%; }
+/* The head sits on the device's foot corner, over its edge. */
+.xp-plate .xp-face {
+  position: absolute;
+  left: calc(100% - var(--size) * 0.65);
+  top: calc(100% - var(--size) * 0.7);
+  box-shadow: 0 0 0 2.5px #0b1d14, 0 0 0 4px rgba(227, 175, 37, 0.55), 0 6px 14px rgba(0, 0, 0, 0.5);
+}
+/* A character's head in a ring: their cast sprite (192 square, the head
+   round (96, 62) and 100 across), drawn at 1.85 times the ring. */
+.xp-face {
+  --size: 40px;
+  flex: none;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background-color: #081c14;
+  background-repeat: no-repeat;
+  background-size: calc(var(--size) * 1.85);
+  background-position: 50% calc(var(--size) * -0.05);
+  box-shadow: 0 0 0 2px rgba(255, 247, 228, 0.16);
+  transition: box-shadow 0.25s ease;
+}
+/* The marks (#xp-i-* in the page): the platform's (Apple's, or Android's
+   robot in its green) and the device, in the set's gold. The seats wear
+   both in a row; a plate wears the platform's on its glass. */
+.xp-icons { position: absolute; width: 0; height: 0; overflow: hidden; }
+.xp-on { display: flex; align-items: center; gap: 7px; }
+.xp-os,
+.xp-kit { display: block; flex: none; }
+.xp-os { width: 21px; height: 21px; color: var(--cream); }
+.xp-kit { width: 27px; height: 27px; color: var(--showroom); }
+.xp-dev.is-turn .xp-body {
+  stroke: var(--showroom);
+  color: var(--showroom);
+  filter: drop-shadow(0 0 9px rgba(247, 201, 72, 0.6)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+}
+.xp-dev.is-turn .xp-plate .xp-face { box-shadow: 0 0 0 2.5px #0b1d14, 0 0 0 4.5px var(--showroom), 0 0 18px rgba(247, 201, 72, 0.5); }
+/* One screen up: the others step back, plate and picture. */
+.xp.has-focus .xp-dev:not(.is-turn) figcaption { filter: brightness(0.45) saturate(0.6); }
+.xp-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: rgba(3, 10, 6, 0.6);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.xp.has-focus .xp-dev:not(.is-turn) .xp-glass::before { opacity: 1; }
 .xp-plus {
   font-size: 0.64rem;
   font-weight: 900;
@@ -1755,66 +1813,184 @@ section { padding: 72px 0; }
   border-radius: 999px;
   padding: 1px 8px;
 }
-.xp-glass { position: relative; overflow: hidden; background: #000; }
+/* PLUS stands off the headset's left, level with the wire off its right, so
+   the headset itself is centred. */
+.xp-vision .xp-plus { position: absolute; top: 30%; right: calc(50% + var(--plate-w) / 2 + 10px); transform: translateY(-50%); }
+/* The bezels are rings, so they follow each screen's own corners: satin black
+   with the TV's brass hairline, which goes gold, glowing, on its player's turn. */
+.xp-glass {
+  --bezel: 5px;
+  --hair: rgba(227, 175, 37, 0.45);
+  --glow: 0 0 0 0 rgba(247, 201, 72, 0);
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 0 var(--bezel) #0d1210, 0 0 0 calc(var(--bezel) + 1px) var(--hair), var(--glow), var(--shadow);
+  transition: box-shadow 0.3s ease;
+}
+.xp-dev.is-turn .xp-glass { --hair: var(--showroom); --glow: 0 0 46px 6px rgba(247, 201, 72, 0.3); }
 .xp-glass video,
 .xp-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 /* The still stands over the video until its screen is running in step. */
 .xp-still { transition: opacity 0.3s ease; }
 .xp-dev.is-live .xp-still { opacity: 0; }
-/* The bezels are rings, so they follow each screen's own corners: satin black
-   with the TV's brass hairline. */
-.xp-phone .xp-glass {
-  aspect-ratio: 442 / 960;
-  border-radius: 13% / 6%;
-  box-shadow: 0 0 0 5px #0d1210, 0 0 0 6px rgba(227, 175, 37, 0.45), var(--shadow);
-}
-.xp-droid .xp-glass {
-  aspect-ratio: 428 / 960;
-  border-radius: 9% / 4%;
-  box-shadow: 0 0 0 5px #0d1210, 0 0 0 6px rgba(227, 175, 37, 0.45), var(--shadow);
-}
-.xp-pad .xp-glass {
-  aspect-ratio: 720 / 960;
-  border-radius: 4.6% / 3.45%;
-  box-shadow: 0 0 0 7px #0d1210, 0 0 0 8px rgba(227, 175, 37, 0.45), var(--shadow);
-}
+.xp-phone .xp-glass { aspect-ratio: 442 / 960; border-radius: 13% / 6%; }
+.xp-droid .xp-glass { aspect-ratio: 428 / 960; border-radius: 9% / 4%; }
+.xp-pad .xp-glass { --bezel: 7px; aspect-ratio: 720 / 960; border-radius: 4.6% / 3.45%; }
 .xp-vision .xp-glass {
   aspect-ratio: 16 / 9;
   border-radius: 3.4% / 6%;
-  box-shadow: 0 0 0 1.5px rgba(227, 175, 37, 0.45), var(--shadow-lift);
+  box-shadow: 0 0 0 1.5px var(--hair), var(--glow), var(--shadow-lift);
 }
 /* The headset's view: the room through the glass, its edges falling dark. */
 .xp-vision .xp-glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 70px 6px rgba(5, 16, 10, 0.55); pointer-events: none; }
+
+/* ---------- The table they all sit at ----------
+   The hub is the one live table, drawn the way the screens draw it: the
+   dealer's band (the chip rack, the lit sign, the game), the felt in a
+   padded rail with the house's print, the dealer, and the five seats in the
+   app's seat order. Its sizes run off the table's own width (cqw). */
 .xp-hub {
   grid-area: hub;
   justify-self: center;
+  width: min(100%, 460px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
 }
-/* A sign, not a button: lit felt in a gold rail, the set's live dot. */
-.xp-sign {
+.xp-table { position: relative; width: 100%; container-type: inline-size; filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.5)); }
+.xp-band {
   position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 2cqw;
+  height: 8.6cqw;
+  padding: 0 4.2cqw;
+  border-radius: 3.4cqw 3.4cqw 0 0;
+  background: linear-gradient(180deg, #6a4220, #432812 62%, #2e1b0b);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -0.5cqw 0 rgba(227, 175, 37, 0.6), 0 0 0 1px rgba(227, 175, 37, 0.3);
+}
+/* The rack: chips on edge, in the house's colours. */
+.xp-rack {
+  justify-self: start;
+  width: 17cqw;
+  height: 3.6cqw;
+  border-radius: 0.7cqw;
+  background: linear-gradient(90deg,
+    #efe6cf 0 11%, #1a120a 11% 12.5%, #6b4fc0 12.5% 23.5%, #1a120a 23.5% 25%,
+    #2a2a2a 25% 36%, #1a120a 36% 37.5%, #21803f 37.5% 48.5%, #1a120a 48.5% 50%,
+    #21803f 50% 61%, #1a120a 61% 62.5%, #c93327 62.5% 73.5%, #1a120a 73.5% 75%,
+    #c93327 75% 86%, #1a120a 86% 87.5%, #2f6fd6 87.5% 100%);
+  box-shadow: 0 0 0 0.4cqw #1a120a, 0 0 0 calc(0.4cqw + 1px) rgba(227, 175, 37, 0.4);
+  opacity: 0.92;
+}
+.xp-sign {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  height: 44px;
-  padding: 0 20px;
-  border: 1px solid var(--gold-500);
-  border-radius: 12px;
-  background: linear-gradient(180deg, var(--mode-green), var(--felt-700));
-  box-shadow: 0 0 34px -6px rgba(247, 201, 72, 0.5);
-  font-size: 0.82rem;
+  gap: 1.8cqw;
+  font-size: clamp(0.6rem, 2.75cqw, 0.8rem);
   font-weight: 900;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--showroom);
-  text-shadow: 0 0 0.6em rgba(255, 209, 77, 0.4);
+  text-shadow: 0 0 0.6em rgba(255, 209, 77, 0.55);
 }
-.xp-sign i { width: 8px; height: 8px; border-radius: 50%; background: var(--live-red); animation: blink 1.6s ease-in-out infinite; }
-.xp-cap { font-size: 0.86rem; color: var(--cream-faint); white-space: nowrap; }
+.xp-sign i { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--live-red); box-shadow: 0 0 8px rgba(255, 66, 56, 0.8); animation: blink 1.6s ease-in-out infinite; }
+.xp-game { justify-self: end; font-size: clamp(0.5rem, 2cqw, 0.64rem); font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247, 201, 72, 0.72); }
+.xp-rail {
+  margin-top: -1px;
+  padding: 0 2.6cqw 2.6cqw;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: radial-gradient(120% 100% at 50% 0%, #4c2e17, #2b190b 62%, #1c1007);
+  box-shadow: 0 0 0 1px rgba(227, 175, 37, 0.3), inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+}
+.xp-felt {
+  position: relative;
+  aspect-ratio: 400 / 150;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: radial-gradient(85% 115% at 50% 0%, #2e9159 0%, #1d6b40 50%, #11452a 100%);
+  box-shadow: inset 0 0 0 0.35cqw rgba(227, 175, 37, 0.62), inset 0 1.6cqw 3cqw rgba(0, 0, 0, 0.32);
+}
+/* The house's print on the felt, on an arc round the rail. */
+.xp-print { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.xp-print path { fill: none; }
+.xp-print text { fill: rgba(247, 201, 72, 0.6); font-family: var(--font); font-size: 10.5px; font-weight: 900; letter-spacing: 0.2em; }
+/* A seat: the app's plate, the head and the name, and the result over it. */
+.xp-seats { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
+.xp-seat,
+.xp-dealer {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(255, 247, 228, 0.16);
+  border-radius: 999px;
+  background: rgba(5, 14, 9, 0.9);
+  line-height: 1;
+  white-space: nowrap;
+  transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.xp-seat {
+  gap: 1.5cqw;
+  padding: 0.6cqw 2cqw 0.6cqw 0.6cqw;
+  color: var(--cream);
+}
+.xp-seat .xp-face { --size: clamp(20px, 6.4cqw, 30px); box-shadow: none; }
+.xp-seat .xp-on { gap: 1cqw; }
+.xp-seat .xp-os { width: clamp(11px, 3.5cqw, 16px); height: clamp(11px, 3.5cqw, 16px); }
+.xp-seat .xp-kit { width: clamp(13px, 4.3cqw, 19px); height: clamp(13px, 4.3cqw, 19px); }
+.xp-dealer {
+  left: 50%;
+  top: 14%;
+  padding: 1cqw 2.8cqw;
+  font-size: clamp(0.5rem, 2.1cqw, 0.66rem);
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+.xp-seat.is-turn,
+.xp-dealer.is-turn {
+  color: var(--showroom);
+  border-color: var(--showroom);
+  box-shadow: 0 0 0 1px var(--showroom), 0 0 22px 6px rgba(255, 214, 102, 0.38);
+}
+/* Vinny is the house's: no screen of his own, the app's robot instead. */
+.xp-bot { width: clamp(13px, 4.3cqw, 19px); height: clamp(13px, 4.3cqw, 19px); flex: none; opacity: 0.6; }
+.xp-bot path { fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; }
+.xp-bot rect { fill: currentColor; }
+.xp-bot circle { fill: #0a1610; }
+.xp-seat em,
+.xp-dealer em {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 1cqw);
+  transform: translate(-50%, 30%) scale(0.6);
+  opacity: 0;
+  padding: 0.55cqw 1.7cqw;
+  border-radius: 999px;
+  background: var(--cash-400);
+  color: #04140b;
+  font-style: normal;
+  font-size: clamp(0.55rem, 2.3cqw, 0.72rem);
+  font-weight: 900;
+  transition: opacity 0.2s ease, transform 0.35s cubic-bezier(0.2, 1.5, 0.4, 1);
+}
+.xp-seat em.xp-bust,
+.xp-dealer em { background: var(--red-400); color: #fff; letter-spacing: 0.08em; text-transform: uppercase; }
+.xp-seat.is-paid em { opacity: 1; transform: translate(-50%, 0) scale(1); }
+/* The dealer's bust stands beside the plate, as on the screens. */
+.xp-dealer em { left: calc(100% + 1.4cqw); bottom: auto; top: 50%; transform: translate(-20%, -50%) scale(0.6); }
+.xp-dealer.is-paid em { opacity: 1; transform: translate(0, -50%) scale(1); }
+/* Whose turn, in the app's words, under the table. */
+.xp-turn { margin: 0; min-height: 1.4em; font-size: 0.98rem; line-height: 1.4; text-align: center; color: var(--cream-dim); }
+.xp-turn b { font-weight: 900; color: var(--cream); }
+.xp-turn.is-new { animation: xp-turn-in 0.35s ease both; }
+@keyframes xp-turn-in { from { opacity: 0; transform: translateY(4px); } }
 .xp-note { margin: 16px 0 0; text-align: center; font-size: 0.92rem; color: var(--cream-dim); }
 .xp-note a { font-weight: 800; white-space: nowrap; }
 
@@ -1826,32 +2002,29 @@ section { padding: 72px 0; }
 .floor-head .tagline { margin-top: 6px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .xp-dev figcaption i, .xp-sign i, .store::after { animation: none; }
+  .xp-sign i { animation: none; }
+  .xp-turn.is-new { animation: none; }
 }
 @media (max-width: 760px) {
   .xp { row-gap: 34px; }
-  .xp-cap { font-size: 0.8rem; }
-  .xp-dev figcaption { font-size: 0.78rem; }
+  .xp-turn { font-size: 0.9rem; }
 }
 @media (max-width: 560px) {
   .xp-hero { --gap: 12px; padding-top: 14px; }
-  .stores { width: 100%; max-width: 380px; gap: 10px; margin-left: auto; margin-right: auto; }
-  .store { flex: 1 1 0; min-width: 0; padding: 8px 14px 9px; min-height: 54px; }
-  .store b { font-size: 1.08rem; }
-  .store small { font-size: 0.6rem; letter-spacing: 0.08em; }
+  .stores { --badge: 46px; gap: 12px; }
   .get-band { padding-left: 18px; padding-right: 18px; }
-  /* Three screens a phone wide: the device over the player, no dot. */
-  .xp-dev { gap: 9px; }
-  .xp-dev figcaption { flex-direction: column; gap: 0; font-size: 0.74rem; line-height: 1.15; }
-  .xp-dev figcaption i { display: none; }
-  .xp-vision figcaption { flex-direction: row; gap: 6px; }
-  .xp-vision figcaption i { display: block; }
+  /* Three screens a phone wide: the plates come down with them. */
+  .xp-dev { --plate-w: 32px; --plate-h: 58px; --tuck: 18px; }
+  .xp-pad { --plate-w: 44px; }
+  .xp-vision { --plate-w: 70px; --plate-h: 41px; }
+  .xp-plate .xp-face { --size: 28px; }
+  .xp-vision .xp-plate .xp-face { --size: 30px; }
+  .xp-plate .xp-os { width: 15px; height: 15px; }
+  .xp-droid .xp-plate .xp-os { width: 19px; }
   .xp-vision { width: 100%; }
-  .xp-sign { height: 40px; padding: 0 16px; font-size: 0.76rem; }
+  .xp-turn { font-size: 0.84rem; }
   .floor-hero { padding-top: 30px; }
 }
-/* The narrowest phones: the band's two buttons stand one over the other. */
 @media (max-width: 380px) {
-  .get-band .stores { flex-direction: column; max-width: 250px; }
-  .get-band .store { flex: none; align-items: center; }
+  .stores { --badge: 42px; gap: 10px; }
 }

@@ -42,24 +42,67 @@ head script that sends Android to Google Play (below).
 ## The two stores
 
 The app is on the App Store (iPhone, iPad, Apple Vision Pro) and Google
-Play (Android, since v1.5). Where the site has room
-it offers both, as a pair of `.store` buttons: the App Store and Google Play.
-A small script in each page's head names the visitor's phone before the first
-paint: Android puts Google Play first and gold, an iPhone or iPad keeps the
-App Store gold and turns Google Play green, a desktop sees both gold. The
-single "Get it free" links (`a[data-get]`: the nav's, the home screen's GET IT
-FREE card) point at the App Store and switch to Google Play on Android. The
-Vision Pro page's own buttons stay App Store only. The structured data lists
-both stores (`downloadUrl`, `installUrl`, `sameAs`, one `Offer` each), and
+Play (Android, since v1.5). Where the site has room it offers both, as the
+stores' own badges side by side (`.stores`, `.store`): Apple's "Download on
+the App Store" (`badges/app-store.svg`, Apple's SVG as supplied) and Google's
+"Get it on Google Play" (`badges/google-play.png`, Google's PNG with its
+built-in clear-space margin cropped off). Both stores' rules: their art as
+supplied, nothing drawn on or in it (Apple's logo appears nowhere else on the
+site), clear space of a quarter of its height around it, never under 40 px
+tall. They stand at one height (`--badge`: 54 px, 46 on phones, 42 on the
+narrowest). A small script in each page's head names the visitor's phone
+before the first paint, and Android puts Google Play first. The single "Get
+it free" links (`a[data-get]`: the nav's, the home screen's GET IT FREE card)
+point at the App Store and switch to Google Play on Android. The Vision Pro
+page shows the App Store badge only. The structured data lists both stores
+(`downloadUrl`, `installUrl`, `sameAs`, one `Offer` each), and
 `site.webmanifest` names both apps in `related_applications`.
 
-## The hero: one table, every phone
+## The hero: one table, all your friends
 
 The first screen is crossplay (`crossplay.js`): one blackjack round, filmed
 live on an iPhone, an iPad and an Android phone at once and played back in
-step, each wired to the ONE LIVE TABLE sign, with Apple Vision Pro hanging
-under the sign as the addition and a line to `/vision-pro`. The name, the
-line ("One table. Every phone.") and the two stores stand above them.
+step, with Apple Vision Pro under them as the addition and a line to
+`/vision-pro`. The name, the line ("One table. All your friends."), the
+tagline (the games, with friends on all four platforms) and the two stores
+stand above them.
+
+**The players.** Each screen wears its player's plate: their device, drawn
+(`#xp-b-*` in the page: the iPhone with its island, the iPad, the Android
+phone with its punch-hole, the headset's visor), with the platform's mark on
+its glass (Apple's, from the App Store badge's own paths, or Android's robot
+in its green) and their character's head (their cast sprite, cropped to the
+head in CSS) on its foot corner. The plate stands centred over its screen
+with its foot on the picture. No names: the heads and the devices tell them
+apart. The take's players are Maya (`ballet-mira`) on the iPhone, Jules
+(`skater-jinx`) the iPad, Sam (`rock-axel`) Android and Alex (`card-shark`)
+the headset, the characters `scripts/promo-video/xplay-android.sh` (in
+CasinoBros) seats them as; their names are only keys (`data-who`). Between
+the screens and the headset stands **the table** they all sit at, drawn the
+way the screens draw it: the dealer's band (the chip rack, the lit ONE LIVE
+TABLE sign, BLACKJACK), the felt in its padded rail with BLACKJACK PAYS 3 TO
+2 on an arc, the dealer, and the five seats in the app's seat order (Sam,
+Maya, Jules, Vinny, Alex), each wearing the head and, in a row, the
+platform's and the device's marks. Vinny is the house's regular (`vinnie`)
+and wears the app's robot. Brass wires run from the band to each screen, the
+headset's from the rail by Alex's seat to the visor's side.
+
+**The turns** are the app's, read off the lead's clock (`TURNS` in
+`crossplay.js`, measured off take xpa5's iPad, where the app lights each
+player's plate gold): Sam from 0 s (he's up through the deal), Maya at 1.95,
+Jules 3.7, Vinny 6.75, Alex 9.45 (he busts), the dealer 10.85, the dealer's
+bust 12.4, and Sam again at the wrap, 15.0. Whoever is up lights on the
+table, and so do their plate, their screen's bezel and their wire, with a
+gold chip running down it to them. While a screen's player is up, the other
+screens sink (`has-focus`: a dark veil over each picture, its plate dimmed).
+The line under the table says who's up by what they're on ("Your friend on
+iPad is up"; the house regular and the dealer by their roles). At the bust
+every wire lights and the results land on the seats: +$25 for Sam, Maya,
+Jules and Vinny, BUST for Alex from his own bust, and BUST beside the dealer.
+Reduced motion and Save-Data hold the payoff on every screen, so the table
+holds the results too, and the line stays "Same cards, same second". **A new
+take means measuring `TURNS` again** (and the seats, results and characters,
+if the table changed).
 
 **The screens** are take `xpa5` (2026-11-15, re-shot for Android 1.5.1,
 whose table sits right under the header;
