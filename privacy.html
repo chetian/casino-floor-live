@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261115d" />
+  <link rel="stylesheet" href="styles.css?v=20261115e" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -66,10 +66,10 @@
     <article class="doc">
       <a class="back" href="/">← Back to home</a>
       <h1>Privacy Policy</h1>
-      <p class="eff">Effective date: July 11, 2026 · Last updated: November 7, 2026</p>
+      <p class="eff">Effective date: July 11, 2026 · Last updated: November 23, 2026</p>
 
       <div class="tldr">
-        <strong>The short version:</strong> Casino Floor Live! has no ads. On Apple devices it has no trackers, and no analytics or other third-party SDKs. On Android its only third-party SDKs are two of Google's libraries, <strong>Play Games Services</strong> and <strong>Play Billing</strong>, which send Google their own analytics and diagnostics. There are no accounts, and we don't collect your email (unless you add it to feedback or email us, so we can reply), contacts, location, or photos. Your player name comes from Apple's <strong>Game Center</strong> or, on Android, <strong>Google Play Games</strong> — we don't create it, and we never store it on our servers. When you play online, the app passes your moves and chat messages to the other players in your room through a relay we operate; that relay <strong>forwards</strong> messages in real time and does <strong>not</strong> store them. In-game chat is filtered for profanity on your device, and you can mute or report other players. Feedback and reports you send are emailed to us. That's it.
+        <strong>The short version:</strong> Casino Floor Live! has no ads and no trackers. From version 1.6, it sends <strong>usage statistics</strong> (what you play, for how long, and how the App is running) to <strong>PostHog</strong>, our analytics provider, so we can make the game better. They never include your name, your chat or your location, and you can turn them off any time in Settings › <strong>ANALYTICS</strong>. On Apple devices the App has no third-party SDKs. On Android its only third-party SDKs are two of Google's libraries, <strong>Play Games Services</strong> and <strong>Play Billing</strong>, which send Google their own analytics and diagnostics. There are no accounts, and we don't collect your email (unless you add it to feedback or email us, so we can reply), contacts, location, or photos. Your player name comes from Apple's <strong>Game Center</strong> or, on Android, <strong>Google Play Games</strong> — we don't create it, and we never store it on our servers. When you play online, the app passes your moves and chat messages to the other players in your room through a relay we operate; that relay <strong>forwards</strong> messages in real time and does <strong>not</strong> store them. In-game chat is filtered for profanity on your device, and you can mute or report other players. Feedback and reports you send are emailed to us. That's it.
       </div>
 
       <p class="lead">This Privacy Policy explains how the mobile game <strong>Casino Floor Live!</strong> (the "App") handles information. The App is developed and operated by <strong>Chetian Holdings LLC</strong> ("we," "us," or "our"), a limited liability company. This policy covers the App on Apple devices and on Android; where the two differ, it says so. By using the App you agree to this policy.</p>
@@ -84,7 +84,7 @@
       <p>On Android, your player name comes from <strong>Google Play Games</strong> instead, and it works the same way: the App does not ask you to create a username or password. When you sign in, Google provides the App with your Play Games <strong>display name</strong> and a <strong>player identifier</strong>, and the App uses them just as it uses Game Center's: your display name is shown to the other players in your room, and we do <strong>not</strong> store your name or identifier on our servers. Google keeps your Play Games profile (your gamer name and avatar) and your leaderboard scores. Your use of Play Games is governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>, and Google describes what Play Games collects in its <a href="https://developer.android.com/games/pgs/data-collection" target="_blank" rel="noopener">Play Games Services data disclosure</a>. You can delete the App's game data from your Play Games profile; our <a href="/delete">Delete your data</a> page shows how. Play Games is optional — if you don't sign in, you can still play the App solo, but multiplayer features will be unavailable.</p>
 
       <h3>Google's libraries (on Android)</h3>
-      <p>On Apple devices, the App contains no analytics, advertising, or other third-party SDKs. The Android app includes two of Google's libraries: <strong>Play Games Services</strong>, for sign-in and leaderboards, and <strong>Play Billing</strong>, for purchases. These libraries send Google their own analytics and diagnostics, which Google handles under its own privacy policy (linked above). The Android app includes no other third-party SDKs.</p>
+      <p>On Apple devices, the App contains no third-party SDKs: no advertising or analytics libraries. Its usage statistics (described below) are sent by the App's own code. The Android app includes two of Google's libraries: <strong>Play Games Services</strong>, for sign-in and leaderboards, and <strong>Play Billing</strong>, for purchases. These libraries send Google their own analytics and diagnostics, which Google handles under its own privacy policy (linked above). The Android app includes no other third-party SDKs.</p>
 
       <h3>Multiplayer gameplay data</h3>
       <p>When you play online, the App sends <strong>gameplay messages</strong> — such as your player name and color, your seat and table, bets, and game actions — to the other players in your room. This traffic passes through a relay server we operate so that everyone in the room stays in sync. The relay simply <strong>forwards</strong> messages between the players who are connected at that moment; it treats each message as opaque data, does <strong>not</strong> maintain user accounts, profiles, or a database of players, and is <strong>not</strong> designed to store your gameplay or read its contents after it is delivered.</p>
@@ -100,6 +100,9 @@
 
       <h3>Feedback</h3>
       <p>Settings has a <strong>Send Feedback</strong> form. When you send it, the App passes your note through our relay, which <strong>emails</strong> it to us through our email provider, <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">Resend</a>. The relay does <strong>not</strong> keep a copy. Along with your words, the note carries your app version and build, your device model and operating-system version, and, if you have them, your Game Center or Play Games display name, whether you're a VIP, and your room code. The form shows all of this before you send. You can add your <strong>email address</strong> if you'd like a reply; it's optional, and we use it only to answer you. If you choose to send your feedback by email instead, it goes through your device's mail app.</p>
+
+      <h3>Usage statistics (analytics)</h3>
+      <p>From version 1.6, to help us improve the game, the App sends usage statistics to <a href="https://posthog.com/privacy" target="_blank" rel="noopener">PostHog</a>, our analytics provider: which screens and games you open, how long you play, your bets and chip totals (play money only), what you buy, and how the App is running (for example, whether it closed unexpectedly or ran low on memory). Each comes with your device model, operating system and version, the App's version, your language, time zone and screen size. The statistics are tied to a <strong>random ID</strong> the App makes and, if you sign in to Game Center or Google Play Games, to a <strong>one-way hash</strong> of your player identifier, so that one player on several devices counts once. They never include your name, the words of a chat, or your location, and your IP address is <strong>not stored</strong>. We use them only to understand and improve the App, never for advertising, and we never sell them. You can turn them off at any time in Settings › <strong>ANALYTICS</strong>: nothing more is sent, and anything still waiting on your device is deleted. To have statistics already sent deleted, see <a href="/delete">Delete your data</a>.</p>
 
       <h3>House shows and bets</h3>
       <p>The televisions in the App show our own <strong>house shows</strong>, live for everyone at once. The App downloads the show schedules and results from our relay over HTTPS; those requests don't include your player name or identifier. Bets are placed with in-game chips only. Your bet tickets are kept <strong>on your device</strong> and settled there — we never store them.</p>
@@ -125,13 +128,14 @@
         <li><strong>House shows</strong> — <em>downloaded</em> from our relay; the requests don't identify you. <strong>Your bet tickets stay on your device.</strong></li>
         <li><strong>Player reports you send</strong> — reach us <em>by email</em>, from your mail app or through our relay and Resend; <strong>not stored</strong> on our relay. Used only for safety and moderation.</li>
         <li><strong>Feedback you send</strong> — <em>emailed</em> to us through our relay and Resend; <strong>not stored</strong> on our relay. Kept in our inbox and used only to answer you and improve the App.</li>
-        <li><strong>Analytics SDKs</strong> — <strong>none</strong> on Apple devices. On Android, Google's Play Games Services and Play Billing libraries send their own analytics and diagnostics to <em>Google</em>.</li>
+        <li><strong>Usage statistics</strong> (from version 1.6) — <em>sent</em> to PostHog, our analytics provider, tied to a random ID (and a one-way hash of your player identifier if you sign in). No name, chat or location, and your IP address isn't stored. <strong>Off any time</strong> in Settings › ANALYTICS.</li>
+        <li><strong>Third-party SDKs</strong> — <strong>none</strong> on Apple devices. On Android, Google's Play Games Services and Play Billing libraries send their own analytics and diagnostics to <em>Google</em>.</li>
       </ul>
 
       <h2>2. What we do NOT collect</h2>
       <ul>
         <li>No advertising identifiers (IDFA or the Android advertising ID) and no ad networks.</li>
-        <li>No analytics, telemetry, or crash-tracking SDKs of our own. On Apple devices there are none at all; on Android, Google's Play Games Services and Play Billing libraries send Google their own analytics and diagnostics (see above).</li>
+        <li>No third-party analytics, telemetry, or crash-reporting SDKs on Apple devices. The App's own usage statistics (above) are the only analytics we receive; on Android, Google's Play Games Services and Play Billing libraries also send Google their own analytics and diagnostics (see above).</li>
         <li>No third-party or social-media SDKs on Apple devices; on Android, only Google's Play Games Services and Play Billing libraries.</li>
         <li>No phone number, contacts, calendar, or address book, and no email address unless you give us one — by adding it to feedback so we can reply, or by emailing us.</li>
         <li>No precise or coarse location.</li>
@@ -148,6 +152,7 @@
         <li>Deliver and restore your in-app purchases (VIP and character packs).</li>
         <li>Save your progress and preferences on your device.</li>
         <li>Read the feedback you send, answer it when you've left an address, and fix what it reports.</li>
+        <li>Understand how the App is played and how well it runs, from usage statistics you can turn off, so we can fix problems and make it better.</li>
       </ul>
       <p>We do not use your information for advertising, profiling, or automated decision-making, and we never sell it.</p>
 
@@ -158,11 +163,12 @@
         <li><strong>With Apple</strong>, through Game Center and the App Store, to provide sign-in and purchases under Apple's own terms and privacy policy.</li>
         <li><strong>With Google</strong>, on Android, through Google Play Games and Google Play, to provide sign-in, leaderboards and purchases under Google's own terms and privacy policy. Google's Play Games Services and Play Billing libraries also send Google their own analytics and diagnostics.</li>
         <li><strong>With Resend</strong>, our email provider, only to deliver the feedback and player reports sent through our relay to our inbox.</li>
+        <li><strong>With PostHog</strong>, our analytics provider, which stores the App's usage statistics for us in the United States and processes them only on our behalf.</li>
         <li><strong>When required by law</strong>, if we must respond to a valid legal request.</li>
       </ul>
 
       <h2>5. Data retention</h2>
-      <p>On-device data remains until you delete it or uninstall the App (on Android, clearing the App's storage also deletes it). Multiplayer messages are relayed in real time and are not intended to be retained after your session; the relay may keep transient, non-identifying operational logs for a short period to keep the service running and secure. Feedback and player reports you send are kept in our email inbox only as long as we need them to answer you, follow up on what they report, and keep chat safe; we delete yours on request (see <a href="/delete">Delete your data</a>). Resend keeps its delivery records for a limited period under its own policy. Purchase records are held by Apple or Google Play under their own policies, and your Game Center or Play Games profile and scores by Apple or Google under theirs.</p>
+      <p>On-device data remains until you delete it or uninstall the App (on Android, clearing the App's storage also deletes it). Multiplayer messages are relayed in real time and are not intended to be retained after your session; the relay may keep transient, non-identifying operational logs for a short period to keep the service running and secure. Feedback and player reports you send are kept in our email inbox only as long as we need them to answer you, follow up on what they report, and keep chat safe; we delete yours on request (see <a href="/delete">Delete your data</a>). Resend keeps its delivery records for a limited period under its own policy. Usage statistics are kept in our PostHog project only as long as they help us improve the App, and we delete yours on request. Purchase records are held by Apple or Google Play under their own policies, and your Game Center or Play Games profile and scores by Apple or Google under theirs.</p>
 
       <h2>6. Security</h2>
       <p>Multiplayer connections to our relay server use encrypted transport (TLS/WSS). No method of transmission or storage is 100% secure, but because the App collects so little and stores your progress locally, there is very little personal information at risk. Please keep your device and its operating system up to date.</p>
@@ -171,7 +177,7 @@
       <p>Casino Floor Live! depicts <strong>simulated casino gambling with virtual currency</strong> and is intended for adults (rated 18+). It is not directed to children, and we do not knowingly collect personal information from children. If you believe a child has provided information through the App, please contact us and we will address it.</p>
 
       <h2>8. Your rights</h2>
-      <p>Because we do not maintain accounts or a user database, most of your data lives on your device and is under your control — you can clear it at any time by deleting the App (or, on Android, clearing its storage). Our <a href="/delete">Delete your data</a> page explains how to delete each part, including your Game Center or Play Games data and any feedback or reports you've sent us. Depending on where you live (for example, under the GDPR or California privacy laws), you may have rights to access, correct, or delete personal information. To make a request or ask a question, contact us using the details below and we'll do our best to help.</p>
+      <p>Because we do not maintain accounts or a user database, most of your data lives on your device and is under your control — you can clear it at any time by deleting the App (or, on Android, clearing its storage). Our <a href="/delete">Delete your data</a> page explains how to delete each part, including your Game Center or Play Games data, your usage statistics, and any feedback or reports you've sent us. Depending on where you live (for example, under the GDPR or California privacy laws), you may have rights to access, correct, or delete personal information. To make a request or ask a question, contact us using the details below and we'll do our best to help.</p>
 
       <h2>9. International users</h2>
       <p>The App is operated from the United States. If you use the App from outside the U.S., any limited information involved may be processed in the U.S. By using the App, you consent to that processing.</p>
