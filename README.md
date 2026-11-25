@@ -29,7 +29,7 @@ Served via GitHub Pages as a plain static site.
 - `sprites/` — art baked out of the game (see below)
 - `tv/` — the hero set's channels, filmed from the app (see below)
 - `games/` — the game picker's clips, stills and cards, cut from the app (see below)
-- `crossplay/` — one blackjack round on four screens, and the grid's scenes, for the hero (see below)
+- `crossplay/` — one evening at one blackjack table on four screens (one player, then three friends), and the grid's scenes, for the hero (see below)
 - `clips/` — the App Store preview, and stills for the other pages' phones
 - `tools/` — the scripts that rebuild the cast wall, the TV and the game clips
 
@@ -60,12 +60,16 @@ page shows the App Store badge only. The structured data lists both stores
 
 ## The hero: one table, all your friends
 
-The first screen is crossplay (`crossplay.js`): one blackjack round, filmed
-live on an iPhone, an iPad and an Android phone at once and played back in
-step, with Apple Vision Pro under them as the addition and a line to
-`/vision-pro`. The name, the line ("One table. All your friends."), the
+The first screen is crossplay (`crossplay.js`): one evening at one blackjack
+table, filmed live on an iPhone, an iPad, an Android phone and Apple Vision
+Pro at once and played back in step. It starts with one player alone at the
+table; her friends arrive one at a time, and with each one the floor bonus
+(1.6's: every human on the floor past the first adds 20% to every win) climbs
+on every screen; then they play a round together and two of them are paid,
+bonus and all. The name, the line ("One table. All your friends."), the
 tagline (the games, with friends on all four platforms) and the two stores
-stand above them.
+stand above the screens, and the headset stands under the table as the
+addition, with a line to `/vision-pro`.
 
 **The players.** Each screen wears its player's plate: their device, drawn
 (`#xp-b-*` in the page: the iPhone with its island, the iPad, the Android
@@ -81,49 +85,73 @@ CasinoBros) seats them as; their names are only keys (`data-who`). Between
 the screens and the headset stands **the table** they all sit at, drawn the
 way the screens draw it: the dealer's band (the chip rack, the lit ONE LIVE
 TABLE sign, BLACKJACK), the felt in its padded rail with BLACKJACK PAYS 3 TO
-2 on an arc, the dealer, and the five seats in the app's seat order (Sam,
-Maya, Jules, Vinny, Alex), each wearing the head and, in a row, the
-platform's and the device's marks. Vinny is the house's regular (`vinnie`)
-and wears the app's robot. Brass wires run from the band to each screen, the
-headset's from the rail by Alex's seat to the visor's side.
+2 on an arc, the dealer, the four seats in the app's seat order (Maya, Jules,
+Sam, Alex), each wearing the head and, in a row, the platform's and the
+device's marks, and the FLOOR BONUS pill on the rail. Brass wires run from
+the band to each screen, the headset's from the rail by Alex's seat to the
+visor's side.
 
-**The turns** are the app's, read off the lead's clock (`TURNS` in
-`crossplay.js`, measured off take xpa5's iPad, where the app lights each
-player's plate gold): Sam from 0 s (he's up through the deal), Maya at 1.95,
-Jules 3.7, Vinny 6.75, Alex 9.45 (he busts), the dealer 10.85, the dealer's
-bust 12.4, and Sam again at the wrap, 15.0. Whoever is up lights on the
-table, and so do their plate, their screen's bezel and their wire, with a
-gold chip running down it to them. While a screen's player is up, the other
-screens sink (`has-focus`: a dark veil over each picture, its plate dimmed).
-The line under the table says who's up by what they're on ("Your friend on
-iPad is up"; the house regular and the dealer by their roles). At the bust
-every wire lights and the results land on the seats: +$25 for Sam, Maya,
-Jules and Vinny, BUST for Alex from his own bust, and BUST beside the dealer.
-Reduced motion and Save-Data hold the payoff on every screen, so the table
-holds the results too, and the line stays "Same cards, same second". **A new
-take means measuring `TURNS` again** (and the seats, results and characters,
-if the table changed).
+**The evening** runs on Maya's clock (her iPhone leads) and is read off the
+take (the data block at the top of `crossplay.js`). Until a friend arrives,
+their screen is an open seat: dark under a dashed gold outline and a "+",
+their plate dimmed and its head gone, their seat on the table dashed; the
+next to arrive breathes. A friend arrives on the frame the app's badge climbs
+on Maya's screen (`JOINS`: Jules at 2.70 s, Sam 6.93, Alex 10.47): their wire
+runs out from the table, their screen powers on the way the TV does (a white
+line, then the picture), and the line under the table says so ("Your friend
+on iPad joined. Every win pays ×1.2"); their seat fills when they sit down in
+the app (`sits`; the headset's table stands up in Alex's room 3.5 s after he
+joins). The pill pops in at ×1.2 and punches at ×1.4 and ×1.6, the way the
+app's badge does, and a gold ring calls out that badge (under the avatar,
+top left) on every screen that shows one; the headset's has none yet, and
+`--bx`/`--by`/`--bw` in `styles.css` place the ring on each screen. Then the
+round (`TURNS`, measured off Maya's console): the deal at 18.8, Maya at 20.1
+(3 10, hits to 21), Jules 21.3 (stands on 20), Sam 21.8 and Alex 23.53 (both
+bust), the dealer at 24.37. That's when the app throws the bonus (+$15 on a
+$25 win at ×1.6) up off the winners' badges (`PAYS`), so the rings go round
+Maya's and Jules's and "+$15" rises off the pill. The results land at 25.7
+(`PAID`): +$25 for Maya and Jules, BUST for Sam and Alex, 17 for the dealer,
+"21 beats 17. Every win pays ×1.6". Whoever is up lights on the table, and so
+do their plate, their screen's bezel and their wire, with a gold chip running
+down it to them; while a screen's player is up, the other screens sink
+(`has-focus`). When the evening ends every screen powers off, the table
+empties and stands dark for 0.75 s (`BREAK`), and Maya sits down alone again.
+**A new take means measuring all of it again**: `JOINS`, `TURNS`, `PAYS`,
+`PAID`, the seats and their results, and the badge's place on each screen.
 
-**The screens** are take `xpa5` (2026-11-15, re-shot for Android 1.5.1,
-whose table sits right under the header;
-`~/Movies/cfl-promo/raw/xpa5_{iphone,ipad,android,vision}.mp4`): Maya on an
-iPhone simulator, Jules on an iPad, Sam on the Android emulator and Alex on
-Vision Pro at one table on a local relay, with Vinny, a house regular (the
-game repo's `/promo-video` skill; the emulator's side is
-`scripts/promo-video/xplay-android.sh`). `tools/crossplay-cut.sh` cuts one
-round, 15.3 s from sweep to sweep, from each device on one clock: each has its
-own start (the iPhone at 57.25 s, the iPad 57.26, Android 57.35, the headset
-57.45, so the deal lands on the same frame), resampled at 30 fps from a
-second early so every clip shares frame 0. The house deals the next round
-while this one's sweep is still in the air, so no end frame matches the
-first: the last 0.3 s dissolve into the 0.3 s before frame 0, a sweep into a
-sweep. It writes `crossplay/<device>.mp4`, the first frame as `.webp`, and
-the payoff at 14.0 s (DEALER BUSTS $50 on every phone) as `-payoff.webp`,
-which is all reduced motion and Save-Data see. The iPad leads: the phones follow its clock and are
-nudged back when they drift, and the headset, which loads only as it comes
-near, joins the round where it is. iOS Safari fetches a video only once it's
-asked to play, so each screen is a still over its playing video; the stills
-fade off once the first round is running on all three.
+**Where it runs.** The evening plays only under `xp-story`, which the page's
+head sets when motion is allowed and Save-Data is off. Reduced motion,
+Save-Data and refused autoplay (Low Power Mode) show the evening settled:
+everyone seated with their results, the pill at ×1.6, "Three friends joined",
+and each screen's payoff still. An open seat covers its screen with opaque
+layers and never hides the video itself: muted autoplay may pause a video it
+takes for invisible, and a friend's video has to be running in step the
+moment they arrive.
+
+**The screens** are take `xpj1` (2026-11-15, on the 1.6 tree with the floor
+bonus lit; `~/Movies/cfl-promo/raw/xpj1_{iphone,ipad,android,vision}.mp4`,
+shot by `scripts/promo-video/xplay-android.sh joins` in CasinoBros): Maya
+sits down alone on an iPhone simulator, then Jules launches on an iPad, Sam
+on the Android emulator and Alex on the Vision Pro simulator, and each joins
+her room on a local relay. `tools/crossplay-cut.sh` cuts three spans of the
+iPhone's clock into one 28 s evening: Maya alone through Sam's arrival
+(8.4–17.6 s), Alex's arrival and the round he sits down in (20.6–29.05; the
+3 s between, the table waiting on Sam's first bet with nothing moving, is
+cut), and, from the same empty felt with every bet down, the round they win
+(114.25–123.6), with the first frame held a second. Each device has its own
+clock against the iPhone's (the iPad 0, Android +0.10 s, by the badge
+climbing on every screen at once; the headset, which has no badge, +0.07 by
+the round's sweep), resampled at 30 fps counting from each span's seek point
+(the recorders write no frame while a screen is still, and counting from the
+first one they do write ran Sam's clip 2.5 s ahead). A friend's clip is black
+until they arrive, which costs next to nothing. It writes
+`crossplay/<device>.mp4`, the still as `.webp` (Maya's first frame, or the
+moment a friend arrives) and the payoff at 26.6 s (21 BEATS 17 on Maya's
+screen, 20 BEATS 17 on Jules's, the busts) as `-payoff.webp`. The others
+follow Maya's clock and are nudged back when they drift; the headset loads
+only as it comes near. iOS Safari fetches a video only once it's asked to
+play, so each screen is a still over its playing video, and every video
+plays from the top, a friend's under its open seat.
 
 **The grid** behind them is chetianholdings.com's lit grid, ported: 56 px
 squares, a few at a time opening (a green line across, then the picture) on a
@@ -233,6 +261,8 @@ RELAY_HOUSE_OFF=banquet,boxing,drag tools/tv-take.sh tri2 22 drag,drag tri 1194
 tools/tv-take.sh cams 52 banquet,banquet rally 225 CFL_DEBUG_HOME_CAM=all
 tools/tv-take.sh pushers 50 banquet,banquet rally 225 CFL_DEBUG_HOME_CAM=pushers   # CAM 14, pinned
 tools/tv-take.sh open3 38 banquet,banquet rally 225   # v1.4's opening: CAM 15, then CAM 16 (unpinned)
+CFL_SIM="CFL Showcase iPad 13" tools/tv-take.sh open-v16 44 banquet,banquet rally 225 \
+  CFL_DEBUG_DAILY_PRESS=claimdone                       # v1.6's opening: CAM 21, the wheel's JACKPOT
 python3 tools/tv-encode.py ~/Movies/cfl-site-tv
 ```
 
@@ -242,7 +272,13 @@ this set — v1.1 ships with real games off, and the clips are house shows and
 the floor's own cameras only.
 
 The set comes on to what's new, as the app's home set does
-(`ChannelLineup.showcase`): since v1.5, the new cabinets — CAM 17 on the
+(`ChannelLineup.showcase`): since v1.6, CAM 21 on the rebuilt prize wheel,
+whose regular gives it a throw that lands the JACKPOT, $25,000 over the face.
+It's one take of the app's own opening (`open-v16`, 2026-11-25, the 1.6
+tree), cut in three the way the floor is (`cam-wheel-1`, `-2`, `-3`), under
+the app's own guide line, NEW ON THE FLOOR · PRIZE WHEEL; `cam-wheel` is the
+whole, with a card, for the Latest section's set. Before it, v1.5's new
+cabinets — CAM 17 on the
 slots, CAM 18 on Plinko, CAM 19 on mines and CAM 20 on video poker, in that
 order, a dwell each — cut from one take of the app's own opening
 (`open-v15`, 2026-11-13), three clips a camera the way the floor is
@@ -253,7 +289,8 @@ between the cameras is the app's own flash, and each camera lands its payoff
 `cam-videopoker` are the wholes, with cards, for a Latest section's sets.
 Film a showcase unpinned: `CFL_DEBUG_HOME_CAM` holds a pinned camera for
 600 s (a tracking camera like v1.4's CAM 16 plans its path over the whole
-hold, so pinned it frames empty floor). v1.4's CAM 15/16 clips
+hold, so pinned it frames empty floor). v1.5's CAM 17–20 clips
+(`cam-slots*` … `cam-videopoker*`), v1.4's CAM 15/16 clips
 (`cam-baccarat*`, `cam-shellgame*`) and v1.3's CAM 14 clips (`cam-pushers*`)
 are off the set but stay in `tv/`, which chetianholdings.com links. The next
 new game takes that slot: film the opening, cut it in three a camera, and
@@ -344,9 +381,10 @@ the right cup.
 newest release open beside its set (the showcase camera's clip, playing on
 hover like the guide's), the earlier ones folded a version a row. When a
 release ships, put its entry on top, fold the one it replaces, and drop any
-line that only made sense on the day ("every drop so far is out now"). v1.5
-has four sets, one a camera (`.update-sets.four`), and a line of the site's
-own under the app's: Android, which the app's What's New doesn't cover.
+line that only made sense on the day ("every drop so far is out now"). v1.6
+has one set, CAM 21's jackpot (`.update-sets.one`, full width on a phone).
+v1.5 had four, one a camera (`.update-sets.four`), and a line of the site's
+own under the app's for Android; folded, it keeps the app's lines only.
 
 ### The phones
 
@@ -375,9 +413,9 @@ no longer on any page.
 
 Announced content only:
 
-- **Held drops** — Yuletide is drawn and in the app binary but held
-  (`ReleaseWave.held`). The cast export leaves it out by itself; when it opens,
-  re-bake (above) and the wall and the floor pick it up.
+- **Held drops** — none since 1.6: Yuletide opened, and the wall and the floor
+  were re-baked with it on 2026-11-25 (88). The cast export leaves out any wave
+  in `ReleaseWave.held` by itself; when one opens, re-bake (above).
 - **The badge case** — the badges themselves aren't shown; a few emblems serve
   as the site's icons.
 - **Real games** — the sports broadcasts are parked in the app (`RealGames.enabled`

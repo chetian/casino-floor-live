@@ -38,6 +38,7 @@ SHELVES = [
     ('sportsBook', 'Sports Book'),
     ('fantasyTavern', 'Fantasy Tavern'),
     ('halloween', 'Halloween'),
+    ('christmas', 'Yuletide'),
     ('throwback', 'The Throwback Season'),
     ('coinPushers', 'The Coin Pushers'),
     ('hustle', 'The Hustle'),
@@ -77,6 +78,10 @@ WHO = {
     'soda-sundae': 'the soda fountain server', 'gummy-gummo': 'the gummy bear',
     'ringmaster-monty': 'the ringmaster', 'monkey-bingo': 'the monkey in a fez',
     'mermaid-coral': 'the mermaid', 'diver-fathom': 'the deep-sea diver',
+    'santa-nick': 'Santa Claus', 'mrs-claus-noelle': 'Mrs. Claus', 'elf-tinsel': "Santa's elf",
+    'reindeer-rudy': 'the reindeer', 'snowman-flurry': 'the snowman', 'nutcracker-major': 'the nutcracker',
+    'gingerbread-snap': 'the gingerbread man', 'yeti-frost': 'the yeti', 'caroler-bell': 'the caroler',
+    'krampus-grim': 'the Krampus',
     'hustler-lefty': 'the hustler in a pinstripe suit', 'shill-winston': 'the shill in an aloha shirt',
     'raccoon-rascal': 'the raccoon', 'lookout-scout': 'the lookout with binoculars',
     'watchman-tick': 'the watch seller in a trench coat',
@@ -141,7 +146,8 @@ def main(dump):
     for e in cast:
         i = e['id']
         who = WHO.get(i, '')
-        alt = f"{e['name']}, {who}" if who.startswith('the ') else f"{e['name']}, a casino regular {who}" if who else e['name']
+        # "the …" and a name of their own (Santa Claus, Mrs. Claus) follow the name as they are.
+        alt = f"{e['name']}, {who}" if who.startswith('the ') or who[:1].isupper() else f"{e['name']}, a casino regular {who}" if who else e['name']
         set_title = 'The Throwback Season' if e['set'] in THROWBACK else e['setTitle']
         if e['set'] in THROWBACK:
             set_title = f"{e['setTitle']} · Throwback"

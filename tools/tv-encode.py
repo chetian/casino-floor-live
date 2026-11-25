@@ -26,7 +26,10 @@ Hall moving after a third of the bytes. `floor` is the three joined. A clip
 with no card time gets no card.
 
 What's new comes on first, as the app's home set opens on its showcase
-(ChannelLineup.showcase): since v1.5, v1.5's machines in their new cabinets —
+(ChannelLineup.showcase): since v1.6, CAM 21 on the rebuilt prize wheel
+landing its JACKPOT, from the 2026-11-25 take `open-v16`, in three
+(cam-wheel-1, -2, -3), with `cam-wheel` the whole for Latest. Before it,
+v1.5's machines in their new cabinets —
 CAM 17 on the slots, CAM 18 on Plinko, CAM 19 on mines and CAM 20 on video
 poker — from the 2026-11-13 take `open-v15`, the app's own opening, unpinned.
 It plays a place at a time too: cam-slots-1, -2, -3 … cam-videopoker-1, -2,
@@ -35,7 +38,7 @@ the cameras is the app's own flash. `cam-slots`, `cam-plinko`, `cam-mines`
 and `cam-videopoker` are the wholes, for a Latest section's sets. v1.4's
 CAM 15/16 clips (`cam-baccarat*`, `cam-shellgame*`, from `open3`, unpinned:
 a pinned CAM 16 frames the wrong stretch of floor) and v1.3's CAM 14 clips
-(`cam-pushers*`) are off the set but stay in tv/.
+(`cam-pushers*`) are off the set but stay in tv/, and so do v1.5's.
 """
 import os
 import subprocess
@@ -50,6 +53,18 @@ CONGA_CROP = 'crop=2162:1380:345:295'
 # clip -> (take, [(start, end), ...], card time within the clip[, crop])
 # A take is a name in the takes dir, or a path of its own.
 CLIPS = {
+    # New on the floor (v1.6), as the app's home set opens on it: CAM 21 on the
+    # rebuilt prize wheel, whose regular gives it a throw that lands the JACKPOT,
+    # $25,000 over the face (FloorCamStageNode.prizeWheelCutIn). One take of that
+    # opening, `open-v16` (2026-11-25, the 1.6 tree at 3ce04cf, unpinned:
+    # CFL_SIM="CFL Showcase iPad 13" tools/tv-take.sh open-v16 44 banquet,banquet
+    # rally 225 CFL_DEBUG_DAILY_PRESS=claimdone). The set comes on at 5.2 s and is
+    # clean from 5.35; the wheel lands the JACKPOT at ~11.0 and holds it to the
+    # snow at 13.9. `cam-wheel` is the whole, for the Latest section's set.
+    'cam-wheel': ('open-v16', [(5.35, 13.85)], 7.0),
+    'cam-wheel-1': ('open-v16', [(5.35, 8.18)], None),
+    'cam-wheel-2': ('open-v16', [(8.18, 11.02)], None),
+    'cam-wheel-3': ('open-v16', [(11.02, 13.85)], None),
     # New on the floor (v1.5), as the app's home set opens on it: v1.5's
     # machines in their new cabinets, a dwell each, in Dan's order — CAM 17 on
     # the pit's LUCKY 7s bank, CAM 18 on PLINKO, CAM 19 on DIAMOND MINE, CAM 20
@@ -120,7 +135,7 @@ CLIPS = {
 # A clip whose first frame isn't its picture takes its poster this far in:
 # CAM 17's opens on the set's power-on bloom, and each camera's first place
 # after it on the cut's flash.
-POSTER_AT = {'cam-shellgame-1': 0.3, 'cam-slots': 0.15, 'cam-slots-1': 0.15, 'cam-plinko-1': 0.3,
+POSTER_AT = {'cam-wheel': 0.15, 'cam-wheel-1': 0.15, 'cam-shellgame-1': 0.3, 'cam-slots': 0.15, 'cam-slots-1': 0.15, 'cam-plinko-1': 0.3,
              'cam-mines-1': 0.3, 'cam-videopoker-1': 0.3}
 
 

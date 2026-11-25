@@ -13,7 +13,7 @@
   <meta property="og:site_name" content="Casino Floor Live!" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:title" content="Casino Floor Live! | Crossplay Multiplayer Casino Game for iPhone, Android &amp; Vision Pro" />
-  <meta property="og:description" content="Free on the App Store and Google Play. A social casino party game for iPhone, iPad, Android and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 78 to collect. Virtual chips only." />
+  <meta property="og:description" content="Free on the App Store and Google Play. A social casino party game for iPhone, iPad, Android and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 88 to collect. Virtual chips only." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://casinofloor.live/" />
   <meta property="og:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
@@ -23,7 +23,7 @@
   <meta property="og:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Casino Floor Live! | Crossplay Multiplayer Casino Game for iPhone, Android &amp; Vision Pro" />
-  <meta name="twitter:description" content="Free on the App Store and Google Play. A social casino party game for iPhone, iPad, Android and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 78 to collect." />
+  <meta name="twitter:description" content="Free on the App Store and Google Play. A social casino party game for iPhone, iPad, Android and Apple Vision Pro: up to 10 friends on one live floor, the house's own shows on TV, and a cast of 88 to collect." />
   <meta name="twitter:image" content="https://casinofloor.live/og-image.jpg?v=20261115" />
   <meta name="twitter:image:alt" content="The Casino Floor Live! app icon and name beside the app's TV airing Fight Night, with characters from the cast crowding the set: play a live casino with your friends on iPhone, iPad, Android and Apple Vision Pro." />
   <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
@@ -37,7 +37,7 @@
        stands in elsewhere. Pirata One is the Battle Banquet's own blackletter
        (the app bundles the same font). -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&amp;family=Pirata+One&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261115d" />
+  <link rel="stylesheet" href="styles.css?v=20261125" />
   <link rel="preload" as="image" href="sprites/emblem-crown.png" />
   <!-- The phone's store comes first: Android gets Google Play, an iPhone or an
        iPad the App Store, before the first paint. The "Get it free" links
@@ -45,6 +45,11 @@
   <script>
     (function () {
       var ua = navigator.userAgent || '', html = document.documentElement;
+      // The hero tells its story (you alone, then friends arriving) only
+      // where it can play: motion allowed, no Save-Data (crossplay.js).
+      // Everywhere else everyone's already at the table.
+      var conn = navigator.connection;
+      if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) && !(conn && conn.saveData)) html.classList.add('xp-story');
       if (/Android/i.test(ua)) {
         html.classList.add('os-android');
         document.addEventListener('DOMContentLoaded', function () {
@@ -86,7 +91,7 @@
           "https://casinofloor.live/og-image-square.jpg"
         ],
         "trailer": { "@id": "https://casinofloor.live/#trailer" },
-        "description": "A social casino party game. Up to 10 friends share one live casino floor and play Blackjack, Baccarat, Poker, Roulette, Slots, Craps, Coin Pushers and more with virtual chips only — no real-money gambling. The house runs its own shows on TV, and there is a cast of 78 characters to collect.",
+        "description": "A social casino party game. Up to 10 friends share one live casino floor and play Blackjack, Baccarat, Poker, Roulette, Slots, Craps, Coin Pushers and more with virtual chips only — no real-money gambling. The house runs its own shows on TV, and there is a cast of 88 characters to collect.",
         "applicationCategory": "GameApplication",
         "genre": ["Casino", "Party", "Multiplayer"],
         "operatingSystem": "iOS, iPadOS, visionOS, Android",
@@ -166,11 +171,13 @@
   <main>
     <!-- THE HERO is crossplay: one blackjack table, filmed live at once on an
          iPhone, an iPad, an Android phone and Apple Vision Pro, played back in
-         step and wired to the one table (crossplay.js; take xpa5, cut by
-         tools/crossplay-cut.sh). It stands on the floor's grid, where a few
-         squares at a time come on as little screens on the floor
-         (crossplay/tiles.mp4, tools/tiles-cut.sh) and players walk in from
-         every kind of device. -->
+         step and wired to the one table (crossplay.js; take xpj1, cut by
+         tools/crossplay-cut.sh). It starts with one: you, on the iPhone,
+         alone at the table. Then your friends arrive one at a time, and each
+         one lifts the floor bonus, which climbs on every screen as they land.
+         It stands on the floor's grid, where a few squares at a time come on
+         as little screens on the floor (crossplay/tiles.mp4,
+         tools/tiles-cut.sh) and players walk in from every kind of device. -->
     <section class="hero xp-hero" id="crossplay">
       <div class="xp-grid" aria-hidden="true"></div>
       <div class="xp-stage">
@@ -186,52 +193,54 @@
         </div>
         <!-- Each screen wears its player's plate: their device, drawn, with the
              platform's mark on its glass and their character's head on its
-             corner, tucked onto the top of the picture. The hub is the
-             table they all sit at, in the app's seat order (take xpa5: Sam on
-             Android, Maya on iPhone, Jules on iPad, Vinny the house's regular,
-             Alex on Vision Pro), each seat wearing the same head and marks. No
-             names: the heads and the devices tell them apart. crossplay.js reads the
-             round's turns off the lead's clock and lights whoever is up (their
-             seat, wire, plate and screen) and dims the other screens, the
-             moment the app lights them on every screen. -->
+             corner, tucked onto the top of the picture. A friend who hasn't
+             arrived is an open seat (is-away): a dashed outline with a "+",
+             their plate dim with no head on it yet. The hub is the table they
+             all sit at, in the app's seat order, each seat wearing the same
+             head and marks, and under it the floor bonus as the app's own
+             badge. No names: the heads and the devices tell them apart.
+             crossplay.js plays the evening off the iPhone's clock: who's here,
+             who's sitting, the bonus, and whose turn it is (their seat, wire,
+             plate and screen light, and the other screens dim, the moment the
+             app lights them on every screen). -->
         <div class="xp">
-          <p class="visually-hidden">Crossplay in action: one round of blackjack, filmed live on four devices at once. Four friends play at one table, one on an iPhone, one on an iPad, one on an Android phone and one on Apple Vision Pro, with a house regular in the fifth seat. The same cards land on every screen in the same second: the iPhone player hits to 21 and the Vision Pro player goes bust, then the dealer busts and the others are paid.</p>
+          <p class="visually-hidden">Crossplay in action, filmed live on four devices at once. One player sits down at a blackjack table on an iPhone, alone. Then three friends join one at a time, on an iPad, an Android phone and Apple Vision Pro, and with each one the floor bonus climbs on every screen: every win pays 1.2 times, then 1.4, then 1.6. Then they play a round together, with the same cards landing on every screen in the same second: the iPhone player hits to 21, the iPad player stands on 20, and both are paid, with the floor bonus on top.</p>
           <svg class="xp-icons" aria-hidden="true" focusable="false"><symbol id="xp-i-apple" viewBox="9.97 8.72 17.72 21.78"><path fill="currentColor" d="M24.76888,20.30068a4.94881,4.94881,0,0,1,2.35656-4.15206,5.06566,5.06566,0,0,0-3.99116-2.15768c-1.67924-.17626-3.30719,1.00483-4.1629,1.00483-.87227,0-2.18977-.98733-3.6085-.95814a5.31529,5.31529,0,0,0-4.47292,2.72787c-1.934,3.34842-.49141,8.26947,1.3612,10.97608.9269,1.32535,2.01018,2.8058,3.42763,2.7533,1.38706-.05753,1.9051-.88448,3.5794-.88448,1.65876,0,2.14479.88448,3.591.8511,1.48838-.02416,2.42613-1.33124,3.32051-2.66914a10.962,10.962,0,0,0,1.51842-3.09251A4.78205,4.78205,0,0,1,24.76888,20.30068Z" /><path fill="currentColor" d="M22.03725,12.21089a4.87248,4.87248,0,0,0,1.11452-3.49062,4.95746,4.95746,0,0,0-3.20758,1.65961,4.63634,4.63634,0,0,0-1.14371,3.36139A4.09905,4.09905,0,0,0,22.03725,12.21089Z" /></symbol><symbol id="xp-i-android" viewBox="2.5 4.6 19 12"><path fill="#3ddc84" fill-rule="evenodd" d="M3 16a9 9 0 0 1 18 0Zm6.55-3.4a1.15 1.15 0 1 0-2.3 0 1.15 1.15 0 1 0 2.3 0Zm7.2 0a1.15 1.15 0 1 0-2.3 0 1.15 1.15 0 1 0 2.3 0Z" /><path fill="none" stroke="#3ddc84" stroke-width="1.5" stroke-linecap="round" d="M7.3 9.4 5.3 5.9M16.7 9.4l2-3.5" /></symbol><symbol id="xp-i-iphone" viewBox="0 0 24 24"><rect x="6.25" y="1.75" width="11.5" height="20.5" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.8" /><rect x="9.9" y="4.1" width="4.2" height="1.6" rx=".8" fill="currentColor" /></symbol><symbol id="xp-i-droid" viewBox="0 0 24 24"><rect x="6.25" y="1.75" width="11.5" height="20.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="4.9" r="1" fill="currentColor" /></symbol><symbol id="xp-i-ipad" viewBox="0 0 24 24"><rect x="3.4" y="1.75" width="17.2" height="20.5" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="4.2" r=".75" fill="currentColor" /></symbol><symbol id="xp-i-vision" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M2.8 10.2c0-2.5 1.9-4 4.6-4h9.2c2.7 0 4.6 1.5 4.6 4v2.6c0 2.8-1.6 4.4-4.1 4.4h-1.7c-1.2 0-1.8-1.4-3.4-1.4s-2.2 1.4-3.4 1.4H6.9c-2.5 0-4.1-1.6-4.1-4.4z" /></symbol><linearGradient id="xp-g-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17422b" /><stop offset="1" stop-color="#08180f" /></linearGradient><symbol id="xp-b-iphone" viewBox="0 0 46 84"><rect x="1" y="1" width="44" height="82" rx="9.5" fill="url(#xp-g-body) #0f2c1e" /><rect x="16.5" y="5.6" width="13" height="4.4" rx="2.2" fill="currentColor" stroke="none" /></symbol><symbol id="xp-b-droid" viewBox="0 0 46 84"><rect x="1" y="1" width="44" height="82" rx="6" fill="url(#xp-g-body) #0f2c1e" /><circle cx="23" cy="7.4" r="2.3" fill="currentColor" stroke="none" /></symbol><symbol id="xp-b-ipad" viewBox="0 0 64 84"><rect x="1" y="1" width="62" height="82" rx="5.5" fill="url(#xp-g-body) #0f2c1e" /><circle cx="32" cy="5.4" r="1.5" fill="currentColor" stroke="none" /></symbol><symbol id="xp-b-vision" viewBox="0 0 92 54"><path d="M1 19.9c0-11.82 9.29-18.91 22.49-18.91h44.99c13.2 0 22.49 7.09 22.49 18.91v12.29c0 13.24-7.82 20.8-20.05 20.8h-8.31c-5.87 0-8.8-6.62-16.63-6.62s-10.76 6.62-16.63 6.62H21.05c-12.23 0-20.05-7.56-20.05-20.8z" fill="url(#xp-g-body) #0f2c1e" /></symbol></svg>
           <svg class="xp-wires" aria-hidden="true"></svg>
           <figure class="xp-dev xp-phone" data-who="maya" aria-hidden="true">
             <figcaption><span class="xp-plate"><svg class="xp-body"><use href="#xp-b-iphone" /></svg><svg class="xp-os"><use href="#xp-i-apple" /></svg><span class="xp-face" style="background-image: url(sprites/cast/ballet-mira.webp)"></span></span></figcaption>
-            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/iphone" disableremoteplayback></video><picture><source srcset="crossplay/iphone-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/iphone.webp" alt="" width="442" height="960" /></picture></div>
+            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/iphone" disableremoteplayback></video><picture><source srcset="crossplay/iphone-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/iphone.webp" alt="" width="442" height="960" /></picture><span class="xp-power"><i></i></span><span class="xp-open"><i>+</i></span><span class="xp-ping"></span></div>
           </figure>
-          <figure class="xp-dev xp-pad" data-who="jules" aria-hidden="true">
+          <figure class="xp-dev xp-pad is-away" data-who="jules" aria-hidden="true">
             <figcaption><span class="xp-plate"><svg class="xp-body"><use href="#xp-b-ipad" /></svg><svg class="xp-os"><use href="#xp-i-apple" /></svg><span class="xp-face" style="background-image: url(sprites/cast/skater-jinx.webp)"></span></span></figcaption>
-            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/ipad" disableremoteplayback></video><picture><source srcset="crossplay/ipad-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/ipad.webp" alt="" width="720" height="960" /></picture></div>
+            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/ipad" disableremoteplayback></video><picture><source srcset="crossplay/ipad-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/ipad.webp" alt="" width="720" height="960" /></picture><span class="xp-power"><i></i></span><span class="xp-open"><i>+</i></span><span class="xp-ping"></span></div>
           </figure>
-          <figure class="xp-dev xp-droid" data-who="sam" aria-hidden="true">
+          <figure class="xp-dev xp-droid is-away" data-who="sam" aria-hidden="true">
             <figcaption><span class="xp-plate"><svg class="xp-body"><use href="#xp-b-droid" /></svg><svg class="xp-os"><use href="#xp-i-android" /></svg><span class="xp-face" style="background-image: url(sprites/cast/rock-axel.webp)"></span></span></figcaption>
-            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/android" disableremoteplayback></video><picture><source srcset="crossplay/android-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/android.webp" alt="" width="428" height="960" /></picture></div>
+            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/android" disableremoteplayback></video><picture><source srcset="crossplay/android-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/android.webp" alt="" width="428" height="960" /></picture><span class="xp-power"><i></i></span><span class="xp-open"><i>+</i></span><span class="xp-ping"></span></div>
           </figure>
           <div class="xp-hub" aria-hidden="true">
             <div class="xp-table">
               <div class="xp-band"><span class="xp-rack"></span><span class="xp-sign"><i></i>One live table</span><span class="xp-game">Blackjack</span></div>
               <div class="xp-rail">
                 <div class="xp-felt">
-                  <span class="xp-dealer">Dealer<em class="xp-bust">Bust</em></span>
+                  <span class="xp-dealer">Dealer<em>17</em></span>
                   <svg class="xp-print" viewBox="0 0 400 150"><path id="xp-arc" d="M 96 50 Q 200 98 304 50" /><text><textPath href="#xp-arc" startOffset="50%" text-anchor="middle">BLACKJACK PAYS 3 TO 2</textPath></text></svg>
                   <ol class="xp-seats">
-                    <li class="xp-seat" data-who="sam" style="left: 15.5%; top: 37%"><span class="xp-face" style="background-image: url(sprites/cast/rock-axel.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-android" /></svg><svg class="xp-kit"><use href="#xp-i-droid" /></svg></span><em>+$25</em></li>
-                    <li class="xp-seat" data-who="maya" style="left: 30%; top: 64%"><span class="xp-face" style="background-image: url(sprites/cast/ballet-mira.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-iphone" /></svg></span><em>+$25</em></li>
-                    <li class="xp-seat" data-who="jules" style="left: 50%; top: 76%"><span class="xp-face" style="background-image: url(sprites/cast/skater-jinx.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-ipad" /></svg></span><em>+$25</em></li>
-                    <li class="xp-seat" data-who="vinny" style="left: 70%; top: 64%"><span class="xp-face" style="background-image: url(sprites/cast/vinnie.webp)"></span><svg class="xp-bot" viewBox="0 0 12 12"><path d="M6 .8v1.8" /><rect x="1.4" y="3" width="9.2" height="7.6" rx="2.2" /><circle cx="4.3" cy="6.7" r="1.15" /><circle cx="7.7" cy="6.7" r="1.15" /></svg><em>+$25</em></li>
-                    <li class="xp-seat" data-who="alex" style="left: 84.5%; top: 37%"><span class="xp-face" style="background-image: url(sprites/cast/card-shark.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-vision" /></svg></span><em class="xp-bust">Bust</em></li>
+                    <li class="xp-seat" data-who="maya" style="left: 19%; top: 47%"><span class="xp-face" style="background-image: url(sprites/cast/ballet-mira.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-iphone" /></svg></span><em>+$25</em></li>
+                    <li class="xp-seat is-away" data-who="jules" style="left: 39%; top: 72%"><span class="xp-face" style="background-image: url(sprites/cast/skater-jinx.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-ipad" /></svg></span><em>+$25</em></li>
+                    <li class="xp-seat is-away" data-who="sam" style="left: 61%; top: 72%"><span class="xp-face" style="background-image: url(sprites/cast/rock-axel.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-android" /></svg><svg class="xp-kit"><use href="#xp-i-droid" /></svg></span><em class="xp-bust">Bust</em></li>
+                    <li class="xp-seat is-away" data-who="alex" style="left: 81%; top: 47%"><span class="xp-face" style="background-image: url(sprites/cast/card-shark.webp)"></span><span class="xp-on"><svg class="xp-os"><use href="#xp-i-apple" /></svg><svg class="xp-kit"><use href="#xp-i-vision" /></svg></span><em class="xp-bust">Bust</em></li>
                   </ol>
                 </div>
               </div>
+              <p class="xp-bonus" data-pay="+$15"><span>Floor bonus</span><b>&times;1.2</b></p>
             </div>
-            <p class="xp-turn"><b>Same cards,</b> same second</p>
+            <p class="xp-turn"><b>Just you at the table.</b> <span>Bring a friend and every win pays more</span></p>
           </div>
-          <figure class="xp-dev xp-vision" data-who="alex" aria-hidden="true">
+          <figure class="xp-dev xp-vision is-away" data-who="alex" aria-hidden="true">
             <figcaption><span class="xp-plus">Plus</span><span class="xp-plate"><svg class="xp-body"><use href="#xp-b-vision" /></svg><svg class="xp-os"><use href="#xp-i-apple" /></svg><span class="xp-face" style="background-image: url(sprites/cast/card-shark.webp)"></span></span></figcaption>
-            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/vision" disableremoteplayback></video><picture><source srcset="crossplay/vision-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/vision.webp" alt="" width="1280" height="720" loading="lazy" /></picture></div>
+            <div class="xp-glass"><video muted playsinline preload="none" data-clip="crossplay/vision" disableremoteplayback></video><picture><source srcset="crossplay/vision-payoff.webp" media="(prefers-reduced-motion: reduce)" /><img class="xp-still" src="crossplay/vision.webp" alt="" width="1280" height="720" loading="lazy" /></picture><span class="xp-power"><i></i></span><span class="xp-open"><i>+</i></span><span class="xp-ping"></span></div>
           </figure>
         </div>
         <p class="xp-note">On Apple Vision Pro, the same table stands in your room. <a href="/vision-pro">More on Vision&nbsp;Pro&nbsp;→</a></p>
@@ -242,8 +251,8 @@
          show on it is listed properly below. -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>Fourteen games, one floor</span><span>Now on Android</span><span>Baccarat</span><span>Lefty&#x27;s Shell Game</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Coin Pushers</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>iPhone, iPad, Android, Vision Pro</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>78 characters</span>
-        <span>Fourteen games, one floor</span><span>Now on Android</span><span>Baccarat</span><span>Lefty&#x27;s Shell Game</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Coin Pushers</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>iPhone, iPad, Android, Vision Pro</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>78 characters</span>
+        <span>Fourteen games, one floor</span><span>The Prize Wheel</span><span>The Floor Bonus</span><span>Baccarat</span><span>Lefty&#x27;s Shell Game</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Coin Pushers</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>iPhone, iPad, Android, Vision Pro</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>88 characters</span>
+        <span>Fourteen games, one floor</span><span>The Prize Wheel</span><span>The Floor Bonus</span><span>Baccarat</span><span>Lefty&#x27;s Shell Game</span><span>Blackjack</span><span>Texas Hold&#x27;em</span><span>Ultimate Hold&#x27;em</span><span>Craps</span><span>Roulette</span><span>Slots</span><span>Video Poker</span><span>Plinko</span><span>Coin Pushers</span><span>Mines</span><span>Dice</span><span>Horse Racing</span><span>Up to 10 friends</span><span>iPhone, iPad, Android, Vision Pro</span><span>The Lounge is open</span><span>Battle Banquet</span><span>Fight Night</span><span>Burnout Boulevard</span><span>The Big Race</span><span>88 characters</span>
       </div>
     </div>
 
@@ -274,7 +283,7 @@
           <div class="tv">
             <div class="tv-slab">
               <div class="tv-glass">
-                <video class="tv-pic" muted playsinline preload="auto" poster="tv/cam-slots-1.webp" aria-hidden="true" disableremoteplayback></video>
+                <video class="tv-pic" muted playsinline preload="auto" poster="tv/cam-wheel-1.webp" aria-hidden="true" disableremoteplayback></video>
                 <video class="tv-pic hidden" muted playsinline preload="auto" aria-hidden="true" disableremoteplayback></video>
                 <canvas class="tv-snow" aria-hidden="true"></canvas>
                 <div class="tv-osd" aria-hidden="true"></div>
@@ -308,11 +317,9 @@
     <!-- LATEST: what each update brought, newest first, in the app's own
          words (CasinoNews in the game repo: the What's New panel on iOS and
          Apple Vision Pro), less the lines that only made sense on the day.
-         The newest is open, its sets CAM 17 to CAM 20 (tv/, playing on
-         hover, focus or a tap, as the guide's sets do); the earlier ones
-         fold, the way the app keeps them a tap away. 1.5 is also the first
-         on Android, which the app's notes don't say: that line is the
-         site's own. -->
+         The newest is open beside its set, CAM 21 on the prize wheel (tv/,
+         playing on hover, focus or a tap, as the guide's sets do); the
+         earlier ones fold, the way the app keeps them a tap away. -->
     <section id="latest">
       <div class="wrap">
         <div class="section-head">
@@ -321,24 +328,29 @@
           <p class="section-sub">The floor keeps changing. Here's what each update brought, newest first.</p>
         </div>
         <article class="note-card update">
-          <div class="update-sets four">
-            <div class="mini-tv" data-clip="cam-slots" style="--tint: #8CBFA6">
-              <div class="glass"><img src="tv/cam-slots-card.webp" alt="Eye in the sky, camera 17: a security camera looks down on three LUCKY 7s slot machines as players in a chef's hat and a cowboy hat watch the middle one land a BIG WIN." width="480" height="306" loading="lazy" /></div>
-            </div>
-            <div class="mini-tv" data-clip="cam-plinko" style="--tint: #8CBFA6">
-              <div class="glass"><img src="tv/cam-plinko-card.webp" alt="Eye in the sky, camera 18: a security camera looks down on the Plinko machine, a neon pyramid of pegs, as a ball lands in the ×25 bucket for a player in a purple hat." width="480" height="306" loading="lazy" /></div>
-            </div>
-            <div class="mini-tv" data-clip="cam-mines" style="--tint: #8CBFA6">
-              <div class="glass"><img src="tv/cam-mines-card.webp" alt="Eye in the sky, camera 19: a security camera looks down on the Diamond Mine machine as its grid of gems lights up MAX WIN." width="480" height="306" loading="lazy" /></div>
-            </div>
-            <div class="mini-tv" data-clip="cam-videopoker" style="--tint: #8CBFA6">
-              <div class="glass"><img src="tv/cam-videopoker-card.webp" alt="Eye in the sky, camera 20: a security camera looks down on a video poker machine as a grey-haired player's five hands light up a royal flush." width="480" height="306" loading="lazy" /></div>
+          <div class="update-sets one">
+            <div class="mini-tv" data-clip="cam-wheel" style="--tint: #8CBFA6">
+              <div class="glass"><img src="tv/cam-wheel-card.webp" alt="Eye in the sky, camera 21: a security camera looks down on the Prize Wheel's cabinet as the wheel lands the jackpot, $25,000 across its face, and the player who spun it winks." width="480" height="306" loading="lazy" /></div>
             </div>
           </div>
           <div class="update-body">
-            <p class="update-ver"><span class="ch-num">v1.5</span><span class="pill new">New</span><span class="pill set">Now on Android</span></p>
-            <h3>The slots got bigger.</h3>
-            <p class="update-tag">Plus five games of video poker, and new Plinko and Mines machines.</p>
+            <p class="update-ver"><span class="ch-num">v1.6</span><span class="pill new">New</span></p>
+            <h3>The prize wheel got bigger.</h3>
+            <p class="update-tag">Plus a bonus for company, and Christmas on the floor.</p>
+            <ul>
+              <li>The Prize Wheel is rebuilt with bigger prizes, a jackpot that lands more often, and a spin twice as often.</li>
+              <li>With the FLOOR BONUS, every win pays more the more players are on the floor and the longer you stay; on a phone or tablet, the multiplier by your wallet shows how much.</li>
+              <li>The Yuletide Cast is in the Gift Shop, led by Santa, and five more holiday characters are on the wheel.</li>
+              <li>Christmas is on the floor: a tree stands where the fountain was, the walls light up, and Santa, his elves and two burglars drop by.</li>
+              <li>On Apple Vision Pro, the wheel stands in a cabinet of its own, and you can stand the Christmas tree in your room.</li>
+              <li>Winnings no longer reset when you come back to the app after a while.</li>
+            </ul>
+            <p class="update-links"><a href="#cast">Meet the Yuletide Cast →</a></p>
+          </div>
+        </article>
+        <div class="update-past">
+          <details>
+            <summary><span class="ch-num">v1.5</span><span><b>The slots got bigger.</b> Plus five games of video poker, and new Plinko and Mines machines.</span></summary>
             <ul>
               <li>All eight slot machines are rebuilt, five reels by five rows, from LUCKY 7s to COSMIC CASH.</li>
               <li>New bonus games let you dive for pearls, spin the royal wheel, swing in a home run derby or race for pink slips.</li>
@@ -346,11 +358,7 @@
               <li>Plinko comes in four machines and Mines in four worlds, each with its own look and sound.</li>
               <li>On Apple Vision Pro, every slot stands in a tall curved cabinet, and Plinko stands life size beside you.</li>
             </ul>
-            <p class="update-android">And the floor is open on Android: the same tables as iPhone, iPad and Apple&nbsp;Vision&nbsp;Pro, free on Google&nbsp;Play.</p>
-            <p class="update-links"><a href="/games#slots">How the slots pay →</a><a href="/games#video-poker">The five poker games →</a><a href="https://play.google.com/store/apps/details?id=chetian.casinofloorlive" rel="noopener">Google Play →</a></p>
-          </div>
-        </article>
-        <div class="update-past">
+          </details>
           <details>
             <summary><span class="ch-num">v1.4</span><span><b>Baccarat, and a hustler with a cart.</b> Two new games just opened on the floor.</span></summary>
             <ul>
@@ -447,7 +455,7 @@
             <li><button class="game-card" type="button" aria-pressed="false" data-game="horses" data-name="Horse Racing" data-pills="Six horses|Win, place or show" data-line="A six-horse field and the same six prices on every card, from 2 to 1 up to 12 to 1." data-alt="Horse racing: the field breaks, Comet sets the pace, and after a photo finish the official result is Comet, Lucky Star, Sir Gallop."><img src="games/horses-card.webp" alt="" width="320" height="320" loading="lazy" /><span><i class="chip"><img src="sprites/emblems/racehorse.webp" alt="" width="128" height="128" /></i>Horse Racing</span></button></li>
           </ul>
         </div>
-        <p class="game-foot">Every game plays its real odds, win or lose, and nothing anywhere sells you chips. The Prize Wheel is on the house: a free spin every 20&nbsp;minutes. <a href="/games">Every rule and payout →</a></p>
+        <p class="game-foot">Every game plays its real odds, win or lose, and nothing anywhere sells you chips. The Prize Wheel is on the house: a free spin every 10&nbsp;minutes, with a $25,000 jackpot. <a href="/games">Every rule and payout →</a></p>
       </div>
     </section>
 
@@ -627,13 +635,13 @@
         <div class="section-head">
           <span class="eyebrow">Collect the cast</span>
           <h2 class="section-title sign">The cast</h2>
-          <p class="section-sub">Seventy-eight characters. The twelve house regulars are yours from your first visit; the rest you win on the free Prize Wheel, buy with chips at the Gift Shop, earn by playing, find in a pack, or win at a coin pusher or Lefty's shell game. The legendaries bring their own moves.</p>
+          <p class="section-sub">Eighty-eight characters. The twelve house regulars are yours from your first visit; the rest you win on the free Prize Wheel, buy with chips at the Gift Shop, earn by playing, find in a pack, or win at a coin pusher or Lefty's shell game. The legendaries bring their own moves.</p>
         </div>
 <!-- CAST:BEGIN -->
         <!-- Generated by tools/cast_wall.py from the app's cast export. Do not hand-edit. -->
         <div class="cast-tabs" role="group" aria-label="Show part of the cast">
-          <button class="cast-tab" type="button" data-filter="all" aria-pressed="true">Everyone<b>78</b></button>
-          <button class="cast-tab" type="button" data-filter="legendary" aria-pressed="false">Legendary<b>14</b></button>
+          <button class="cast-tab" type="button" data-filter="all" aria-pressed="true">Everyone<b>88</b></button>
+          <button class="cast-tab" type="button" data-filter="legendary" aria-pressed="false">Legendary<b>15</b></button>
           <button class="cast-tab" type="button" data-filter="houseRegulars" aria-pressed="false">House Regulars<b>12</b></button>
           <button class="cast-tab" type="button" data-filter="critters" aria-pressed="false">The Critters<b>6</b></button>
           <button class="cast-tab" type="button" data-filter="mainStreet" aria-pressed="false">Main Street<b>14</b></button>
@@ -641,6 +649,7 @@
           <button class="cast-tab" type="button" data-filter="sportsBook" aria-pressed="false">Sports Book<b>10</b></button>
           <button class="cast-tab" type="button" data-filter="fantasyTavern" aria-pressed="false">Fantasy Tavern<b>5</b></button>
           <button class="cast-tab" type="button" data-filter="halloween" aria-pressed="false">Halloween<b>10</b></button>
+          <button class="cast-tab" type="button" data-filter="christmas" aria-pressed="false">Yuletide<b>10</b></button>
           <button class="cast-tab" type="button" data-filter="throwback" aria-pressed="false">The Throwback Season<b>4</b></button>
           <button class="cast-tab" type="button" data-filter="coinPushers" aria-pressed="false">The Coin Pushers<b>6</b></button>
           <button class="cast-tab" type="button" data-filter="hustle" aria-pressed="false">The Hustle<b>5</b></button>
@@ -726,6 +735,16 @@
             <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="vlad-vampire" data-name="Vlad" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Never plays before dark. Never loses after it." data-door="Only in the Halloween pack. Never on the wheel, never for chips."><img src="sprites/cast/vlad-vampire.webp" alt="Vlad, the vampire" width="192" height="192" loading="lazy" /><span>Vlad</span></button></li>
             <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="stitch-frank" data-name="Stitch" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Built for this. Assembled, anyway." data-door="Only in the Halloween pack. Never on the wheel, never for chips."><img src="sprites/cast/stitch-frank.webp" alt="Stitch, the monster" width="192" height="192" loading="lazy" /><span>Stitch</span></button></li>
             <li data-shelf="halloween" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="reaper-mort" data-name="Mort" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Halloween" data-tagline="Comes for everyone. Waits for the river first." data-door="Only in the Halloween pack. Never on the wheel, never for chips."><img src="sprites/cast/reaper-mort.webp" alt="Mort, the reaper" width="192" height="192" loading="lazy" /><span>Mort</span></button></li>
+            <li data-shelf="christmas" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="santa-nick" data-name="Nick" data-rarity="Legendary" data-tint="#F2842B" data-set-title="Yuletide" data-tagline="Checks the list twice. Checks the shoe once." data-door="Only in the Yuletide pack. Never on the wheel, never for chips." data-fx="20,90" data-pet="16,100,44"><img src="sprites/cast/santa-nick.webp" alt="Nick, Santa Claus" width="192" height="192" loading="lazy" /><span>Nick</span></button></li>
+            <li data-shelf="christmas" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="reindeer-rudy" data-name="Rudy" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Yuletide" data-tagline="Pulls the sleigh. Knows exactly what&#x27;s in it." data-door="Only in the Yuletide pack. Never on the wheel, never for chips."><img src="sprites/cast/reindeer-rudy.webp" alt="Rudy, the reindeer" width="192" height="192" loading="lazy" /><span>Rudy</span></button></li>
+            <li data-shelf="christmas" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="snowman-flurry" data-name="Flurry" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Yuletide" data-tagline="Melts under pressure. Freezes on a bluff." data-door="On the Prize Wheel, or $60,000 in chips at the Gift Shop."><img src="sprites/cast/snowman-flurry.webp" alt="Flurry, the snowman" width="192" height="192" loading="lazy" /><span>Flurry</span></button></li>
+            <li data-shelf="christmas" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="nutcracker-major" data-name="Major" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Yuletide" data-tagline="Stands guard over the pot. Cracks under nothing." data-door="On the Prize Wheel, or $120,000 in chips at the Gift Shop."><img src="sprites/cast/nutcracker-major.webp" alt="Major, the nutcracker" width="192" height="192" loading="lazy" /><span>Major</span></button></li>
+            <li data-shelf="christmas" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="gingerbread-snap" data-name="Snap" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Yuletide" data-tagline="Can&#x27;t catch him. Can&#x27;t out-bet him either." data-door="On the Prize Wheel, or $65,000 in chips at the Gift Shop."><img src="sprites/cast/gingerbread-snap.webp" alt="Snap, the gingerbread man" width="192" height="192" loading="lazy" /><span>Snap</span></button></li>
+            <li data-shelf="christmas" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="mrs-claus-noelle" data-name="Noelle" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Yuletide" data-tagline="Runs the whole operation. Lets him have the hat." data-door="Only in the Yuletide pack. Never on the wheel, never for chips."><img src="sprites/cast/mrs-claus-noelle.webp" alt="Noelle, Mrs. Claus" width="192" height="192" loading="lazy" /><span>Noelle</span></button></li>
+            <li data-shelf="christmas" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="elf-tinsel" data-name="Tinsel" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Yuletide" data-tagline="Wrapped it. Did not read the card." data-door="Only in the Yuletide pack. Never on the wheel, never for chips."><img src="sprites/cast/elf-tinsel.webp" alt="Tinsel, Santa&#x27;s elf" width="192" height="192" loading="lazy" /><span>Tinsel</span></button></li>
+            <li data-shelf="christmas" data-rarity="rare"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4B9BF5" data-id="yeti-frost" data-name="Frost" data-rarity="Rare" data-tint="#4B9BF5" data-set-title="Yuletide" data-tagline="Came down for the buffet. Stayed for the dice." data-door="Only in the Yuletide pack. Never on the wheel, never for chips."><img src="sprites/cast/yeti-frost.webp" alt="Frost, the yeti" width="192" height="192" loading="lazy" /><span>Frost</span></button></li>
+            <li data-shelf="christmas" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="caroler-bell" data-name="Bell" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Yuletide" data-tagline="Knows every verse. Sings them at the table." data-door="On the Prize Wheel, or $28,000 in chips at the Gift Shop."><img src="sprites/cast/caroler-bell.webp" alt="Bell, the caroler" width="192" height="192" loading="lazy" /><span>Bell</span></button></li>
+            <li data-shelf="christmas" data-rarity="uncommon"><button class="cast-card" type="button" aria-pressed="false" style="--tint: #4BD07A" data-id="krampus-grim" data-name="Grim" data-rarity="Uncommon" data-tint="#4BD07A" data-set-title="Yuletide" data-tagline="On the other list. Proud of it." data-door="On the Prize Wheel, or $36,000 in chips at the Gift Shop."><img src="sprites/cast/krampus-grim.webp" alt="Grim, the Krampus" width="192" height="192" loading="lazy" /><span>Grim</span></button></li>
             <li data-shelf="throwback" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="hippie-daisy" data-name="Daisy" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Sixties · Throwback" data-tagline="Leaves a trail of bubbles and nobody minds." data-door="Earned with the Giant Leap badge: claim day 7 of the Throwback season." data-fx="16,110" data-pet="12,90,40"><img src="sprites/cast/hippie-daisy.webp" alt="Daisy, the flower child" width="192" height="192" loading="lazy" /><span>Daisy</span></button></li>
             <li data-shelf="throwback" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="disco-boogie" data-name="Boogie" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Seventies · Throwback" data-tagline="The floor lights up wherever he&#x27;s standing." data-door="Earned with the Saturday Night badge: claim day 14 of the Throwback season." data-fx="12,240" data-pet="16,80,36"><img src="sprites/cast/disco-boogie.webp" alt="Boogie, the disco king" width="192" height="192" loading="lazy" /><span>Boogie</span></button></li>
             <li data-shelf="throwback" data-rarity="legendary"><button class="cast-card legendary" type="button" aria-pressed="false" style="--tint: #F2842B" data-id="synth-roxy" data-name="Roxy" data-rarity="Legendary" data-tint="#F2842B" data-set-title="The Eighties · Throwback" data-tagline="Plays one long chord on her way past the bar." data-door="Earned with the High Score badge: claim day 21 of the Throwback season." data-fx="12,90" data-pet="12,90,40"><img src="sprites/cast/synth-roxy.webp" alt="Roxy, the synth star" width="192" height="192" loading="lazy" /><span>Roxy</span></button></li>
@@ -869,9 +888,9 @@
     </div>
   </footer>
 
-  <script src="crossplay.js?v=20261115d" defer></script>
+  <script src="crossplay.js?v=20261125" defer></script>
   <script src="floor.js?v=20261015" defer></script>
-  <script src="tv.js?v=20261115" defer></script>
+  <script src="tv.js?v=20261125" defer></script>
   <script src="cast.js?v=20261020b" defer></script>
   <script src="games.js?v=20261020" defer></script>
 </body>

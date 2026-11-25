@@ -1,62 +1,81 @@
 #!/bin/zsh
-# crossplay-cut.sh — cut the home page's crossplay graphic: crossplay/
-# {iphone,android,ipad,vision}.mp4, each with its first frame (.webp) and its
-# payoff (-payoff.webp, the still that stands for reduced motion and Save-Data).
+# crossplay-cut.sh — cut the home page's crossplay hero: crossplay/
+# {iphone,ipad,android,vision}.mp4, each with its still (.webp: your first
+# frame, or the moment a friend arrives) and its payoff (-payoff.webp, the
+# still that stands for reduced motion, Save-Data and refused autoplay).
 #
 #   tools/crossplay-cut.sh            # → crossplay/
 #   OUT=/some/dir tools/crossplay-cut.sh
 #
-# The source is take xpa5 (the game repo's scripts/promo-video/xplay-android.sh,
-# 2026-11-15, re-shot for Android 1.5.1's table, which now sits right under the
-# header): ONE blackjack table filmed live at once on an iPhone (Maya), an
-# Android phone (Sam), an iPad (Jules) and Apple Vision Pro (Alex), with Vinny,
-# a house regular. The loop is one round, sweep to sweep: the deal, Maya hits
-# her 8 8 to 21, Jules hits 3 K to 20, Alex hits 14 and busts, Sam stands on
-# 20, the dealer turns 2 10 and busts on the jack, and Maya, Jules and Sam are
-# paid.
+# The source is take xpj1 (the game repo's scripts/promo-video/xplay-android.sh
+# joins, 2026-11-15, on the 1.6 tree with the floor bonus lit): Maya sits down
+# at a blackjack table ALONE on her iPhone, then her friends arrive one at a
+# time, Jules on an iPad, Sam on an Android phone, Alex on Apple Vision Pro,
+# and the floor bonus badge under every player's avatar climbs ×1.2, ×1.4,
+# ×1.6 as each lands. Then they play: Maya hits 3 10 to 21, Jules stands on
+# 20, Sam and Alex bust, the dealer stands on 17, and the bonus rises off
+# Maya's badge (+$15) before 21 BEATS 17 lands.
 #
-# Each screen has its own clock (the emulator's screenrecord starts late, and
-# every device acts the table out on its own timeline), so each has its own
-# FROM, lined up by the sweep and the first card. Every screen is resampled to
-# 30 fps from a second early, then trimmed, so all four share frame 0 and the
-# page can start them together.
+# Three spans of the iPhone's clock, played as one (SPANS): Maya alone through
+# Sam's arrival; then Alex's arrival and the round he sits down in (the 3 s
+# between, the table waiting on Sam's first bet with nothing moving, is cut);
+# then, from the same empty felt with every bet down, the round they win, held
+# on the payoff. The first frame holds a second (HOLD) so Maya has the table
+# to herself a moment before anyone comes. The page goes dark between two
+# evenings, so the loop has no seam to hide.
 #
-# The next deal doesn't wait for the sweep (the house deals as soon as the bets
-# are down, and this round's sweep is still in the air when the first card of
-# the next one leaves the shoe), so no frame at the round's end matches its
-# first. The last FADE frames dissolve into the FADE frames just before the
-# first one: a sweep into a sweep, and the loop runs straight on.
+# Each screen has its own clock (the emulator's screenrecord starts late), so
+# each has its own OFF against the iPhone's, measured by the floor bonus badge
+# climbing on every screen at once (iPad 0, Android +0.10 s) and, for the
+# headset, which has no badge yet, by the round's sweep (+0.07 s). A friend's
+# screen is black until they arrive (ON, on the cut's clock: the frame the
+# badge climbs on Maya's screen), so it costs nothing before it's needed.
 set -e
 RAW=${PROMO:-$HOME/Movies/cfl-promo}/raw
 OUT=${OUT:-${0:A:h:h}/crossplay}
-TAKE=xpa5
-SECS=15.3         # one round: 57.25 → 72.55 on the iPhone's clock
-PAYOFF=14.0       # DEALER BUSTS $50 on every phone, counted up and held
-FADE=9            # frames (0.3 s) of the round's end dissolved into its start
+TAKE=xpj1
+HOLD=1.0
+LEAD=8            # s each span seeks early (longer than any still screen inside a span)
+SPANS=(8.4 17.6  20.6 29.05  114.25 123.6)
+typeset -A OFF ON
+OFF=(iphone 0 ipad 0 android 0.10 vision 0.07)
+ON=(iphone 0 ipad 2.70 android 6.93 vision 10.47)
+PAYOFF=26.6       # 21 BEATS 17 on Maya's screen, 20 BEATS 17 on Jules's, the busts
+H=${H:-960}       # the phones and the tablet at the hero's 2x
 
-cut() {   # device, its clock at the loop's first frame, the picture
-  local from=$(( $2 - 1 )) n=$(printf %.0f $(( SECS * 30 )))
-  ffmpeg -v error -y -ss $from -t $((SECS + 2)) -i $RAW/${TAKE}_$1.mp4 -filter_complex \
-    "[0:v]fps=30,$3,setsar=1,format=yuv420p,split[a][b];
-     [a]trim=start_frame=30:end_frame=$((30 + n)),setpts=PTS-STARTPTS[round];
-     [b]trim=start_frame=$((30 - FADE)):end_frame=30,setpts=PTS-STARTPTS[before];
-     [round][before]xfade=transition=fade:duration=$(printf %.4f $((FADE / 30.0))):offset=$(printf %.4f $(((n - FADE) / 30.0))),format=yuv420p[v]" \
-    -map '[v]' -an -c:v libx264 -preset slow -crf ${CRF:-22} -tune animation -profile:v high \
-    -movflags +faststart $OUT/$1.mp4
-  ffmpeg -v error -y -i $OUT/$1.mp4 -frames:v 1 -c:v libwebp -quality 80 $OUT/$1.webp
-  ffmpeg -v error -y -ss $PAYOFF -i $OUT/$1.mp4 -frames:v 1 -c:v libwebp -quality 80 $OUT/$1-payoff.webp
-  printf '%-12s %4s KB  poster %3s KB  payoff %3s KB\n' $1.mp4 \
-    $(( $(stat -f %z $OUT/$1.mp4) / 1024 )) $(( $(stat -f %z $OUT/$1.webp) / 1024 )) $(( $(stat -f %z $OUT/$1-payoff.webp) / 1024 ))
+cut() {   # device, the picture
+  local dev=$1 pic=$2 off=${OFF[$1]} on=${ON[$1]} parts="" chain="" i=0 a b
+  local -a inputs
+  # Each span seeks LEAD early and counts frames from the seek point
+  # (fps=…:start_time=0). The recorders write no frame while a screen is
+  # still (the emulator's for seconds before Sam's launch), and fps counts
+  # from the first frame it gets: without start_time, a span that seeks into
+  # a still screen starts that much late in the take (Sam's ran 2.5 s ahead).
+  local seek lead n
+  for a b in $SPANS; do
+    seek=$(( a + off - LEAD )); (( seek < 0 )) && seek=0
+    lead=$(printf %.0f $(( (a + off - seek) * 30 )))
+    n=$(printf %.0f $(( (b - a) * 30 )))
+    inputs+=(-ss $seek -t $(( a + off - seek + b - a + 1 )) -i $RAW/${TAKE}_$dev.mp4)
+    parts+="[${i}:v]fps=30:start_time=0,trim=start_frame=${lead}:end_frame=$((lead + n)),setpts=PTS-STARTPTS,$pic,setsar=1[s$i];"
+    chain+="[s$i]"; i=$((i + 1))
+  done
+  # Black until they arrive: the frames before ON are dark (and nearly free).
+  local dark=""; (( on > 0 )) && dark=",fade=t=in:st=${on}:d=0.034"
+  ffmpeg -v error -y $inputs -filter_complex \
+    "${parts}${chain}concat=n=$i:v=1:a=0,tpad=start_duration=${HOLD}:start_mode=clone${dark},format=yuv420p[v]" \
+    -map '[v]' -an -c:v libx264 -preset slow -crf ${CRF:-23} -tune animation -profile:v high \
+    -movflags +faststart $OUT/$dev.mp4
+  # The still: your first frame; a friend's, just after they come on.
+  ffmpeg -v error -y -ss $(( on > 0 ? on + 0.5 : 0 )) -i $OUT/$dev.mp4 -frames:v 1 -c:v libwebp -quality 80 $OUT/$dev.webp
+  ffmpeg -v error -y -ss $PAYOFF -i $OUT/$dev.mp4 -frames:v 1 -c:v libwebp -quality 80 $OUT/$dev-payoff.webp
+  printf '%-12s %4s KB  still %3s KB  payoff %3s KB\n' $dev.mp4 \
+    $(( $(stat -f %z $OUT/$dev.mp4) / 1024 )) $(( $(stat -f %z $OUT/$dev.webp) / 1024 )) $(( $(stat -f %z $OUT/$dev-payoff.webp) / 1024 ))
 }
 
-# Sizes are the hero's at 2x: the three stand at one height.
-H=${H:-960}
-# Each start is a quarter second after that screen's sweep of the round before
-# (the frame-difference peak: iPhone 57.00, iPad 56.97, Android 57.10, headset
-# 57.20), so the loop's seam falls as the next deal's first card leaves the shoe.
-# The iPad's is a frame later still: its payoff card fades a beat slower, and a
-# ghost of it would sit on the poster.
-cut iphone  57.25 "scale=-2:${H}:flags=lanczos"
-cut android 57.35 "scale=-2:${H}:flags=lanczos"
-cut ipad    57.26 "scale=-2:${H}:flags=lanczos"
-cut vision  57.45 "crop=2480:1395:800:560,scale=1280:720:flags=lanczos"
+cut iphone  "scale=-2:${H}:flags=lanczos"
+cut ipad    "scale=-2:${H}:flags=lanczos"
+cut android "scale=-2:${H}:flags=lanczos"
+# The headset's view: the table in the lower half of the room, the dealer's
+# board on the set behind him.
+cut vision  "crop=1920:1080:960:1080,scale=1280:720:flags=lanczos"

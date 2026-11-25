@@ -52,23 +52,11 @@
   var FLOOR = { ch: 1, name: 'THE FLOOR', live: true, tint: '#4BD07A', pale: '#DDF8E6' };
   function ch(o, base) { for (var k in base) if (!(k in o)) o[k] = base[k]; return o; }
   var SHOWCASE = ch({ ch: 7, name: 'EYE IN THE SKY' }, CAM);
-  var SLOTS = ch({ guide: 'NEW ON THE FLOOR · SLOT MACHINES' }, SHOWCASE);
-  var PLINKO = ch({ guide: 'NEW ON THE FLOOR · PLINKO' }, SHOWCASE);
-  var MINES = ch({ guide: 'NEW ON THE FLOOR · MINES' }, SHOWCASE);
-  var POKER = ch({ guide: 'NEW ON THE FLOOR · VIDEO POKER' }, SHOWCASE);
+  var WHEEL = ch({ guide: 'NEW ON THE FLOOR · PRIZE WHEEL' }, SHOWCASE);
   var CHANNELS = [
-    ch({ clip: 'cam-slots-1', dwell: 2820 }, SLOTS),
-    ch({ clip: 'cam-slots-2', dwell: 2810, cut: true }, SLOTS),
-    ch({ clip: 'cam-slots-3', dwell: 2820, cut: true }, SLOTS),
-    ch({ clip: 'cam-plinko-1', dwell: 3300, cut: true }, PLINKO),
-    ch({ clip: 'cam-plinko-2', dwell: 3300, cut: true }, PLINKO),
-    ch({ clip: 'cam-plinko-3', dwell: 3300, cut: true }, PLINKO),
-    ch({ clip: 'cam-mines-1', dwell: 3320, cut: true }, MINES),
-    ch({ clip: 'cam-mines-2', dwell: 3310, cut: true }, MINES),
-    ch({ clip: 'cam-mines-3', dwell: 3320, cut: true }, MINES),
-    ch({ clip: 'cam-videopoker-1', dwell: 3340, cut: true }, POKER),
-    ch({ clip: 'cam-videopoker-2', dwell: 3330, cut: true }, POKER),
-    ch({ clip: 'cam-videopoker-3', dwell: 3340, cut: true }, POKER),
+    ch({ clip: 'cam-wheel-1', dwell: 2830 }, WHEEL),
+    ch({ clip: 'cam-wheel-2', dwell: 2840, cut: true }, WHEEL),
+    ch({ clip: 'cam-wheel-3', dwell: 2830, cut: true }, WHEEL),
     ch({ clip: 'floor-1', cams: [[0, 'WEST HALL']], dwell: 3700 }, FLOOR),
     ch({ clip: 'floor-2', cams: [[0, 'THE BAR']], dwell: 4000, cut: true }, FLOOR),
     ch({ clip: 'floor-3', cams: [[0, 'THE PIT']], dwell: 4000, cut: true }, FLOOR),

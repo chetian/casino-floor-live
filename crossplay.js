@@ -1,20 +1,32 @@
-/* Casino Floor Live! — the hero: one table on every screen.
+/* Casino Floor Live! — the hero: one table, and your friends arriving at it.
  *
- * Four takes of one moment, played as one (crossplay/, take xpa5): an iPhone,
- * an iPad and an Android phone, with the headset under them. The iPad leads,
- * the others follow it, and all go back to the top together when it ends. The
- * three are the first screen, so they load at once; the headset loads as it
- * comes near and joins the round where it is. Nothing plays out of view.
- * Under reduced motion or Save-Data each screen holds its payoff as a still,
- * and nothing moves on its own.
+ * Four takes of one evening, played as one (crossplay/, take xpj1): an
+ * iPhone, an iPad and an Android phone, with the headset under them. It
+ * starts with one: you, on your iPhone, alone at a blackjack table. Then your
+ * friends arrive one at a time (an iPad, an Android phone, Apple Vision Pro),
+ * and each one lifts the floor bonus (1.6: every player on the floor past
+ * the first adds 20% to every win), which climbs on every screen the moment
+ * they land. Then they play a round together. Then the screens go dark and
+ * the evening starts again, with one.
+ *
+ * The iPhone leads: the other screens, and everything on the table, keep its
+ * clock. A friend who isn't here yet is an open seat: a dashed outline with
+ * a "+", like the floor bonus explainer's own open seats. They come on the
+ * way the house's TV does (a line across the dark glass, opening to the
+ * picture) as their wire runs out to them from the table. The three phones
+ * and the tablet load at once; the headset loads as it comes near. Nothing
+ * plays out of view. Under reduced motion or Save-Data everyone is already
+ * here and each screen holds the payoff as a still.
  *
  * Each screen wears its player's plate, and between them stands the table
  * they all sit at. Brass wires run from its band to each screen, drawn from
  * where the screens actually landed, with two chips riding every wire, one
- * each way. The round's turns are read off the lead's clock: whoever is up
- * lights on the table, and so do their plate, their screen and their wire,
- * with a gold chip running down it to them, the moment the app lights them
- * on every screen. When the dealer busts, the results land on the seats.
+ * each way. Whoever is up lights on the table, and so do their plate, their
+ * screen and their wire, with a gold chip running down it to them, the
+ * moment the app lights them on every screen. Under the table the floor
+ * bonus stands as the app's own badge, a gold pill that pops in with the
+ * first friend and punches up with each one after, while a gold ring calls
+ * out the badge on every screen; a line says what just happened.
  *
  * Behind it all stands the floor's grid (the studio's, chetianholdings.com).
  * A few of its squares at a time come on as little screens on the floor
@@ -42,12 +54,125 @@
       fn(entries[0].isIntersecting);
     }, { threshold: threshold || 0, rootMargin: margin || '0px' }).observe(el);
   }
+  function clamp(k) { return k < 0 ? 0 : k > 1 ? 1 : k; }
 
-  // The iPad leads: the other screens, and the turns, keep its clock.
-  var lead = xp.querySelector('.xp-pad video');
+  /* ---------- the evening ----------
+     Read off take xpj1 on the iPhone's clock, as tools/crossplay-cut.sh cuts
+     it: the frame each friend lands (the room has them, and the badge climbs
+     on every screen that frame), the second their seat fills on the table,
+     and the floor bonus once they're here (the app's: 20% a head past the
+     first). */
+  var LEAD = 'maya';
+  var JOINS = [
+    { who: 'jules', on: 2.70, sits: 4.4, bonus: 20 },
+    { who: 'sam', on: 6.93, sits: 8.7, bonus: 40 },
+    // The headset joins in its living room; the table appears in it 3.5 s on.
+    { who: 'alex', on: 10.47, sits: 13.93, bonus: 60 }
+  ];
+  // Who's at the table from the first frame: you.
+  var SEATED = { maya: 0 };
+  // The round they win, as the app lights each player on every screen
+  // (Maya's console, to the frame), and when the results land on the seats.
+  var TURNS = [[14.2, 'same'], [18.8, 'deal'], [20.1, 'maya'], [21.3, 'jules'], [21.8, 'sam'], [23.53, 'alex'], [24.37, 'dealer']];
+  var PAID = 25.7;
+  // The win's floor bonus (+$15 on a $25 win at ×1.6) rises off the badges
+  // of the two who won, as the dealer starts to play.
+  var PAYS = { at: 24.37, who: ['maya', 'jules'] };
+  var DEVICE = { maya: 'iPhone', jules: 'iPad', sam: 'Android', alex: 'Apple Vision Pro' };
+  var WIRE = 0.45;    // s for a friend's wire to run out to their screen
+  var BREAK = 750;    // ms the table stands dark between two evenings
 
-  // The grid waits for the round to be on the glass: the first moments'
+  var JOIN = {};
+  JOINS.forEach(function (j) { JOIN[j.who] = j; SEATED[j.who] = j.sits; });
+  var FULL = JOINS[JOINS.length - 1].bonus;
+  var BEATS = [[0, 'alone']]
+    .concat(JOINS.map(function (j) { return [j.on, 'join:' + j.who]; }))
+    .concat(TURNS, [[PAID, 'paid']])
+    .sort(function (a, b) { return a[0] - b[0]; });
+
+  // The evening at t seconds; t < 0 is the dark between two.
+  function here(who, t) { return t >= 0 && (who === LEAD || !JOIN[who] || t >= JOIN[who].on); }
+  function seated(who, t) { return t >= 0 && SEATED[who] !== undefined && t >= SEATED[who]; }
+  function bonusAt(t) {
+    var b = 0;
+    JOINS.forEach(function (j) { if (t >= j.on) b = j.bonus; });
+    return b;
+  }
+  function beatAt(t) {
+    if (t < 0) return 'alone';
+    var at = BEATS[0][1];
+    for (var i = 0; i < BEATS.length && t >= BEATS[i][0]; i++) at = BEATS[i][1];
+    return at;
+  }
+  // How far a screen's wire has run out from the table (0 to 1).
+  function reach(who, t) {
+    if (t < 0) return 0;
+    var at = who === LEAD || !JOIN[who] ? 0 : JOIN[who].on - WIRE;
+    return clamp((t - at) / WIRE);
+  }
+  // The app's own figure: 20 → ×1.2, 100 → ×2.
+  function times(p) { return '×' + (100 + p) / 100; }
+  // The line under the table: what just happened, in the app's words where
+  // it has them. The keys are the take's players; the page names nobody.
+  function words(beat) {
+    if (beat === 'alone') return ['Just you at the table.', 'Bring a friend and every win pays more'];
+    if (beat.indexOf('join:') === 0) {
+      var j = JOIN[beat.slice(5)];
+      return ['Your friend on ' + DEVICE[j.who] + ' joined.', 'Every win pays ' + times(j.bonus)];
+    }
+    if (beat === 'same') return ['One table,', 'on every screen'];
+    if (beat === 'deal') return ['Same cards,', 'same second'];
+    if (beat === LEAD) return ['You’re', 'up'];
+    if (beat === 'dealer') return ['Dealer’s turn,', 'on every screen at once'];
+    if (beat === 'paid') return ['21 beats 17.', 'Every win pays ' + times(FULL)];
+    return ['Your friend on ' + DEVICE[beat], 'is up'];
+  }
+  // The settled table, for stills: everyone here, the bonus at its top.
+  function settledWords() { return ['Three friends joined.', 'Every win pays ' + times(FULL)]; }
+
+  /* ---------- the screens ---------- */
+  var devs = $$('.xp-dev', xp).map(function (fig) {
+    var v = fig.querySelector('video');
+    return {
+      fig: fig,
+      who: fig.getAttribute('data-who'),
+      v: v,
+      clip: v.getAttribute('data-clip'),
+      still: fig.querySelector('.xp-still'),
+      extra: fig.classList.contains('xp-vision'),
+      wired: false,
+      here: !fig.classList.contains('is-away'),
+      timer: 0
+    };
+  });
+  function dev(who) { return devs.filter(function (d) { return d.who === who; })[0]; }
+  var lead = dev(LEAD).v;
+  var opener = dev(JOINS[0].who);
+
+  // The clock: the lead's, from the first frame; -1 while the table is dark.
+  var started = false;
+  var resting = false;
+  function clock() { return resting ? -1 : started ? lead.currentTime : 0; }
+
+  // The grid waits for the evening to be on the glass: the first moments'
   // bandwidth goes to the screens.
+  // Autoplay refused (Low Power Mode): the evening can't play, so everyone's
+  // already here, holding the payoff, as under reduced motion.
+  var settle = null;
+  var refused = false;
+  function refuse() {
+    if (refused || stills) return;
+    refused = true;
+    stills = true;
+    document.documentElement.classList.remove('xp-story');
+    devs.forEach(function (d) {
+      d.v.pause();
+      d.fig.classList.remove('is-live', 'is-arriving', 'is-leaving', 'is-next', 'is-ping');
+      if (d.still) d.still.src = d.clip + '-payoff.webp';
+    });
+    if (settle) settle();
+  }
+
   var whenRound = [];
   var roundOn = false;
   function roundStarted() {
@@ -56,90 +181,118 @@
     while (whenRound.length) whenRound.shift()();
   }
 
-  /* ---------- the screens ----------
-     Each screen is a still with its video running underneath. iOS won't
-     buffer a video until it's told to play, so playing is what loads them;
-     once the three can run, they go back to the top as one and the stills
-     fade off. If autoplay is refused (Low Power Mode) the stills just stand. */
-  (function screens() {
-    var all = $$('.xp-dev', xp).map(function (fig) {
-      var v = fig.querySelector('video');
-      return {
-        fig: fig,
-        v: v,
-        clip: v.getAttribute('data-clip'),
-        still: fig.querySelector('.xp-still'),
-        extra: fig.classList.contains('xp-vision'),
-        wired: false
-      };
-    });
-    var main = all.filter(function (s) { return !s.extra; });
-    var on = false, started = false;
+  // A screen comes on as the house's TV does, or goes dark to an open seat.
+  function power(d, on) {
+    if (d.here === on) return;
+    d.here = on;
+    clearTimeout(d.timer);
+    var c = d.fig.classList;
+    c.remove('is-arriving', 'is-leaving');
+    if (stills) { c.toggle('is-away', !on); return; }
+    if (on) {
+      c.remove('is-away');
+      void d.fig.offsetWidth;
+      c.add('is-arriving');
+      d.timer = setTimeout(function () { c.remove('is-arriving'); }, 700);
+    } else {
+      c.add('is-leaving');
+      d.timer = setTimeout(function () { c.remove('is-leaving'); c.add('is-away'); }, 300);
+    }
+  }
 
+  /* Each screen is a still with its video running underneath. iOS won't
+     buffer a video until it's told to play, so playing is what loads them;
+     once the lead and the first friend can run, they all go back to the top
+     as one. A friend's video runs on under their open seat, in step, so it's
+     on the glass the moment they arrive; if it isn't ready by then, the
+     still of that moment stands in. If autoplay is refused (Low Power Mode)
+     the stills just stand. */
+  (function screens() {
     // Save-Data with motion allowed: the payoff, not the first frame.
-    if (saveData && !reduceMotion) all.forEach(function (s) { if (s.still) s.still.src = s.clip + '-payoff.webp'; });
+    if (saveData && !reduceMotion) devs.forEach(function (d) { if (d.still) d.still.src = d.clip + '-payoff.webp'; });
     if (stills) return;
 
-    function wire(s) {
-      if (s.wired) return;
-      s.wired = true;
-      s.v.preload = 'auto';
-      s.v.src = s.clip + '.mp4';
+    var on = false;
+    function wire(d) {
+      if (d.wired) return;
+      d.wired = true;
+      d.v.preload = 'auto';
+      d.v.src = d.clip + '.mp4';
     }
     function play(v) {
       var p = v.play();
-      if (p && p.catch) p.catch(function () { /* autoplay refused: the stills stand */ });
+      if (p && p.catch) p.catch(function (e) { if (e && e.name === 'NotAllowedError') refuse(); });
     }
     function seek(v, t) { try { v.currentTime = t; } catch (e) {} }
     function fromTop() {
-      if (!on) return;
-      all.forEach(function (s) {
-        if (!s.wired) return;
-        seek(s.v, 0);
-        play(s.v);
+      if (!on || refused) return;
+      devs.forEach(function (d) {
+        if (!d.wired) return;
+        seek(d.v, 0);
+        play(d.v);
       });
     }
-    // Before the first round: the three have to be able to run. (Not at a
-    // loop, where a clip that has finished has no "next frame" to report.)
+    // Before the first evening: the lead and the first friend have to be
+    // able to run. (Not at a loop, where a clip that has finished has no
+    // "next frame" to report.)
     function tryStart() {
       if (started || !on) return;
-      if (!main.every(function (s) { return s.v.readyState >= 3; })) return;
+      if (lead.readyState < 3 || opener.v.readyState < 3) return;
       started = true;
       fromTop();
     }
     function update() {
-      if (!on) { all.forEach(function (s) { s.v.pause(); }); return; }
+      if (refused) return;
+      if (resting) { devs.forEach(function (d) { d.v.pause(); }); wake(); return; }
+      if (!on) { devs.forEach(function (d) { d.v.pause(); }); return; }
       if (started && lead.ended) { fromTop(); return; }
-      all.forEach(function (s) { if (s.wired) play(s.v); });
+      devs.forEach(function (d) { if (d.wired) play(d.v); });
       tryStart();
     }
+    // After the dark between two evenings, the next one starts, once it can
+    // be seen.
+    var rested = false;
+    function wake() {
+      if (!rested || !on) return;
+      rested = false;
+      resting = false;
+      fromTop();
+    }
 
-    main.forEach(wire);
-    all.forEach(function (s) {
-      s.v.addEventListener('canplay', tryStart);
-      s.v.addEventListener('playing', tryStart);
-      if (!s.extra) return;
-      // The headset loads as it comes near, and joins the round where it is
-      // (the lead's clock puts it in step).
-      watch(s.fig, function (near) { if (near) { wire(s); update(); } }, 0, '400px 0px');
-      s.v.addEventListener('canplay', function () { if (started && on) play(s.v); });
+    devs.forEach(function (d) { if (!d.extra) wire(d); });
+    devs.forEach(function (d) {
+      d.v.addEventListener('canplay', tryStart);
+      d.v.addEventListener('playing', tryStart);
+      if (!d.extra) return;
+      // The headset loads as it comes near, and joins the evening where it is.
+      watch(d.fig, function (near) { if (near) { wire(d); update(); } }, 0, '400px 0px');
+      d.v.addEventListener('canplay', function () {
+        if (started && on && !resting) { seek(d.v, lead.currentTime); play(d.v); }
+      });
     });
-    lead.addEventListener('ended', fromTop);
+    // The evening's over: the screens go dark and the table empties, and a
+    // moment later it starts again, with one.
+    lead.addEventListener('ended', function () {
+      if (resting) return;
+      resting = true;
+      devs.forEach(function (d) { d.v.pause(); });
+      setTimeout(function () { rested = true; wake(); }, BREAK);
+    });
     lead.addEventListener('timeupdate', function () {
-      if (!started) return;
+      if (!started || resting) return;
       var t = lead.currentTime;
-      // The first round is on the glass: the stills can go.
+      // The first evening is on the glass: the lead's still can go.
       if (t > 0 && t < 1 && !roundOn) {
-        main.forEach(function (s) { s.fig.classList.add('is-live'); });
+        dev(LEAD).fig.classList.add('is-live');
         roundStarted();
       }
       // Keep in step: a screen that has drifted a few frames off is put back.
-      all.forEach(function (s) {
-        var v = s.v;
-        if (v === lead || !s.wired || v.ended || v.seeking || v.readyState < 2) return;
+      devs.forEach(function (d) {
+        var v = d.v;
+        if (v === lead || !d.wired || v.ended || v.seeking || v.readyState < 2) return;
         var off = Math.abs(v.currentTime - t);
         if (off > 0.12) { if (t < lead.duration - 0.4) seek(v, t + 0.05); }
-        else if (!v.paused) s.fig.classList.add('is-live');
+        else if (!v.paused) d.fig.classList.add('is-live');
       });
     });
     var inView = false;
@@ -151,33 +304,22 @@
     document.addEventListener('visibilitychange', changed);
   })();
 
-  /* ---------- the wires, and whose turn it is ----------
+  /* ---------- the table ----------
      The wires run from the table's band to each screen (the headset's from
-     under the table), drawn from where everything landed. The turns are the
-     app's, read off the lead's clock (take xpa5, as the iPad lights each
-     player's plate): Sam during the deal, then Maya, Jules, Vinny (the
-     house's, no screen of his own), Alex, the dealer, and the bust. */
-  (function wires() {
+     under the table), drawn from where everything landed, and out to a
+     friend's screen as they arrive. Everything on it is the evening at the
+     lead's second: who's here, who's sitting, the bonus, whose turn. */
+  (function table() {
     var svg = xp.querySelector('.xp-wires');
     var band = xp.querySelector('.xp-band');
     var rail = xp.querySelector('.xp-rail');
+    var pill = xp.querySelector('.xp-bonus');
+    var figure = pill.querySelector('b');
+    var said = xp.querySelector('.xp-turn');
     var NS = 'http://www.w3.org/2000/svg';
     var SPEED = 0.14;          // px a millisecond
     var SEND = 700;            // ms for the turn's chip to run to its screen
     var CHIPS = ['#21803f', '#c93327', '#6b4fc0', '#1f1f1f'];
-    var TURNS = [[0, 'sam'], [1.95, 'maya'], [3.7, 'jules'], [6.75, 'vinny'], [9.45, 'alex'],
-                 [10.85, 'dealer'], [12.4, 'paid'], [15.0, 'sam']];
-    // What the line under the table says: who's up, by what they're on. The
-    // keys are the take's players; the page names nobody (they're your friends).
-    var WORDS = {
-      sam: ['Your friend on Android', 'is up'],
-      maya: ['Your friend on iPhone', 'is up'],
-      jules: ['Your friend on iPad', 'is up'],
-      vinny: ['A house regular', 'is up'],
-      alex: ['Your friend on Apple Vision Pro', 'is up'],
-      dealer: ['Dealer’s turn', 'same cards, same second'],
-      paid: ['Dealer busts', 'on every screen at once']
-    };
     var lines = [], chips = [];
 
     function make(name, cls) {
@@ -187,8 +329,8 @@
       return el;
     }
     // The glows under the wires, the wires, then everything riding them.
-    $$('.xp-dev', xp).forEach(function (dev) {
-      lines.push({ dev: dev, who: dev.getAttribute('data-who'), glass: dev.querySelector('.xp-glass'), glow: make('path', 'glow'), len: 0, sent: -1e9 });
+    devs.forEach(function (d) {
+      lines.push({ d: d, who: d.who, glass: d.fig.querySelector('.xp-glass'), glow: make('path', 'glow'), len: 0, k: -1, sent: -1e9 });
     });
     lines.forEach(function (w) { w.path = make('path'); });
     lines.forEach(function (w, i) {
@@ -216,7 +358,6 @@
       var ny = n.top + n.height / 2 - b.top;
       lines.forEach(function (w) {
         var s = w.glass.getBoundingClientRect();
-        var f = w.dev.getBoundingClientRect();
         var x = s.left + s.width / 2 - b.left;
         var d;
         if (s.top + s.height / 2 - b.top < ny) {
@@ -228,8 +369,8 @@
         } else {
           // the headset, under the table: out of the visor's side (above the
           // picture, and over the head on its corner), across, and up into
-          // the rail by Alex's seat, clear of the line under the table
-          var p = w.dev.querySelector('.xp-plate').getBoundingClientRect();
+          // the rail by its player's seat, clear of the words under the table
+          var p = w.d.fig.querySelector('.xp-plate').getBoundingClientRect();
           var a = r.width / 2;
           var cx = r.left + a - b.left;
           var px = p.right - b.left + 6;
@@ -241,56 +382,125 @@
         w.path.setAttribute('d', d);
         w.glow.setAttribute('d', d);
         w.len = w.path.getTotalLength();
+        w.k = -1;
+      });
+    }
+    // A wire runs out from the table (the path's far end) toward its screen.
+    function stretch(w, k) {
+      if (k === w.k || !w.len) return;
+      w.k = k;
+      var dash = w.len.toFixed(1) + ' ' + w.len.toFixed(1);
+      var off = (-w.len * (1 - k)).toFixed(1);
+      [w.path, w.glow].forEach(function (p) {
+        p.style.strokeDasharray = k >= 1 ? '' : dash;
+        p.style.strokeDashoffset = k >= 1 ? '' : off;
+        p.style.visibility = k <= 0 ? 'hidden' : '';
       });
     }
 
-    /* ---- the turns ---- */
-    var seats = $$('.xp-seat', xp).map(function (el) { return { el: el, who: el.getAttribute('data-who') }; });
+    var seats = $$('.xp-seat', xp).map(function (el) {
+      return { el: el, who: el.getAttribute('data-who'), sat: !el.classList.contains('is-away') };
+    });
     var dealer = xp.querySelector('.xp-dealer');
-    var words = xp.querySelector('.xp-turn');
-    var turn = '';
-    function turnAt(t) {
-      var at = TURNS[0][1];
-      for (var i = 0; i < TURNS.length && t >= TURNS[i][0]; i++) at = TURNS[i][1];
-      return at;
-    }
-    // The results stand on the seats from the bust: Alex's from his own, the
-    // rest (and the dealer's) from the dealer's.
-    function results(t) {
-      seats.forEach(function (s) {
-        s.el.classList.toggle('is-paid', s.who === 'alex' ? t === 'dealer' || t === 'paid' : t === 'paid');
+    var shown = { bonus: 0, beat: '', turn: '' };
+
+    // A gold ring round the app's badge, on every screen that shows one
+    // (the headset's has none yet), or only on `only`'s.
+    function callOut(except, only) {
+      if (stills) return;
+      devs.forEach(function (d) {
+        if (!d.here || d.extra || d === except) return;
+        if (only && only.indexOf(d.who) < 0) return;
+        var c = d.fig.classList;
+        c.remove('is-ping');
+        void d.fig.offsetWidth;
+        c.add('is-ping');
       });
-      dealer.classList.toggle('is-paid', t === 'paid');
     }
+    function setBonus(b, arriving) {
+      var was = shown.bonus;
+      if (b === was) return;
+      shown.bonus = b;
+      if (b > 0) figure.textContent = times(b);
+      pill.classList.toggle('is-on', b > 0);
+      if (stills) return;
+      pill.classList.remove('is-in', 'is-up', 'is-out');
+      void pill.offsetWidth;
+      pill.classList.add(b > 0 && was <= 0 ? 'is-in' : b > was ? 'is-up' : 'is-out');
+      if (b > was) callOut(arriving);
+    }
+    function setBeat(beat) {
+      if (beat === shown.beat) return;
+      shown.beat = beat;
+      var w = words(beat);
+      said.innerHTML = '<b>' + w[0] + '</b> <span>' + w[1] + '</span>';
+      if (stills) return;
+      said.classList.remove('is-new');
+      void said.offsetWidth;
+      said.classList.add('is-new');
+    }
+    // Whose turn it is: their seat, plate, screen and wire light, and the
+    // other screens step back. At the bust every wire lights and the results
+    // land on the seats.
     function setTurn(t, now) {
-      if (t === turn) return;
-      turn = t;
+      if (t === shown.turn) return;
+      shown.turn = t;
       lines.forEach(function (w) {
         var lit = t === 'paid' || w.who === t;
-        w.dev.classList.toggle('is-turn', w.who === t);
+        w.d.fig.classList.toggle('is-turn', w.who === t);
         w.path.classList.toggle('on', lit);
         w.glow.classList.toggle('on', lit);
         if (lit) w.sent = now;
       });
       seats.forEach(function (s) { s.el.classList.toggle('is-turn', s.who === t); });
       dealer.classList.toggle('is-turn', t === 'dealer');
-      // a screen's turn sinks the other screens
       xp.classList.toggle('has-focus', lines.some(function (w) { return w.who === t; }));
-      results(t);
-      words.innerHTML = '<b>' + WORDS[t][0] + '</b> ' + WORDS[t][1];
-      words.classList.remove('is-new');
-      void words.offsetWidth;
-      words.classList.add('is-new');
+      seats.forEach(function (s) { s.el.classList.toggle('is-paid', t === 'paid'); });
+      dealer.classList.toggle('is-paid', t === 'paid');
     }
-    // The screens hold the payoff: so does the table.
-    if (stills) results('paid');
 
-    var running = false, raf = 0;
+    var floated = false;
+    function render(t, now) {
+      var arriving = null;
+      // the next to arrive: their open seat breathes
+      var next = JOINS.filter(function (j) { return !(t >= j.on); })[0];
+      devs.forEach(function (d) {
+        var on = here(d.who, t);
+        if (on && !d.here) arriving = d;
+        power(d, on);
+        d.fig.classList.toggle('is-next', !stills && !!next && d.who === next.who);
+      });
+      seats.forEach(function (s) {
+        var on = seated(s.who, t);
+        if (on === s.sat) return;
+        s.sat = on;
+        s.el.classList.toggle('is-away', !on);
+        if (!stills) s.el.classList.toggle('is-sitting', on);
+      });
+      lines.forEach(function (w) { stretch(w, reach(w.who, t)); });
+      setBonus(bonusAt(t), arriving);
+      var beat = beatAt(t);
+      setBeat(beat);
+      setTurn(beat === 'paid' || beat === 'dealer' || DEVICE[beat] ? beat : '', now);
+      // The win paid the bonus: it rises off the winners' badges, and off
+      // the table's.
+      if (t >= PAYS.at && t < PAYS.at + 1 && !floated) {
+        floated = true;
+        callOut(null, PAYS.who);
+        if (!stills) {
+          pill.classList.remove('is-pay');
+          void pill.offsetWidth;
+          pill.classList.add('is-pay');
+        }
+      }
+      if (t < PAYS.at) { floated = false; pill.classList.remove('is-pay'); }
+    }
+
     function tick(now) {
-      if (roundOn && !lead.paused && lead.readyState >= 2) setTurn(turnAt(lead.currentTime), now);
+      render(clock(), now);
       chips.forEach(function (p) {
         var w = p.line;
-        if (!w.len) return;
+        if (!w.len || w.k < 1) { p.el.setAttribute('opacity', '0'); return; }
         var period = Math.max(1200, w.len / SPEED);
         var k = (now / period + p.phase) % 1;
         var pt = w.path.getPointAtLength((p.back ? 1 - k : k) * w.len);
@@ -302,7 +512,7 @@
       // the turn's chip: off the table, down the wire, into the screen
       lines.forEach(function (w) {
         var k = (now - w.sent) / SEND;
-        if (!w.len || k < 0 || k > 1) { w.chip.setAttribute('opacity', '0'); return; }
+        if (!w.len || w.k < 1 || k < 0 || k > 1) { w.chip.setAttribute('opacity', '0'); return; }
         var pt = w.path.getPointAtLength(Math.pow(1 - k, 2) * w.len);
         w.chip.setAttribute('cx', pt.x.toFixed(1));
         w.chip.setAttribute('cy', pt.y.toFixed(1));
@@ -315,9 +525,28 @@
     if (window.ResizeObserver) new ResizeObserver(draw).observe(xp);
     else window.addEventListener('resize', draw);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
-    if (reduceMotion) return;
+    // Everyone's here, holding the payoff: so is the table, with the
+    // results on the seats and nothing lit.
+    var running = false, raf = 0;
+    settle = function () {
+      running = false;
+      window.cancelAnimationFrame(raf);
+      render(PAID + 0.01, 0);
+      chips.forEach(function (c) { c.el.setAttribute('opacity', '0'); });
+      lines.forEach(function (w) {
+        w.chip.setAttribute('opacity', '0');
+        w.path.classList.remove('on');
+        w.glow.classList.remove('on');
+        w.d.fig.classList.remove('is-turn');
+      });
+      xp.classList.remove('has-focus');
+      var w = settledWords();
+      said.innerHTML = '<b>' + w[0] + '</b> <span>' + w[1] + '</span>';
+    };
+    if (stills) { settle(); return; }
+    render(0, 0);
     watch(xp, function (v) {
-      if (v === running) return;
+      if (stills || v === running) return;
       running = v;
       if (v) { draw(); raf = window.requestAnimationFrame(tick); }
       else window.cancelAnimationFrame(raf);
